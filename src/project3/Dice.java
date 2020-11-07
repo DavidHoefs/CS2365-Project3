@@ -21,7 +21,7 @@ public class Dice {
     //Dice value will be a number 0 - 5, where 0 = arrow, 1 = dynamite, 
     //2 = one shot, 3 = two shot, 4 = gatling gun, 5 = beer, this can be seen 
     //in toString, n is the number of dice to be rolled 
-    Dice(int n){
+    public Dice(int n){
         Random rnd = new Random();
         this.rolls = new int[n];
         for(int i = 0; i < n; i++){
