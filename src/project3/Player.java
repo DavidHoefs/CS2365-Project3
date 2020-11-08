@@ -18,6 +18,7 @@ public class Player {
     private String name = "";
     private String role = "";
     private int hp = 0;
+    private int arrows = 0;
     
     //constructor
     //creates a player object, each player will have one of these
@@ -25,6 +26,7 @@ public class Player {
         this.name = name;
         this.role = role;
         this.hp = lifePoints;
+        this.arrows = 0;
         
         if("sheriff".equals(role)){
             this.hp = this.hp + 2;
@@ -47,9 +49,17 @@ public class Player {
         return this.hp;
     }
     
+    public int getArrows(){
+        return this.arrows;
+    }
+    
     //mutators 
-    //changes the hp of the player
+    //changes the hp of the player and # of arrows on them
     public void setHp(int newHp){
         this.hp = newHp;
+    }
+    
+    public void setArrows(int newArrows){
+        this.arrows = newArrows;
     }
 }
