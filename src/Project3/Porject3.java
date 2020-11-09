@@ -34,35 +34,40 @@ public class Porject3 {
             playerNum = Integer.parseInt(reader.readLine());
         }
         
-        Player[] players = setUpPlayers(playerNum);
+        Player[] players = setUpPlayers(playerNum); //create player objects
         
         for(int i = 0; i < playerNum; i++){
             System.out.println(players[i].getName() + " | " + players[i].getRole());
         }
     }
     
+    //populates an array of player objects based on how many players there are
+    //asks user for character name, and assigns a random role
     public static Player[] setUpPlayers(int players) throws IOException {
-        Player[] p = new Player[players];
+        //full list of available characters
         String[] Chars = {"bart_cassidy", "black_jack", "calamity_janet", 
             "el_gringo", "jesse_jones", "jourdonnais", "kit_carlson", "lucky_duke", 
             "paul_regret", "pedro_ramirez", "rose_doolan", "sid_ketchum",
             "slab_the_killer", "suzy_lafayette", "vulture_sam", "willy_the_kid"};
-        
         List<String> chars = Arrays.asList(Chars);
-        String[] roles = setRoles(players);
-        for(int i = 0; i < p.length; i++){
+        
+        String[] roles = setRoles(players);//shuffled array of roles
+        Player[] p = new Player[players];
+        for(int i = 0; i < players; i++){
             System.out.println("Player " + (i + 1) + " enter your character name: ");
             String character = reader.readLine().replace(' ', '_').toLowerCase();
             
-            while(!chars.contains(character)){
-            System.out.println("Character not found.\nPlayer " + i + " enter your character name: ");
-            character = reader.readLine().replace(' ', '_').toLowerCase();
+            while(!chars.contains(character)){//keep asking if the user input an invalid character
+                System.out.println("Character not found.\nPlayer " + (i + 1) + " enter your character name: ");
+                character = reader.readLine().replace(' ', '_').toLowerCase();
             }
-            p[i] = new Player(character, roles[i]);
+            p[i] = new Player(character, roles[i]);//create player object
         }
         return p;
     }
     
+    //creates a shuffled array with all the roles based on the number of players
+    //used to assign players a role later
     public static String[] setRoles(int players){
         String[] roles = new String[players];
         switch(players){
@@ -95,6 +100,7 @@ public class Porject3 {
         return shuffleString(roles);
     }
     
+    //shuffle an array of strings
     public static String[] shuffleString(String[] string){
         Random rand = new Random();
 
