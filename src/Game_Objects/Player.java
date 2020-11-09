@@ -33,14 +33,10 @@ public class Player {
         if("sheriff".equals(role)){
             this.hp = this.hp + 2;
         }
+        // adds base character hp;
+        this.hp += this.character.hp;
         
-        // set hp according to Character
-        if (character == Character.PAUL || 
-            character == Character.EL) {
-            hp += 3;
-        } else {
-            hp += 4;
-        }
+        
     }
     
     //accessors

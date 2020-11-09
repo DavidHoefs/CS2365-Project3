@@ -38,7 +38,8 @@ public class Porject3 {
         Player[] players = setUpPlayers(playerNum); //create player objects
         
         for(int i = 0; i < playerNum; i++){
-            System.out.println(players[i].getName() + " | " + players[i].getRole());
+            System.out.println(players[i].getName() + " | " + players[i].getRole() + "| hp: " + players[i].getHp());
+            
         }
     }
     
@@ -52,10 +53,8 @@ public class Porject3 {
             "slab_the_killer", "suzy_lafayette", "vulture_sam", "willy_the_kid"};
         List<String> chars = Arrays.asList(Chars);
         ArrayList<Character> characters = new ArrayList<>();
-        // for Character class
-        characters.addAll(Arrays.asList(Character.PAUL, Character.JOUR, Character.BLACK, Character.SLAB,
-                Character.EL, Character.JESSE, Character.SUZY, Character.WILLY, Character.ROSE, Character.BART,
-                Character.PEDRO, Character.SID, Character.LUCKY, Character.VULTURE, Character.CALAMITY, Character.KIT));
+       
+        
 
         
         String[] roles = setRoles(players);//shuffled array of roles
@@ -68,9 +67,8 @@ public class Porject3 {
                 System.out.println("Character not found.\nPlayer " + (i + 1) + " enter your character name: ");
                 character = reader.readLine().replace(' ', '_').toLowerCase();
             }
-            String[] chosen = character.split("_");
-            String c = chosen[0].toUpperCase();
-            p[i] = new Player( character ,roles[i],Character.valueOf(c));//create player object
+            Character newChar = new Character(character);
+            p[i] = new Player( character ,roles[i],newChar);//create player object
         }
         return p;
     }

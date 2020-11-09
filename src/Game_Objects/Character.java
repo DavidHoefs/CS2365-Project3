@@ -9,31 +9,42 @@ package Game_Objects;
  *
  * @author David Hoefs
  */
-public enum Character {
-    PAUL("Paul Regret"),
-    JOUR("Jourdonnais"),
-    BLACK("Black Jack"),
-    SLAB("Slab the Killer"),
-    EL("El Gringo"),
-    JESSE("Jesse Jones"),
-    SUZY("Suzy Lafayette"),
-    WILLY("Willy the Kid"),
-    ROSE("Rose Doolan"),
-    PEDRO("Pedro Ramirez"),
-    SID("Sid Ketchum"),
-    LUCKY("Lucky Duke"),
-    VULTURE("Vulture Sam"),
-    CALAMITY("Calamity Janet"),
-    KIT("Kit Carlson"),
-    BART("Bart Cassidy");
-    private String value;
-
-    Character(String value) {
-        this.value = value;
+public class Character{
+    String name;
+    String ability;
+    String exceptions;
+    int hp;
+   
+    
+    public Character(String name){
+        this.name = name;
+        switch(name){
+            case "el_gringo":
+                this.hp = 7;
+                break;
+            case "jourdonnais":
+                this.hp = 7;
+                break;
+            case "kit_carlson":
+                this.hp = 7;
+                break;
+            case "jesse_jones":
+                this.hp = 9;
+                break;
+            case "vulture_sam":
+                this.hp = 9;
+                break;
+            case "rose_doolan":
+                this.hp = 9;
+                break;
+            case "paul_regret":
+                this.hp = 9;
+            default:
+                this.hp =8;
+                break;
+               
+        }
     }
-
-    public String getValue() {
-        return value;
-    }
+    
     
 }
