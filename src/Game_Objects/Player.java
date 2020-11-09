@@ -7,7 +7,7 @@ package Game_Objects;
 
 /**
  *
- * @author Blane Brown
+ * @author Blane Brown,David Hoefs
  */
 public class Player {
     
@@ -17,19 +17,29 @@ public class Player {
     //it is a sheriff they get +2 added to their hp
     private final String name;
     private final String role;
+    private Character character;
     private int hp;
     private int arrows;
     
     //constructor
     //creates a player object, each player will have one of these
-    public Player(String name, String role){
+    public Player(String name, String role,Character character){
         this.name = name;
         this.role = role;
         this.arrows = 0;
         this.hp = 0;
+        this.character = character;
         
         if("sheriff".equals(role)){
             this.hp = this.hp + 2;
+        }
+        
+        // set hp according to Character
+        if (character == Character.PAUL || 
+            character == Character.EL) {
+            hp += 3;
+        } else {
+            hp += 4;
         }
     }
     
@@ -49,6 +59,11 @@ public class Player {
         return this.hp;
     }
     
+    public Character getCharacter(){
+        return character;
+    }
+    
+    
     public int getArrows(){
         return this.arrows;
     }
@@ -59,7 +74,16 @@ public class Player {
         this.hp = newHp;
     }
     
+    
     public void setArrows(int newArrows){
         this.arrows = newArrows;
+    }
+    // increment hp 
+    public void gainHp(){
+        hp++;
+    }
+    // decrement hp
+    public void loseHp(){
+        hp--;
     }
 }
