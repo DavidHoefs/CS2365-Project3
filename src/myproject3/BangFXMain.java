@@ -17,7 +17,7 @@ import javafx.stage.Stage;
 
 /**
  *
- * @author blane
+ * @author Blane Brown
  */
 public class BangFXMain extends Application {
     //Data Members
