@@ -619,7 +619,7 @@ public class BangFXMain extends Application {
             if("Renegade".equals(currPlayer.getRole())){
                 int outlawAliveCount = 0;
                 for(MyPlayer player : players){
-                    if("Outlaw".equals(player.getRole())){
+                    if("Outlaw".equals(player.getRole()) && player.getHp() > 0){
                         outlawAliveCount++;
                     }
                 }
@@ -657,7 +657,7 @@ public class BangFXMain extends Application {
                 else{
                     int deputyAliveCount = 0;
                     for(MyPlayer player : players){
-                        if("Deputy".equals(player.getRole())){
+                        if("Deputy".equals(player.getRole()) && player.getHp() > 0){
                             deputyAliveCount++;
                         }
                     }
@@ -705,7 +705,7 @@ public class BangFXMain extends Application {
             if("Sheriff".equals(currPlayer.getRole())){
                 int deputyAliveCount = 0;
                     for(MyPlayer player : players){
-                        if("Deputy".equals(player.getRole())){
+                        if("Deputy".equals(player.getRole()) && player.getHp() > 0){
                             deputyAliveCount++;
                         }
                     }
@@ -757,7 +757,7 @@ public class BangFXMain extends Application {
             if("Renegade".equals(currPlayer.getRole())){
                 int outlawAliveCount = 0;
                 for(MyPlayer player : players){
-                    if("Outlaw".equals(player.getRole())){
+                    if("Outlaw".equals(player.getRole()) && player.getHp() > 0){
                         outlawAliveCount++;
                     }
                 }
@@ -795,7 +795,7 @@ public class BangFXMain extends Application {
                 else{
                     int deputyAliveCount = 0;
                     for(MyPlayer player : players){
-                        if("Deputy".equals(player.getRole())){
+                        if("Deputy".equals(player.getRole()) && player.getHp() > 0){
                             deputyAliveCount++;
                         }
                     }
@@ -845,7 +845,7 @@ public class BangFXMain extends Application {
                         gaveHealthIndex = playerIndex;
                         healthGave = player.getHealOther();
                     }
-                    if("Deputy".equals(player.getRole())){
+                    if("Deputy".equals(player.getRole()) && player.getHp() > 0){
                         deputyAliveCount++;
                     }
                     playerIndex++;
@@ -868,7 +868,7 @@ public class BangFXMain extends Application {
             if("Renegade".equals(currPlayer.getRole())){
                 int outlawCount = 0;
                 for(MyPlayer player : players){
-                    if("Outlaw".equals(player.getRole())){
+                    if("Outlaw".equals(player.getRole()) && player.getHp() > 0){
                         outlawCount++;
                     }
                 }
