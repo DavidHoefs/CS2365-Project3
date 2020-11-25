@@ -1601,9 +1601,11 @@ public class BangFXMain extends Application {
                 }
                 
             }
+            boolean alreadyshot = false;
             while(players.get(shotIndex).getHp() <= 0 || players.get(shotIndex) == currPlayer){
                     if(alive == 2){
                         shoot("oneLeft", currPlayer);
+                        alreadyshot = true;
                         break;
                     }
                     if(shotIndex - 1 < 0){
@@ -1620,7 +1622,12 @@ public class BangFXMain extends Application {
                     }
                     players.get(shotIndex).loseHp(1);
                     updateHp(shotIndex);
-                }          
+                }
+                else{
+                    if(alive == 2 && alreadyshot == false){
+                        shoot("oneLeft", currPlayer);
+                    }
+                }
             
         }
         else if("oneRight".equals(directionLength)){
@@ -1684,9 +1691,11 @@ public class BangFXMain extends Application {
                 }
                 
             }
+            boolean alreadyshot = false;
             while(players.get(shotIndex).getHp() <= 0 || players.get(shotIndex) == currPlayer){
                     if(alive == 2){
                         shoot("oneRight", currPlayer);
+                        alreadyshot = true;
                         break;
                     }
                     if(shotIndex + 1 == playerCount){
@@ -1703,6 +1712,11 @@ public class BangFXMain extends Application {
                     }
                     players.get(shotIndex).loseHp(1);
                     updateHp(shotIndex);
+                }
+                else{
+                    if(alive == 2 && alreadyshot == false){
+                        shoot("oneReft", currPlayer);
+                    }
                 }
             
         }
