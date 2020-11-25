@@ -1715,7 +1715,7 @@ public class BangFXMain extends Application {
                 }
                 else{
                     if(alive == 2 && alreadyshot == false){
-                        shoot("oneReft", currPlayer);
+                        shoot("oneRight", currPlayer);
                     }
                 }
             
