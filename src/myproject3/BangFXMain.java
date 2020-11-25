@@ -1885,7 +1885,7 @@ public class BangFXMain extends Application {
         }
  
             //sets new hp for the player shot
-            switch(i){
+           switch(i){
                 case 0:
                     p1hp.setText("Health: " + players.get(i).getHp());
                     if(players.get(i).getHp() == 0){
@@ -1901,18 +1901,27 @@ public class BangFXMain extends Application {
                     p2hp.setText("Health: " + players.get(i).getHp());
                     if(players.get(i).getHp() == 0){
                         p2t.setText("DEAD - " + players.get(i).getRole());
+                        arrowPile = arrowPile + players.get(i).getArrows();
+                            players.get(i).setArrows(0);
+                            p2arrow.setText("Arrows: 0");
                     }
                     break;
                 case 2:
                     p3hp.setText("Health: " + players.get(i).getHp());
                     if(players.get(i).getHp() == 0){
                         p3t.setText("DEAD - " + players.get(i).getRole());
+                        arrowPile = arrowPile + players.get(i).getArrows();
+                            players.get(i).setArrows(0);
+                            p3arrow.setText("Arrows: 0");
                     }
                     break;
                 case 3:
                     p4hp.setText("Health: " + players.get(i).getHp());
                     if(players.get(i).getHp() == 0){
                         p4t.setText("DEAD - " + players.get(i).getRole());
+                        arrowPile = arrowPile + players.get(i).getArrows();
+                            players.get(i).setArrows(0);
+                            p4arrow.setText("Arrows: 0");
                         
                     }
                     break;
@@ -1920,24 +1929,36 @@ public class BangFXMain extends Application {
                     p5hp.setText("Health: " + players.get(i).getHp());
                     if(players.get(i).getHp() == 0){
                         p5t.setText("DEAD - " + players.get(i).getRole());
+                        arrowPile = arrowPile + players.get(i).getArrows();
+                            players.get(i).setArrows(0);
+                            p5arrow.setText("Arrows: 0");
                     }
                     break;
                 case 5:
                     p6hp.setText("Health: " + players.get(i).getHp());
                     if(players.get(i).getHp() == 0){
                         p6t.setText("DEAD - " + players.get(i).getRole());
+                        arrowPile = arrowPile + players.get(i).getArrows();
+                            players.get(i).setArrows(0);
+                            p6arrow.setText("Arrows: 0");
                     }
                     break;
                 case 6:
                     p7hp.setText("Health: " + players.get(i).getHp());
                     if(players.get(i).getHp() == 0){
                         p7t.setText("DEAD - " + players.get(i).getRole());
+                        arrowPile = arrowPile + players.get(i).getArrows();
+                            players.get(i).setArrows(0);
+                            p7arrow.setText("Arrows: 0");
                     }
                     break;
                 case 7:
                     p8hp.setText("Health: " + players.get(i).getHp());
                     if(players.get(i).getHp() == 0){
                         p8t.setText("DEAD - " + players.get(i).getRole());
+                        arrowPile = arrowPile + players.get(i).getArrows();
+                            players.get(i).setArrows(0);
+                            p8arrow.setText("Arrows: 0");
                     }
                     break;
                 default:
