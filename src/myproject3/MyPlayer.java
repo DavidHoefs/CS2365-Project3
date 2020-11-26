@@ -6,7 +6,7 @@ package myproject3;
 
 /**
  *
- * @author Blane Brown
+ * @author Blane Brown, Javier Vasquez
  */
 public class MyPlayer {
     //Private data memebers
@@ -110,9 +110,7 @@ public class MyPlayer {
     }
     
     public void gainHp(int n){
-        if(hp + n > maxHp){  
-        }
-        else{
+        if(!(hp + n > maxHp)){  
             hp = hp + n;
         }
     }

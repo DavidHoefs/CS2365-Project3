@@ -14,6 +14,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -37,6 +38,17 @@ public class BangFXMain extends Application {
     int arrowPile = 9;
     int beerCount = 0;
     int gatCount = 0;
+    
+    //used to determine if a player just died of if they've been dead
+    boolean p1dead = false;
+    boolean p2dead = false;
+    boolean p3dead = false;
+    boolean p4dead = false;
+    boolean p5dead = false;
+    boolean p6dead = false;
+    boolean p7dead = false;
+    boolean p8dead = false;
+    
     
     //everything below is all FX related and used to change labels and disable
     //certain buttons
@@ -537,6 +549,8 @@ public class BangFXMain extends Application {
         if(dynamiteCount >= 3){
             currPlayer.loseHp(1);
             updateHp(index);
+            if("Pedro Ramirez".equals(currPlayer.getCharacterName()) && currPlayer.getArrows() > 0)
+                dropArrow(currPlayer);
         }
         
         //if they rolled a shoot 1 dice
@@ -651,17 +665,16 @@ public class BangFXMain extends Application {
                         }
                         else{
                             shoot("oneRight", currPlayer);
+                        } 
+                    }
+                    else{
+                        if(players.get(leftTarget).getHp() > players.get(rightTarget).getHp()){
+                            shoot("oneLeft", currPlayer);
                         }
-                        
+                        else{
+                            shoot("oneRight", currPlayer);
+                        }
                     }
-                    else{
-                    if(players.get(leftTarget).getHp() > players.get(rightTarget).getHp()){
-                        shoot("oneLeft", currPlayer);
-                    }
-                    else{
-                        shoot("oneRight", currPlayer);
-                    }
-                }
                 }
             }
             oneShot--;
@@ -751,7 +764,6 @@ public class BangFXMain extends Application {
                         shoot("twoRight", currPlayer);
                     }
                 }
-                
             }
             
             //deputy will never shoot the sheriff, if other deputies are alive they try not
@@ -780,16 +792,15 @@ public class BangFXMain extends Application {
                         else{
                             shoot("twoRight", currPlayer);
                         }
-                        
                     }
                     else{
-                    if(players.get(leftTarget).getHp() > players.get(rightTarget).getHp()){
-                        shoot("twoLeft", currPlayer);
+                        if(players.get(leftTarget).getHp() > players.get(rightTarget).getHp()){
+                            shoot("twoLeft", currPlayer);
+                        }
+                        else{
+                            shoot("twoRight", currPlayer);
+                        }
                     }
-                    else{
-                        shoot("twoRight", currPlayer);
-                    }
-                }
                 }
             }
             twoShot--;
@@ -852,7 +863,6 @@ public class BangFXMain extends Application {
                     players.get(sheriffIndex).gainHp(1);
                     updateHp(sheriffIndex);
                     currPlayer.increaseHealOther();
-                    
                 }
                 else{
                     currPlayer.gainHp(1);
@@ -865,11 +875,18 @@ public class BangFXMain extends Application {
         //if 3 gatling guns were rolled make everyone lose 1hp and lose arrows
         if(gatCount >= 3 || (gatCount > 1 && "Willy The Kid".equals(currPlayer.getCharacterName()))){
             for(int i = 0; i < playerCount; i++){
-                if(players.get(i) != currPlayer){
+                if(players.get(i) != currPlayer && !"Paul Regret".equals(players.get(i).getCharacterName())){
                     players.get(i).loseHp(1);
                     updateHp(i);
                     if("El Gringo".equals(players.get(i).getCharacterName()))
                         arrow(currPlayer);
+                    else if("Pedro Ramirez".equals(players.get(i).getCharacterName()) && players.get(i).getArrows() > 0 && i == 0){
+                            int dropResponse = JOptionPane.showConfirmDialog(null, "You took damage!\nDrop an arrow?", "Pedro Ability", JOptionPane.YES_NO_OPTION);
+                            if(dropResponse == JOptionPane.YES_OPTION)
+                                dropArrow(players.get(i));
+                        }
+                    else if("Pedro Ramirez".equals(players.get(i).getCharacterName()) && players.get(i).getArrows() > 0)
+                        dropArrow(players.get(i));
                 }
                 else{
                     arrowPile = arrowPile + currPlayer.getArrows();
@@ -901,6 +918,11 @@ public class BangFXMain extends Application {
                     }
                 }
             }
+        }
+        
+        if(oneShot == 0 && twoShot == 0 && "Suzy Lafayette".equals(currPlayer.getCharacterName())){
+            currPlayer.gainHp(2);
+            updateHp(index);
         }
         
         //reset the values for the next player
@@ -951,7 +973,8 @@ public class BangFXMain extends Application {
                         dice5.setDisable(true);
                         currPlayer.loseHp(1);
                         updateHp(0);
-                        
+                        if("Pedro Ramirez".equals(currPlayer.getCharacterName()) && currPlayer.getArrows() > 0)
+                            dropArrow(currPlayer);
                     }
                     //a dynamite rolled is not allowed to be re-rolled, so here 
                     //the re-roll button for a certain dice is disabled if a 
@@ -1014,12 +1037,15 @@ public class BangFXMain extends Application {
                         dice5.setDisable(true);
                         currPlayer.loseHp(1);
                         updateHp(0);
-                        
+                        if("Pedro Ramirez".equals(currPlayer.getCharacterName()) && currPlayer.getArrows() > 0){
+                            int dropResponse = JOptionPane.showConfirmDialog(null, "You took damage!\nDrop an arrow?", "Pedro Ability", JOptionPane.YES_NO_OPTION);
+                            if(dropResponse == JOptionPane.YES_OPTION)
+                                dropArrow(currPlayer);
+                        }
                     }
                     dice1.setDisable(true);
                     dice1.setSelected(false);
                 }
-                
             }
             else{
                 dice1.setDisable(true);
@@ -1042,7 +1068,11 @@ public class BangFXMain extends Application {
                         dice5.setDisable(true);
                         currPlayer.loseHp(1);
                         updateHp(0);
-                        
+                        if("Pedro Ramirez".equals(currPlayer.getCharacterName()) && currPlayer.getArrows() > 0){
+                            int dropResponse = JOptionPane.showConfirmDialog(null, "You took damage!\nDrop an arrow?", "Pedro Ability", JOptionPane.YES_NO_OPTION);
+                            if(dropResponse == JOptionPane.YES_OPTION)
+                                dropArrow(currPlayer);
+                        }
                     }
                     dice2.setDisable(true);
                     dice2.setSelected(false);
@@ -1069,7 +1099,11 @@ public class BangFXMain extends Application {
                         dice5.setDisable(true);
                         currPlayer.loseHp(1);
                         updateHp(0);
-                        
+                        if("Pedro Ramirez".equals(currPlayer.getCharacterName()) && currPlayer.getArrows() > 0){
+                            int dropResponse = JOptionPane.showConfirmDialog(null, "You took damage!\nDrop an arrow?", "Pedro Ability", JOptionPane.YES_NO_OPTION);
+                            if(dropResponse == JOptionPane.YES_OPTION)
+                                dropArrow(currPlayer);
+                        }
                     }
                     dice3.setDisable(true);
                     dice3.setSelected(false);
@@ -1095,7 +1129,11 @@ public class BangFXMain extends Application {
                         dice5.setDisable(true);
                         currPlayer.loseHp(1);
                         updateHp(0);
-                        
+                        if("Pedro Ramirez".equals(currPlayer.getCharacterName()) && currPlayer.getArrows() > 0){
+                            int dropResponse = JOptionPane.showConfirmDialog(null, "You took damage!\nDrop an arrow?", "Pedro Ability", JOptionPane.YES_NO_OPTION);
+                            if(dropResponse == JOptionPane.YES_OPTION)
+                                dropArrow(currPlayer);
+                        }
                     }
                     dice4.setDisable(true);
                     dice4.setSelected(false);
@@ -1121,7 +1159,11 @@ public class BangFXMain extends Application {
                         dice5.setDisable(true);
                         currPlayer.loseHp(1);
                         updateHp(0);
-                        
+                        if("Pedro Ramirez".equals(currPlayer.getCharacterName()) && currPlayer.getArrows() > 0){
+                            int dropResponse = JOptionPane.showConfirmDialog(null, "You took damage!\nDrop an arrow?", "Pedro Ability", JOptionPane.YES_NO_OPTION);
+                            if(dropResponse == JOptionPane.YES_OPTION)
+                                dropArrow(currPlayer);
+                        }
                     }
                     dice5.setDisable(true);
                     dice5.setSelected(false);
@@ -1172,6 +1214,10 @@ public class BangFXMain extends Application {
             }
             else{
                 if(gameOver == false){
+                    if("Suzy Lafayette".equals(currPlayer.getCharacterName())){
+                        currPlayer.gainHp(2);
+                        updateHp(index);
+                    }
                     beerAndGat(currPlayer);
                 }
             }
@@ -1311,13 +1357,15 @@ public class BangFXMain extends Application {
                     p7b.setSelected(false);
                     p8b.setSelected(false);
                     
-                    if(this.gatCount >= 3 || this.gatCount > 1 && "Willy The Kid".equals(currPlayer.getCharacterName())){
+                    if(this.gatCount >= 3 || (this.gatCount > 1 && "Willy The Kid".equals(currPlayer.getCharacterName()))){
                         for(int i = 0; i < playerCount; i++){
-                            if(players.get(i) != currPlayer){
+                            if(players.get(i) != currPlayer && !"Paul Regret".equals(players.get(i).getCharacterName())){
                                 players.get(i).loseHp(1);
                                 updateHp(i);
                                 if("El Gringo".equals(players.get(i).getCharacterName()))
                                     arrow(currPlayer);
+                                else if("Pedro Ramirez".equals(players.get(i).getCharacterName()) && players.get(i).getArrows() > 0)
+                                    dropArrow(players.get(i));
                             }
                             else{
                                 arrowPile = arrowPile + currPlayer.getArrows();
@@ -1326,7 +1374,7 @@ public class BangFXMain extends Application {
                             }
                         }
                     }
-                    this.gatCount =0;
+                    this.gatCount = 0;
                     if(gameOver == false){
                         nextPlayer.setDisable(false);
                     }
@@ -1529,6 +1577,13 @@ public class BangFXMain extends Application {
             updateHp(shotIndex);
             if("El Gringo".equals(players.get(shotIndex).getCharacterName()))
                 arrow(currPlayer);
+            else if("Pedro Ramirez".equals(players.get(shotIndex).getCharacterName()) && players.get(shotIndex).getArrows() > 0 && shotIndex == 0){
+                int dropResponse = JOptionPane.showConfirmDialog(null, "You took damage!\nDrop an arrow?", "Pedro Ability", JOptionPane.YES_NO_OPTION);
+                if(dropResponse == JOptionPane.YES_OPTION)
+                    dropArrow(players.get(shotIndex));
+            }
+            else if("Pedro Ramirez".equals(players.get(shotIndex).getCharacterName()) && players.get(shotIndex).getArrows() > 0)
+                dropArrow(players.get(shotIndex));
             
         }
         if("twoLeft".equals(directionLength)){
@@ -1549,9 +1604,7 @@ public class BangFXMain extends Application {
                 }
             }
             else{
-
                 tempIndex = shotIndex - 1;
-                
                 while(players.get(tempIndex).getHp() == 0){
                     if(tempIndex - 1 < 0){
                         tempIndex = playerCount - 1;
@@ -1566,30 +1619,36 @@ public class BangFXMain extends Application {
                 else{
                     shotIndex = tempIndex - 1;
                 }
-                
             }
             while(players.get(shotIndex).getHp() <= 0 || players.get(shotIndex) == currPlayer){
-                    if(alive == 2){
-                        shoot("oneLeft", currPlayer);
-                        break;
-                    }
-                    if(shotIndex - 1 < 0){
-                        shotIndex = playerCount -1;
-                    }
-                    else{
-                        shotIndex--;
-                    }
+                if(alive == 2){
+                    shoot("oneLeft", currPlayer);
+                    break;
                 }
-                //once its found the 2nd left target, shoot them!
-                if(alive != 2){
-                    if("Sheriff".equals(players.get(shotIndex).getRole())){
-                        currPlayer.decreaseHealOther();
-                    }
-                    players.get(shotIndex).loseHp(1);
-                    updateHp(shotIndex);
-                    if("El Gringo".equals(players.get(shotIndex).getCharacterName()))
-                        arrow(currPlayer);
-                }          
+                if(shotIndex - 1 < 0){
+                    shotIndex = playerCount -1;
+                }
+                else{
+                    shotIndex--;
+                }
+            }
+            //once its found the 2nd left target, shoot them!
+            if(alive != 2){
+                if("Sheriff".equals(players.get(shotIndex).getRole())){
+                    currPlayer.decreaseHealOther();
+                }
+                players.get(shotIndex).loseHp(1);
+                updateHp(shotIndex);
+                if("El Gringo".equals(players.get(shotIndex).getCharacterName()))
+                    arrow(currPlayer);
+                else if("Pedro Ramirez".equals(players.get(shotIndex).getCharacterName()) && players.get(shotIndex).getArrows() > 0 && shotIndex == 0){
+                    int dropResponse = JOptionPane.showConfirmDialog(null, "You took damage!\nDrop an arrow?", "Pedro Ability", JOptionPane.YES_NO_OPTION);
+                    if(dropResponse == JOptionPane.YES_OPTION)
+                        dropArrow(players.get(shotIndex));
+                }
+                else if("Pedro Ramirez".equals(players.get(shotIndex).getCharacterName()) && players.get(shotIndex).getArrows() > 0)
+                    dropArrow(players.get(shotIndex));
+            }          
             
         }
         if("oneRight".equals(directionLength)){
@@ -1616,7 +1675,13 @@ public class BangFXMain extends Application {
             updateHp(shotIndex); 
             if("El Gringo".equals(players.get(shotIndex).getCharacterName()))
                 arrow(currPlayer);
-            
+            else if("Pedro Ramirez".equals(players.get(shotIndex).getCharacterName()) && players.get(shotIndex).getArrows() > 0 && shotIndex == 0){
+                int dropResponse = JOptionPane.showConfirmDialog(null, "You took damage!\nDrop an arrow?", "Pedro Ability", JOptionPane.YES_NO_OPTION);
+                if(dropResponse == JOptionPane.YES_OPTION)
+                    dropArrow(players.get(shotIndex));
+            }
+            else if("Pedro Ramirez".equals(players.get(shotIndex).getCharacterName()) && players.get(shotIndex).getArrows() > 0)
+                dropArrow(players.get(shotIndex));
         }
         if("twoRight".equals(directionLength)){
             int shotIndex = index;
@@ -1676,19 +1741,49 @@ public class BangFXMain extends Application {
                     updateHp(shotIndex);
                     if("El Gringo".equals(players.get(shotIndex).getCharacterName()))
                         arrow(currPlayer);
-                }
+                    else if("Pedro Ramirez".equals(players.get(shotIndex).getCharacterName()) && players.get(shotIndex).getArrows() > 0 && shotIndex == 0){
+                        int dropResponse = JOptionPane.showConfirmDialog(null, "You took damage!\nDrop an arrow?", "Pedro Ability", JOptionPane.YES_NO_OPTION);
+                        if(dropResponse == JOptionPane.YES_OPTION)
+                            dropArrow(players.get(shotIndex));
+                    }
+                    else if("Pedro Ramirez".equals(players.get(shotIndex).getCharacterName()) && players.get(shotIndex).getArrows() > 0)
+                        dropArrow(players.get(shotIndex));
+                    }
             
         }
         
     }
     
+    //used for dropping an arrow (Pedro Ramirez's ability)
     public void dropArrow(MyPlayer currPlayer){
         currPlayer.setArrows((currPlayer.getArrows() - 1));
         switch(index){
             case 0:
                 p1arrow.setText("Arrows: " + currPlayer.getArrows());
                 break;
+            case 1:
+                p1arrow.setText("Arrows: " + currPlayer.getArrows());
+                break;
+            case 2:
+                p1arrow.setText("Arrows: " + currPlayer.getArrows());
+                break;
+            case 3:
+                p1arrow.setText("Arrows: " + currPlayer.getArrows());
+                break;
+            case 4:
+                p1arrow.setText("Arrows: " + currPlayer.getArrows());
+                break;
+            case 5:
+                p1arrow.setText("Arrows: " + currPlayer.getArrows());
+                break;
+            case 6:
+                p1arrow.setText("Arrows: " + currPlayer.getArrows());
+                break;
+            case 7:
+                p1arrow.setText("Arrows: " + currPlayer.getArrows());
+                break;
         }
+        arrowPile++;
     }
     
     //used for rolling arrow and indian attacks, currPlayer is the player rolling the dice
@@ -1817,11 +1912,18 @@ public class BangFXMain extends Application {
         else{
             if(this.gatCount >= 3 || (this.gatCount > 1 && "Willy The Kid".equals(currPlayer.getCharacterName()))){
                 for(int i = 0; i < playerCount; i++){
-                    if(players.get(i) != currPlayer){
+                    if(players.get(i) != currPlayer && !"Paul Regret".equals(players.get(i).getCharacterName())){
                         players.get(i).loseHp(1);
                         updateHp(i);
                         if("El Gringo".equals(players.get(i).getCharacterName()))
                             arrow(currPlayer);
+                        else if("Pedro Ramirez".equals(players.get(i).getCharacterName()) && players.get(i).getArrows() > 0 && i == 0){
+                            int dropResponse = JOptionPane.showConfirmDialog(null, "You took damage!\nDrop an arrow?", "Pedro Ability", JOptionPane.YES_NO_OPTION);
+                            if(dropResponse == JOptionPane.YES_OPTION)
+                                dropArrow(players.get(i));
+                        }
+                        else if("Pedro Ramirez".equals(players.get(i).getCharacterName()) && players.get(i).getArrows() > 0)
+                            dropArrow(players.get(i));
                     }
                     else{
                         arrowPile = arrowPile + currPlayer.getArrows();
@@ -1833,6 +1935,16 @@ public class BangFXMain extends Application {
             this.gatCount = 0;
             if(gameOver == false){
                 nextPlayer.setDisable(false);
+            }
+        }
+    }
+    
+    //Vulture Sam's ability that lets him heal if another player dies.
+    public void samAbility(){
+        for(int i = 0; i < playerCount; i++){
+            if("Vulture Sam".equals(players.get(i).getCharacterName()) && players.get(i).getHp() > 0){
+                players.get(i).gainHp(2);
+                updateHp(i);
             }
         }
     }
@@ -1851,6 +1963,10 @@ public class BangFXMain extends Application {
                 case 0:
                     p1hp.setText("Health: " + players.get(i).getHp() + "/" + players.get(i).getMaxHp());
                     if(players.get(i).getHp() == 0){
+                        if(!p1dead){
+                            p1dead = true;
+                            samAbility();
+                        }
                         p1t.setText("DEAD - " + players.get(i).getRole());
                         disableAll();
                         nextPlayer.setDisable(false);
@@ -1862,43 +1978,70 @@ public class BangFXMain extends Application {
                 case 1:
                     p2hp.setText("Health: " + players.get(i).getHp() + "/" + players.get(i).getMaxHp());
                     if(players.get(i).getHp() == 0){
+                        if(!p2dead){
+                            p2dead = true;
+                            samAbility();
+                        }
                         p2t.setText("DEAD - " + players.get(i).getRole());
                     }
                     break;
                 case 2:
                     p3hp.setText("Health: " + players.get(i).getHp() + "/" + players.get(i).getMaxHp());
                     if(players.get(i).getHp() == 0){
+                        if(!p3dead){
+                            p3dead = true;
+                            samAbility();
+                        }
                         p3t.setText("DEAD - " + players.get(i).getRole());
                     }
                     break;
                 case 3:
                     p4hp.setText("Health: " + players.get(i).getHp() + "/" + players.get(i).getMaxHp());
                     if(players.get(i).getHp() == 0){
+                        if(!p4dead){
+                            p4dead = true;
+                            samAbility();
+                        }
                         p4t.setText("DEAD - " + players.get(i).getRole());
-                        
                     }
                     break;
                 case 4:
                     p5hp.setText("Health: " + players.get(i).getHp() + "/" + players.get(i).getMaxHp());
                     if(players.get(i).getHp() == 0){
+                        if(!p5dead){
+                            p5dead = true;
+                            samAbility();
+                        }
                         p5t.setText("DEAD - " + players.get(i).getRole());
                     }
                     break;
                 case 5:
                     p6hp.setText("Health: " + players.get(i).getHp() + "/" + players.get(i).getMaxHp());
                     if(players.get(i).getHp() == 0){
+                        if(!p6dead){
+                            p6dead = true;
+                            samAbility();
+                        }
                         p6t.setText("DEAD - " + players.get(i).getRole());
                     }
                     break;
                 case 6:
                     p7hp.setText("Health: " + players.get(i).getHp() + "/" + players.get(i).getMaxHp());
                     if(players.get(i).getHp() == 0){
+                        if(!p7dead){
+                            p7dead = true;
+                            samAbility();
+                        }
                         p7t.setText("DEAD - " + players.get(i).getRole());
                     }
                     break;
                 case 7:
                     p8hp.setText("Health: " + players.get(i).getHp() + "/" + players.get(i).getMaxHp());
                     if(players.get(i).getHp() == 0){
+                        if(!p8dead){
+                            p8dead = true;
+                            samAbility();
+                        }
                         p8t.setText("DEAD - " + players.get(i).getRole());
                     }
                     break;
