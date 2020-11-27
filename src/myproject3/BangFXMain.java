@@ -553,6 +553,11 @@ public class BangFXMain extends Application {
                 dropArrow(currPlayer);
         }
         
+        if(oneShot == 0 && twoShot == 0 && "Suzy Lafayette".equals(currPlayer.getCharacterName())){
+            currPlayer.gainHp(2);
+            updateHp(index);
+        }
+        
         //if they rolled a shoot 1 dice
         while(oneShot > 0){
             int leftTarget = checkTarget("checkOneLeft", currPlayer);
@@ -918,11 +923,6 @@ public class BangFXMain extends Application {
                     }
                 }
             }
-        }
-        
-        if(oneShot == 0 && twoShot == 0 && "Suzy Lafayette".equals(currPlayer.getCharacterName())){
-            currPlayer.gainHp(2);
-            updateHp(index);
         }
         
         //reset the values for the next player
