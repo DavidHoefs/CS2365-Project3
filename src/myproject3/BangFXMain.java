@@ -403,11 +403,20 @@ public class BangFXMain extends Application {
             saveRolls.setDisable(true);
             
             //used for checking whos alive and if anyone has won
-            int deathIndex = 0;
+            int alive = 0;
             for(MyPlayer player : players){
-                updateHp(deathIndex);
-                deathIndex++;
+                if(player.getHp() > 0){
+                    alive = alive + 1;
+                }
             }
+            if(alive > 1){
+                int deathIndex = 0;
+                for(MyPlayer player : players){
+                    updateHp(deathIndex);
+                    deathIndex++;
+                }
+            }
+            
             
             //resets the index back at 0 if it hits the playerCount - 1
             if(this.index + 1 == playerCount){
@@ -445,31 +454,31 @@ public class BangFXMain extends Application {
                         break;
                     case 1:
                         p2c.setText("Player 2's Turn");
-                        p2t.setText(players.get(index).getRole());
+                        //p2t.setText(players.get(index).getRole());
                         break;
                     case 2:
                         p3c.setText("Player 3's Turn");
-                        p3t.setText(players.get(index).getRole());
+                        //p3t.setText(players.get(index).getRole());
                         break;
                     case 3:
                         p4c.setText("Player 4's Turn");
-                        p4t.setText(players.get(index).getRole());
+                        //p4t.setText(players.get(index).getRole());
                         break;
                     case 4:
                         p5c.setText("Player 5's Turn");
-                        p5t.setText(players.get(index).getRole());
+                        //p5t.setText(players.get(index).getRole());
                         break;
                     case 5:
                         p6c.setText("Player 6's Turn");
-                        p6t.setText(players.get(index).getRole());
+                        //p6t.setText(players.get(index).getRole());
                         break;
                     case 6:
                         p7c.setText("Player 7's Turn");
-                        p7t.setText(players.get(index).getRole());
+                        //p7t.setText(players.get(index).getRole());
                         break;
                     case 7:
                         p8c.setText("Player 8's Turn");
-                        p8t.setText(players.get(index).getRole());
+                        //p8t.setText(players.get(index).getRole());
                         break;
                 }
                 //each player thats alive gets a turn
@@ -480,7 +489,7 @@ public class BangFXMain extends Application {
                 if(players.get(this.index).getHuman() == true){
                     roll(players.get(this.index));
                 }
-            }            
+            }          
         }));
     }
     
@@ -563,11 +572,21 @@ public class BangFXMain extends Application {
             int leftTarget = checkTarget("checkOneLeft", currPlayer);
             int rightTarget = checkTarget("checkOneRight", currPlayer);
             
+            int aliveCount = 0;
+            for(MyPlayer player : players){
+                if(player.getHp() > 0){
+                    aliveCount++;
+                }
+            }
+            if(aliveCount <= 1){
+                break;
+            }
+            
             //attack anyone except the person who has healed him the most, unless all deputies are dead
             if("Sheriff".equals(currPlayer.getRole())){
                 int deputyAliveCount = 0;
                     for(MyPlayer player : players){
-                        if("Deputy".equals(player.getRole())){
+                        if("Deputy".equals(player.getRole()) && player.getHp() > 0){
                             deputyAliveCount++;
                         }
                     }
@@ -619,7 +638,7 @@ public class BangFXMain extends Application {
             if("Renegade".equals(currPlayer.getRole())){
                 int outlawAliveCount = 0;
                 for(MyPlayer player : players){
-                    if("Outlaw".equals(player.getRole())){
+                    if("Outlaw".equals(player.getRole()) && player.getHp() > 0){
                         outlawAliveCount++;
                     }
                 }
@@ -657,7 +676,7 @@ public class BangFXMain extends Application {
                 else{
                     int deputyAliveCount = 0;
                     for(MyPlayer player : players){
-                        if("Deputy".equals(player.getRole())){
+                        if("Deputy".equals(player.getRole()) && player.getHp() > 0){
                             deputyAliveCount++;
                         }
                     }
@@ -670,16 +689,17 @@ public class BangFXMain extends Application {
                         }
                         else{
                             shoot("oneRight", currPlayer);
-                        } 
+                        }
+                        
                     }
                     else{
-                        if(players.get(leftTarget).getHp() > players.get(rightTarget).getHp()){
-                            shoot("oneLeft", currPlayer);
-                        }
-                        else{
-                            shoot("oneRight", currPlayer);
-                        }
+                    if(players.get(leftTarget).getHp() > players.get(rightTarget).getHp()){
+                        shoot("oneLeft", currPlayer);
                     }
+                    else{
+                        shoot("oneRight", currPlayer);
+                    }
+                }
                 }
             }
             oneShot--;
@@ -687,6 +707,16 @@ public class BangFXMain extends Application {
         
         //exact same logic as shoot 1 except now its for 2
         while(twoShot > 0){
+            int aliveCount = 0;
+            for(MyPlayer player : players){
+                if(player.getHp() > 0){
+                    aliveCount++;
+                }
+            }
+            if(aliveCount <= 1){
+                break;
+            }
+            
             int leftTarget = checkTarget("checkTwoLeft", currPlayer);
             int rightTarget = checkTarget("checkTwoRight", currPlayer);
             
@@ -694,7 +724,7 @@ public class BangFXMain extends Application {
             if("Sheriff".equals(currPlayer.getRole())){
                 int deputyAliveCount = 0;
                     for(MyPlayer player : players){
-                        if("Deputy".equals(player.getRole())){
+                        if("Deputy".equals(player.getRole()) && player.getHp() > 0){
                             deputyAliveCount++;
                         }
                     }
@@ -746,7 +776,7 @@ public class BangFXMain extends Application {
             if("Renegade".equals(currPlayer.getRole())){
                 int outlawAliveCount = 0;
                 for(MyPlayer player : players){
-                    if("Outlaw".equals(player.getRole())){
+                    if("Outlaw".equals(player.getRole()) && player.getHp() > 0){
                         outlawAliveCount++;
                     }
                 }
@@ -769,6 +799,7 @@ public class BangFXMain extends Application {
                         shoot("twoRight", currPlayer);
                     }
                 }
+                
             }
             
             //deputy will never shoot the sheriff, if other deputies are alive they try not
@@ -783,7 +814,7 @@ public class BangFXMain extends Application {
                 else{
                     int deputyAliveCount = 0;
                     for(MyPlayer player : players){
-                        if("Deputy".equals(player.getRole())){
+                        if("Deputy".equals(player.getRole()) && player.getHp() > 0){
                             deputyAliveCount++;
                         }
                     }
@@ -797,15 +828,16 @@ public class BangFXMain extends Application {
                         else{
                             shoot("twoRight", currPlayer);
                         }
+                        
                     }
                     else{
-                        if(players.get(leftTarget).getHp() > players.get(rightTarget).getHp()){
-                            shoot("twoLeft", currPlayer);
-                        }
-                        else{
-                            shoot("twoRight", currPlayer);
-                        }
+                    if(players.get(leftTarget).getHp() > players.get(rightTarget).getHp()){
+                        shoot("twoLeft", currPlayer);
                     }
+                    else{
+                        shoot("twoRight", currPlayer);
+                    }
+                }
                 }
             }
             twoShot--;
@@ -813,6 +845,15 @@ public class BangFXMain extends Application {
         
         //if they rolled any beer it is solved here
         while(beerCount > 0 && currPlayer.getHp() > 0){ 
+            int aliveCount = 0;
+            for(MyPlayer player : players){
+                if(player.getHp() > 0){
+                    aliveCount++;
+                }
+            }
+            if(aliveCount <= 1){
+                break;
+            }
             if("Sheriff".equals(currPlayer.getRole())){
                 int gaveHealthIndex = 0;
                 int healthGave = 0;
@@ -823,7 +864,7 @@ public class BangFXMain extends Application {
                         gaveHealthIndex = playerIndex;
                         healthGave = player.getHealOther();
                     }
-                    if("Deputy".equals(player.getRole())){
+                    if("Deputy".equals(player.getRole()) && player.getHp() > 0){
                         deputyAliveCount++;
                     }
                     playerIndex++;
@@ -846,7 +887,7 @@ public class BangFXMain extends Application {
             if("Renegade".equals(currPlayer.getRole())){
                 int outlawCount = 0;
                 for(MyPlayer player : players){
-                    if("Outlaw".equals(player.getRole())){
+                    if("Outlaw".equals(player.getRole()) && player.getHp() > 0){
                         outlawCount++;
                     }
                 }
@@ -868,6 +909,7 @@ public class BangFXMain extends Application {
                     players.get(sheriffIndex).gainHp(1);
                     updateHp(sheriffIndex);
                     currPlayer.increaseHealOther();
+                    
                 }
                 else{
                     currPlayer.gainHp(1);
@@ -1391,7 +1433,10 @@ public class BangFXMain extends Application {
                 alive = alive + 1;
             }
         }
-        if("checkOneLeft".equals(checkDirectionLength)){
+        if(alive < 1){
+            
+        }
+        else if("checkOneLeft".equals(checkDirectionLength)){
             int shotIndex = index;
             if(shotIndex - 1 < 0){
                 shotIndex = playerCount - 1;
@@ -1409,7 +1454,7 @@ public class BangFXMain extends Application {
             }
             return shotIndex;
         }
-        if("checkOneRight".equals(checkDirectionLength)){
+        else if("checkOneRight".equals(checkDirectionLength)){
             int shotIndex = index;
             if(shotIndex + 1 == playerCount){
                 shotIndex = 0;
@@ -1427,7 +1472,7 @@ public class BangFXMain extends Application {
             }
             return shotIndex;                   
         }
-        if("checkTwoLeft".equals(checkDirectionLength)){
+        else if("checkTwoLeft".equals(checkDirectionLength)){
             int shotIndex = index;
             int tempIndex = 0;
             if(shotIndex - 2 == -2){
@@ -1465,10 +1510,7 @@ public class BangFXMain extends Application {
                 
             }
             while(players.get(shotIndex).getHp() <= 0 || players.get(shotIndex) == currPlayer){
-                    if(alive == 2){
-                        shoot("oneLeft", currPlayer);
-                        break;
-                    }
+
                     if(shotIndex - 1 < 0){
                         shotIndex = playerCount -1;
                     }
@@ -1477,14 +1519,14 @@ public class BangFXMain extends Application {
                     }
                 }
                 //once its found the 2nd left target, shoot them!
-                if(alive != 2){
-                    if("Sheriff".equals(players.get(shotIndex).getRole())){
-                        currPlayer.decreaseHealOther();
-                    }
-                    return shotIndex;
-                }                     
+
+                if("Sheriff".equals(players.get(shotIndex).getRole())){
+                    currPlayer.decreaseHealOther();
+                }
+                return shotIndex;
+                                     
         }
-        if("checkTwoRight".equals(checkDirectionLength)){
+        else if("checkTwoRight".equals(checkDirectionLength)){
             int shotIndex = index;
             int tempIndex = 0;
             if(shotIndex + 2 == playerCount + 1){
@@ -1522,10 +1564,7 @@ public class BangFXMain extends Application {
                 
             }
             while(players.get(shotIndex).getHp() <= 0 || players.get(shotIndex) == currPlayer){
-                    if(alive == 2){
-                        shoot("oneRight", currPlayer);
-                        break;
-                    }
+
                     if(shotIndex + 1 == playerCount){
                         shotIndex = 0;
                     }
@@ -1534,15 +1573,16 @@ public class BangFXMain extends Application {
                     }
                 }
                 //once its found the 2nd left target, shoot them!
-                if(alive != 2){
-                    if("Sheriff".equals(players.get(shotIndex).getRole())){
-                        currPlayer.decreaseHealOther();
-                    }
-                    return shotIndex;
+                
+                if("Sheriff".equals(players.get(shotIndex).getRole())){
+                    currPlayer.decreaseHealOther();
                 }
+                return shotIndex;
+                
+                
             
         }  
-        return -1;
+        return 0;
     }
     
     //used for shooting, directionLength is the direction and length u want to shoot, currplayer is the player shooting
@@ -1553,7 +1593,10 @@ public class BangFXMain extends Application {
                 alive = alive + 1;
             }
         }
-        if("oneLeft".equals(directionLength)){
+        if(alive < 1){
+            
+        }
+        else if("oneLeft".equals(directionLength)){
             int shotIndex = index;
             if(shotIndex - 1 < 0){
                 shotIndex = playerCount - 1;
@@ -1586,7 +1629,7 @@ public class BangFXMain extends Application {
                 dropArrow(players.get(shotIndex));
             
         }
-        if("twoLeft".equals(directionLength)){
+        else if("twoLeft".equals(directionLength)){
             int shotIndex = index;
             int tempIndex = 0;
             if(shotIndex - 2 == -2){
@@ -1620,9 +1663,11 @@ public class BangFXMain extends Application {
                     shotIndex = tempIndex - 1;
                 }
             }
+            boolean alreadyshot = false;
             while(players.get(shotIndex).getHp() <= 0 || players.get(shotIndex) == currPlayer){
                 if(alive == 2){
                     shoot("oneLeft", currPlayer);
+                    alreadyshot = true;
                     break;
                 }
                 if(shotIndex - 1 < 0){
@@ -1648,10 +1693,15 @@ public class BangFXMain extends Application {
                 }
                 else if("Pedro Ramirez".equals(players.get(shotIndex).getCharacterName()) && players.get(shotIndex).getArrows() > 0)
                     dropArrow(players.get(shotIndex));
-            }          
+            }
+            else{
+                if(alive == 2 && alreadyshot == false){
+                    shoot("oneLeft", currPlayer);
+                }
+            }
             
         }
-        if("oneRight".equals(directionLength)){
+        else if("oneRight".equals(directionLength)){
             int shotIndex = index;
             if(shotIndex + 1 == playerCount){
                 shotIndex = 0;
@@ -1683,7 +1733,7 @@ public class BangFXMain extends Application {
             else if("Pedro Ramirez".equals(players.get(shotIndex).getCharacterName()) && players.get(shotIndex).getArrows() > 0)
                 dropArrow(players.get(shotIndex));
         }
-        if("twoRight".equals(directionLength)){
+        else if("twoRight".equals(directionLength)){
             int shotIndex = index;
             int tempIndex = 0;
             if(shotIndex + 2 == playerCount + 1){
@@ -1720,9 +1770,11 @@ public class BangFXMain extends Application {
                 }
                 
             }
+            boolean alreadyshot = false;
             while(players.get(shotIndex).getHp() <= 0 || players.get(shotIndex) == currPlayer){
                     if(alive == 2){
                         shoot("oneRight", currPlayer);
+                        alreadyshot = true;
                         break;
                     }
                     if(shotIndex + 1 == playerCount){
@@ -1748,7 +1800,12 @@ public class BangFXMain extends Application {
                     }
                     else if("Pedro Ramirez".equals(players.get(shotIndex).getCharacterName()) && players.get(shotIndex).getArrows() > 0)
                         dropArrow(players.get(shotIndex));
+                }
+                else{
+                    if(alive == 2 && alreadyshot == false){
+                        shoot("oneRight", currPlayer);
                     }
+                }    
             
         }
         
@@ -1788,8 +1845,17 @@ public class BangFXMain extends Application {
     
     //used for rolling arrow and indian attacks, currPlayer is the player rolling the dice
     public void arrow(MyPlayer currPlayer){
+        int alive = 0;
+        for(MyPlayer player : players){
+            if(player.getHp() > 0){
+                alive = alive + 1;
+            }
+        }
+        if(alive < 1){
+            
+        }
         //if the next arrow drawn doesnt empty the pile (start an indian attack)
-        if(arrowPile != 1){
+        else if(arrowPile != 1 && currPlayer.getHp() > 0){
             currPlayer.setArrows(currPlayer.getArrows() + 1);
             switch(index){
                 case 0:
@@ -1830,6 +1896,9 @@ public class BangFXMain extends Application {
                 }
                 else if(player.getArrows() > 0){
                     player.loseHp(player.getArrows());
+                    if(player.getHp() < 0){
+                        player.setHp(0);
+                    }
                     updateHp(playerIndex);
                 }
                 player.setArrows(0);
@@ -1983,6 +2052,9 @@ public class BangFXMain extends Application {
                             samAbility();
                         }
                         p2t.setText("DEAD - " + players.get(i).getRole());
+                        arrowPile = arrowPile + players.get(i).getArrows();
+                            players.get(i).setArrows(0);
+                            p2arrow.setText("Arrows: 0");
                     }
                     break;
                 case 2:
@@ -1993,6 +2065,9 @@ public class BangFXMain extends Application {
                             samAbility();
                         }
                         p3t.setText("DEAD - " + players.get(i).getRole());
+                        arrowPile = arrowPile + players.get(i).getArrows();
+                            players.get(i).setArrows(0);
+                            p3arrow.setText("Arrows: 0");
                     }
                     break;
                 case 3:
@@ -2003,6 +2078,9 @@ public class BangFXMain extends Application {
                             samAbility();
                         }
                         p4t.setText("DEAD - " + players.get(i).getRole());
+                        arrowPile = arrowPile + players.get(i).getArrows();
+                            players.get(i).setArrows(0);
+                            p4arrow.setText("Arrows: 0");
                     }
                     break;
                 case 4:
@@ -2013,6 +2091,9 @@ public class BangFXMain extends Application {
                             samAbility();
                         }
                         p5t.setText("DEAD - " + players.get(i).getRole());
+                        arrowPile = arrowPile + players.get(i).getArrows();
+                            players.get(i).setArrows(0);
+                            p5arrow.setText("Arrows: 0");
                     }
                     break;
                 case 5:
@@ -2023,6 +2104,9 @@ public class BangFXMain extends Application {
                             samAbility();
                         }
                         p6t.setText("DEAD - " + players.get(i).getRole());
+                        arrowPile = arrowPile + players.get(i).getArrows();
+                            players.get(i).setArrows(0);
+                            p6arrow.setText("Arrows: 0");
                     }
                     break;
                 case 6:
@@ -2033,6 +2117,9 @@ public class BangFXMain extends Application {
                             samAbility();
                         }
                         p7t.setText("DEAD - " + players.get(i).getRole());
+                        arrowPile = arrowPile + players.get(i).getArrows();
+                            players.get(i).setArrows(0);
+                            p7arrow.setText("Arrows: 0");
                     }
                     break;
                 case 7:
@@ -2043,6 +2130,9 @@ public class BangFXMain extends Application {
                             samAbility();
                         }
                         p8t.setText("DEAD - " + players.get(i).getRole());
+                        arrowPile = arrowPile + players.get(i).getArrows();
+                            players.get(i).setArrows(0);
+                            p8arrow.setText("Arrows: 0");
                     }
                     break;
                 default:
@@ -2055,13 +2145,13 @@ public class BangFXMain extends Application {
         int renegadeAlive = 0;
         for(MyPlayer player : players){
             String role = player.getRole();
-            if("Sheriff".equals(role) && player.getHp() != 0)
+            if("Sheriff".equals(role) && player.getHp() > 0)
                 sheriffAlive = sheriffAlive + 1;
-            if("Deputy".equals(role) && player.getHp() != 0)
+            if("Deputy".equals(role) && player.getHp() > 0)
                 deputyAlive = deputyAlive + 1;
-            if("Renegade".equals(role) && player.getHp() != 0)
+            if("Renegade".equals(role) && player.getHp() > 0)
                 renegadeAlive = renegadeAlive + 1;
-            if("Outlaw".equals(role) && player.getHp() != 0)
+            if("Outlaw".equals(role) && player.getHp() > 0)
                 outlawAlive = outlawAlive + 1;
         }
         if(sheriffAlive == 0 && outlawAlive > 0){
