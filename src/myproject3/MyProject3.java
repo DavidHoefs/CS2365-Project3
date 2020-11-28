@@ -18,10 +18,12 @@ public class MyProject3 {
     private int playerCount = 0;
     
     //Constructor 
-    public MyProject3(int n){
+    public MyProject3(int n,String expansion){
         this.playerCount = n;
-        this.players = populateGame(playerCount);
+        this.players = populateGame(playerCount, expansion);
     }
+    
+    
     
     //Accessor
     //gets the array of players
@@ -36,12 +38,13 @@ public class MyProject3 {
     }
     
     //creates n players to be given a role and name and put in the player array
-    private ArrayList<MyPlayer> populateGame(int n){
+    private ArrayList<MyPlayer> populateGame(int n,String expansion){
         ArrayList<MyPlayer> players = new ArrayList<>();
-        String[] Chars = {"El Gringo", "Jesse Jones", "Jourdonnais",
-            "Paul Regret", "Pedro Ramirez", "Suzy Lafayette", "Vulture Sam", 
-            "Willy The Kid"};
-        String[] Roles = setRoles(n);
+        
+        String[] Chars = getChars(expansion);
+         String[] Roles = setRoles(n);
+        
+       
         
         ArrayList<String> characters = new ArrayList<>();
         characters.addAll(Arrays.asList(shuffleString(Chars)));
@@ -66,6 +69,21 @@ public class MyProject3 {
         return players;
     }
     
+    private String[] getChars(String expansion){
+        
+       
+        if(expansion == "Old Saloon"){
+            String [] Chars = {"El Gringo", "Jesse Jones", "Jourdonnais",
+                "Paul Regret", "Pedro Ramirez", "Suzy Lafayette", "Vulture Sam", 
+                "Willy The Kid","Jose Delgado","Tequila Joe"};
+            return Chars;
+        }else{
+            String [] Chars = {"El Gringo", "Jesse Jones", "Jourdonnais",
+                "Paul Regret", "Pedro Ramirez", "Suzy Lafayette", "Vulture Sam", 
+                "Willy The Kid"};
+            return Chars;
+        }
+    }
     //shuffle an array of strings
     private String[] shuffleString(String[] string){
         Random rand = new Random();

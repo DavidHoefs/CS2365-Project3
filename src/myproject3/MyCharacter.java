@@ -41,6 +41,12 @@ public class MyCharacter {
             case "Pedro Ramirez":
                 this.hp = 8;
                 break;
+            case "Jose Delgado":
+                this.hp = 7;
+                break;
+            case "Tequila Joe":
+                this.hp = 7;
+                break;
         }
     }
 }
