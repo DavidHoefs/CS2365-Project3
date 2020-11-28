@@ -36,12 +36,8 @@ public class BangFXMain extends Application {
     int playerCount = 0;
     int dynamiteCount = 0;
     int arrowPile = 9;
-    int indianChiefArrow = 1;
-    int indianChiefArrowIndex;
     int beerCount = 0;
     int gatCount = 0;
-    
-    int returnArrowCount = 0;
     
     //used to determine if a player just died of if they've been dead
     boolean p1dead = false;
@@ -52,10 +48,6 @@ public class BangFXMain extends Application {
     boolean p6dead = false;
     boolean p7dead = false;
     boolean p8dead = false;
-    
-    // used to determine if a player wants to include Expansions
-    boolean useOldSaloon = false;
-    
     
     
     //everything below is all FX related and used to change labels and disable
@@ -68,8 +60,6 @@ public class BangFXMain extends Application {
     Button p8;
     Button rollDice;
     Button nextPlayer;
-    Button returnArrow;
-    
     Label p1t;
     Label p2t;
     Label p3t;
@@ -83,8 +73,6 @@ public class BangFXMain extends Application {
     Label roll3;
     Label roll4;
     Label roll5;
-    Label loudmouthRoll;
-    Label cowardRoll;
     Label p1hp;
     Label p2hp;
     Label p3hp;
@@ -116,17 +104,8 @@ public class BangFXMain extends Application {
     CheckBox dice4;
     CheckBox dice5;
     
-    // loudmouth and coward dice for Old Saloon
-    CheckBox loudmouthDice;
-    CheckBox cowardDice;
-    Button chooseDice;
-    
-    CheckBox oldSaloon;
-    
     //used for re-rolling
     int[] rolls;
-    int cowardsRolls;
-    int loudmouthRolls;
     Button reRoll;
     int reRollCount = 0;
     
@@ -165,23 +144,19 @@ public class BangFXMain extends Application {
     @Override
     public void start(Stage primaryStage) {
         primaryStage.setTitle("Bang! The Dice Game");
-        
+        Button btn = new Button("Old Saloon");
+         btn.setOnAction((e)->
+    {
+        new OldSaloonFX();
+    });
+
         //below is where the above labels and buttons are created
-        //roll 1 - 5 is where a dice roll is displayed
+        //roll 1 - 5 is where a d
         roll1 = new Label();
         roll2 = new Label();
         roll3 = new Label();
         roll4 = new Label();
         roll5 = new Label();
-        // labels for Old Saloon dice
-        loudmouthRoll = new Label();
-        cowardRoll = new Label();
-        
-        // Checkbox for expansion
-        oldSaloon = new CheckBox("Old Saloon");
-        oldSaloon.setDisable(false);
-        
-        
         
         //these are the titles of each player
         p1t = new Label("");
@@ -229,10 +204,6 @@ public class BangFXMain extends Application {
         dice3 = new CheckBox("Dice 3");
         dice4 = new CheckBox("Dice 4");
         dice5 = new CheckBox("Dice 5");
-        
-        loudmouthDice = new CheckBox("Loudmouth");
-        cowardDice = new CheckBox("Coward");
-                
         reRoll = new Button("Re-Roll");
         
         dice1.setDisable(true);
@@ -240,9 +211,6 @@ public class BangFXMain extends Application {
         dice3.setDisable(true);
         dice4.setDisable(true);
         dice5.setDisable(true);
-        
-        loudmouthDice.setDisable(true);
-        cowardDice.setDisable(true);
         reRoll.setDisable(true);
         
         //checkboxes so the user can chose who to give beer to
@@ -265,8 +233,6 @@ public class BangFXMain extends Application {
         p7b.setDisable(true);
         p8b.setDisable(true);
         giveBeer.setDisable(true);
-        returnArrow = new Button("Return Arrow");
-        returnArrow.setDisable(true);
         
         //used for shooting
         oneShotLeft = new Button("1 Left");
@@ -292,12 +258,11 @@ public class BangFXMain extends Application {
         
         //displays who won
         winner = new Label("");
-        
+        String expansion = checkExpansion();
         //selection of how many players the user wants including themselves takes place below 
         p4 = new Button(" 4 ");
         p4.setOnAction((e -> {
-            String exp = checkExpansion();
-            MyProject3 game = new MyProject3(4,exp);
+            MyProject3 game = new MyProject3(4,expansion);
             this.players = game.getPlayers();
             disable();
             nextPlayer.setDisable(false);
@@ -309,8 +274,7 @@ public class BangFXMain extends Application {
         
         p5 = new Button(" 5 ");
         p5.setOnAction((e -> {
-            String exp = checkExpansion();
-            MyProject3 game = new MyProject3(5,exp);
+            MyProject3 game = new MyProject3(5,expansion);
             this.players = game.getPlayers();
             disable();
             nextPlayer.setDisable(false);
@@ -322,8 +286,7 @@ public class BangFXMain extends Application {
         
         p6 = new Button(" 6 ");
         p6.setOnAction((e -> {
-            String exp = checkExpansion();
-            MyProject3 game = new MyProject3(6,exp);
+            MyProject3 game = new MyProject3(6,expansion);
             this.players = game.getPlayers();
             disable();
             nextPlayer.setDisable(false);
@@ -335,8 +298,7 @@ public class BangFXMain extends Application {
         
         p7 = new Button(" 7 ");
         p7.setOnAction((e -> {
-            String exp = checkExpansion();
-            MyProject3 game = new MyProject3(7,exp);
+            MyProject3 game = new MyProject3(7,expansion);
             this.players = game.getPlayers();
             disable();
             nextPlayer.setDisable(false);
@@ -348,8 +310,7 @@ public class BangFXMain extends Application {
         
         p8 = new Button(" 8 ");
         p8.setOnAction((e -> {
-            String exp = checkExpansion();
-            MyProject3 game = new MyProject3(8,exp);
+            MyProject3 game = new MyProject3(8,expansion);
             this.players = game.getPlayers();
             disable();
             nextPlayer.setDisable(false);
@@ -361,21 +322,19 @@ public class BangFXMain extends Application {
         
         //below the scene is set-up and all the boxes are put in one vertical box
         HBox hbox1 = new HBox(20);
-        hbox1.getChildren().addAll(p4, p5, p6, p7, p8,oldSaloon);
+        hbox1.getChildren().addAll(p4, p5, p6, p7, p8,btn);
         hbox1.setAlignment(Pos.CENTER);
-        
-       
         
         HBox hbox2 = new HBox(20);
         hbox2.getChildren().addAll(rollDice, reRoll, saveRolls);
         hbox2.setAlignment(Pos.CENTER);
         
         HBox hbox3 = new HBox(25);
-        hbox3.getChildren().addAll(roll1, roll2, roll3, roll4, roll5,loudmouthRoll,cowardRoll);
+        hbox3.getChildren().addAll(roll1, roll2, roll3, roll4, roll5);
         hbox3.setAlignment(Pos.CENTER);
         
         HBox hboxD = new HBox(20);
-        hboxD.getChildren().addAll(dice1, dice2, dice3, dice4, dice5,loudmouthDice,cowardDice);
+        hboxD.getChildren().addAll(dice1, dice2, dice3, dice4, dice5);
         hboxD.setAlignment(Pos.CENTER);
         
         HBox hbox4 = new HBox(20);
@@ -387,7 +346,7 @@ public class BangFXMain extends Application {
         hbox5.setAlignment(Pos.CENTER);
         
         HBox hboxB = new HBox(20);
-        hboxB.getChildren().addAll(p1b, p2b, p3b, p4b, p5b, p6b, p7b, p8b, giveBeer,returnArrow);
+        hboxB.getChildren().addAll(p1b, p2b, p3b, p4b, p5b, p6b, p7b, p8b, giveBeer);
         hboxB.setAlignment(Pos.CENTER);
         
         HBox hboxS = new HBox(20);
@@ -424,7 +383,7 @@ public class BangFXMain extends Application {
         layout.getChildren().add(new Label("Shooting"));
         layout.getChildren().add(hboxS);
         layout.getChildren().add(space4);
-        layout.getChildren().add(new Label("Return Arrow/Give Beer (select one at a time)"));
+        layout.getChildren().add(new Label("Give Beer (select one at a time)"));
         layout.getChildren().add(hboxB);
         layout.getChildren().add(space3);
         layout.getChildren().add(hbox4);
@@ -553,21 +512,12 @@ public class BangFXMain extends Application {
     //buttons become avaliable to them
     public void turn(MyPlayer currPlayer){
         if(currPlayer.getHuman() == true){
-            String expansion = checkExpansion();
             rollDice.setDisable(false);
             dice1.setDisable(false);
             dice2.setDisable(false);
             dice3.setDisable(false);
             dice4.setDisable(false);
             dice5.setDisable(false);
-            if(expansion == "Old Saloon"){
-                loudmouthDice.setDisable(false);
-                cowardDice.setDisable(false);
-            }else{
-                loudmouthDice.setDisable(true);
-                cowardDice.setDisable(true);
-            }
-            
             nextPlayer.setDisable(true);
             
         }
@@ -575,15 +525,6 @@ public class BangFXMain extends Application {
             AIroll(currPlayer);
         }
         
-    }
-    
-    // method to check whether player is including expansion
-    public String checkExpansion(){
-        if(oldSaloon.isSelected()){
-            return "Old Saloon";
-        }else{
-            return "";
-        }
     }
     
     //logic for the AI, they roll their dice and then perform the actions as if
@@ -1048,79 +989,21 @@ public class BangFXMain extends Application {
         //dynamite then their turn ends immediatly
         rollDice.setOnAction((e -> {
             saveRolls.setDisable(false);
-            String expansion = checkExpansion();
-            // 7 because if player is jose delgado or tequila joe in old saloon they can roll 6 dice
-            MyDice firstRoll; 
-            if(expansion == "Old Saloon"){
-                if(currPlayer.getName() == "Jose Delgado" && loudmouthDice.isSelected()){
-                    firstRoll = new MyDice(6);
-                }else if(currPlayer.getName() == "Tequila Joe" && cowardDice.isSelected()){
-                    firstRoll = new MyDice(6);
-                }else{
-                   firstRoll = new MyDice(5);
-                }
-                
-            }else{
-                firstRoll = new MyDice(5);
-            }
-            if(loudmouthDice.isSelected() || cowardDice.isSelected()){
-                
-                dice5.setDisable(true);
-            }
-                
-            
-           // MyDice firstRoll = new MyDice(5);
-            
-            OldSaloonDice cowardsDie = new OldSaloonDice("coward");
-            OldSaloonDice loudmouthDie = new OldSaloonDice("loudmouth");
-            
-            
-            
+            MyDice firstRoll = new MyDice(5);
             this.rolls = firstRoll.getRolls();
-//            this.cowardsRolls = cowardsDie.getRoll();
-//            this.loudmouthRolls = loudmouthDie.getRoll();
-            if(expansion == "Old Saloon"){
-                
-            
-//            if(loudmouthDice.isSelected()){
-//               this.rolls[5] = loudmouthRolls;
-//            }else if(cowardDice.isSelected()){
-//                this.rolls[6] = cowardsRolls;
-//            }
-            }
-            
             roll1.setText(firstRoll.getRollsString(rolls[0]));
             roll2.setText(firstRoll.getRollsString(rolls[1]));
             roll3.setText(firstRoll.getRollsString(rolls[2]));
             roll4.setText(firstRoll.getRollsString(rolls[3]));
-            if(!loudmouthDice.isSelected() && !cowardDice.isSelected()){
-              roll5.setText(firstRoll.getRollsString(rolls[4]));  
-              
-            }else{
-                roll5.setDisable(true);
-            }
-            
-            if(loudmouthDice.isSelected()){
-                loudmouthRoll.setText(loudmouthDie.getRollsString(rolls[4]));
-            }
-            if(cowardDice.isSelected()){
-                cowardRoll.setText(cowardsDie.getRollsString(rolls[4]));
-
-            }
-            
-            
-            
-            
-            
+            roll5.setText(firstRoll.getRollsString(rolls[4]));
             rollDice.setDisable(true);
             reRoll.setDisable(false);
-            //}
+            
             //checking all 5 of the rolls for arrows and dynamite
-            for(int i = 0; i < 5; i++){
+            for(int i = 0; i < this.rolls.length; i++){
                 //if a roll is a 0 a arrow is added to the player and drawn from
                 //the pile, however if the last arrow is drawn from the pile
                 //then the players get attacked by indians and the arrow pile resets
-                
                 if(rolls[i] == 0){
                     arrow(currPlayer);
                 }
@@ -1168,7 +1051,6 @@ public class BangFXMain extends Application {
                 }
             }
             
-            
         }));
         //this is the action for the re-roll button, if a dice is selected to 
         //re-roll then it is rolled here once this button is clicked
@@ -1181,8 +1063,6 @@ public class BangFXMain extends Application {
             dice3.setDisable(true);
             dice4.setDisable(true);
             dice5.setDisable(true);
-            loudmouthDice.setDisable(true);
-            cowardDice.setDisable(true);
             reRollCount = 0;
             }
                 
@@ -1337,26 +1217,7 @@ public class BangFXMain extends Application {
                 }
             }else{
                 dice5.setDisable(true);
-            } 
-            if(loudmouthDice.isSelected()){
-                OldSaloonDice dice = new OldSaloonDice("loudmouth");
-                this.rolls[4] = dice.getRoll();
-                loudmouthRoll.setText(dice.getRollsString(rolls[4]));
-                if(this.rolls[4] == 1){
-                    
-                }
-                
-            }else{
-                loudmouthDice.setDisable(true);
-            }
-            if(cowardDice.isSelected()){
-                OldSaloonDice dice = new OldSaloonDice("coward");
-                this.rolls[4] = dice.getRoll(); 
-                cowardRoll.setText(dice.getRollsString(rolls[4]));
-                
-            }else{
-                cowardDice.setDisable(true);
-            }
+            }           
         }));
         
         saveRolls.setOnAction((e -> {
@@ -1375,44 +1236,7 @@ public class BangFXMain extends Application {
             dynamiteCount = 0;
             reRollCount = 0;
             for(int i = 0; i < this.rolls.length; i++){
-                // if we are using old saloon expansion, indexs 5 and 6 will be the loudmouth and coward dice
-               
-                
-                if((i == 4 || i == 5) && (cowardDice.isSelected() || loudmouthDice.isSelected())){
-                    if(checkExpansion() == "Old Saloon"){
-                    if(this.rolls[i] == 0){
-                        // drop arrow from yourself or another player
-                        dropArrowOldSaloon(currPlayer);
-                        returnArrowCount++;
-                        returnArrow.setDisable(false);
-                        
-                    }
-                    if(this.rolls[i] == 1){
-                        // lose a life point
-                        currPlayer.loseHp(1);
-                    }
-                    if(this.rolls[i] == 2){
-                        oneShot++;
-                     
-                    }
-                    if(this.rolls[i] == 3){
-                        oneShot+=2;
-                    }
-                    if(this.rolls[i] == 4){
-                        beerCount = beerCount + 2;
-                    }
-                    if(this.rolls[i] == 5){
-                        gatCount++;
-                    }
-                    
-            
-            }
-                    
-                }else{
-                    
-                
                 if(this.rolls[i] == 5){
-                    
                     beerCount = beerCount + 1;
                 }
                 if(this.rolls[i] == 4){
@@ -1424,10 +1248,7 @@ public class BangFXMain extends Application {
                 if(this.rolls[i] == 2){
                     oneShot++;
                 }
-                
-                }
-            } 
-            
+            }
             if(twoShot > 0 || oneShot > 0){
                 if(twoShot > 0){
                     twoShotLeft.setDisable(false);
@@ -1447,8 +1268,7 @@ public class BangFXMain extends Application {
                     beerAndGat(currPlayer);
                 }
             }
-            
-            }));
+        }));
         
         oneShotLeft.setOnAction((e -> {
             shoot("oneLeft", currPlayer);
@@ -1506,71 +1326,6 @@ public class BangFXMain extends Application {
             }
         }));
         
-        returnArrow.setOnAction((e -> {
-                if(p1b.isSelected()){
-                    
-                    players.get(0).setArrows((players.get(0).getArrows() - 1));
-                    p1arrow.setText("Arrows: "+ players.get(0).getArrows());
-                    this.arrowPile += 1;
-                }
-                if(p2b.isSelected()){
-                    players.get(1).setArrows((players.get(1).getArrows() - 1));
-                    p2arrow.setText("Arrows: "+ players.get(1).getArrows());
-                    this.arrowPile += 1;
-                }
-                if(p3b.isSelected()){
-                   players.get(2).setArrows((players.get(2).getArrows() - 1));
-                    p2arrow.setText("Arrows: "+ players.get(2).getArrows());
-                    this.arrowPile += 1;
-                }
-                if(p4b.isSelected()){
-                    players.get(3).setArrows((players.get(3).getArrows() - 1));
-                    p3arrow.setText("Arrows: "+ players.get(3).getArrows());
-                    this.arrowPile += 1;
-                }
-                if(p5b.isSelected()){
-                    players.get(4).setArrows((players.get(4).getArrows() - 1));
-                    p4arrow.setText("Arrows: "+ players.get(4).getArrows());
-                    this.arrowPile += 1;
-                }
-                if(p6b.isSelected()){
-                    players.get(5).setArrows((players.get(5).getArrows() - 1));
-                    p5arrow.setText("Arrows: "+ players.get(5).getArrows());
-                    this.arrowPile += 1;
-                }
-                if(p7b.isSelected()){
-                    players.get(6).setArrows((players.get(6).getArrows() - 1));
-                    p6arrow.setText("Arrows: "+ players.get(6).getArrows());
-                    this.arrowPile += 1;
-                }
-                if(p8b.isSelected()){
-                    players.get(7).setArrows((players.get(7).getArrows() - 1));
-                    p7arrow.setText("Arrows: "+ players.get(7).getArrows());
-                    this.arrowPile += 1;
-                }
-                returnArrowCount = returnArrowCount - 1;
-                if(returnArrowCount == 0 && beerCount == 0){
-                    returnArrow.setDisable(true);
-                    p1b.setDisable(true);
-                    p2b.setDisable(true);
-                    p3b.setDisable(true);
-                    p4b.setDisable(true);
-                    p5b.setDisable(true);
-                    p6b.setDisable(true);
-                    p7b.setDisable(true);
-                    p8b.setDisable(true);
-                    p1b.setSelected(false);
-                    p2b.setSelected(false);
-                    p3b.setSelected(false);
-                    p4b.setSelected(false);
-                    p5b.setSelected(false);
-                    p6b.setSelected(false);
-                    p7b.setSelected(false);
-                    p8b.setSelected(false);
-                }
-                
-                
-            })); 
         giveBeer.setOnAction((e -> {
                 if(p1b.isSelected()){
                     if("Sheriff".equals(players.get(0).getRole())){
@@ -2061,51 +1816,6 @@ public class BangFXMain extends Application {
         
     }
     
-    
-    public void dropArrowOldSaloon(MyPlayer currPlayer){
-        int playerIndex = 0;
-            for(MyPlayer player : players){
-                if(player.getArrows() == 0){   
-                }
-                else{
-                    switch(playerIndex){
-                        case 7:
-                            p8b.setDisable(false);
-                            break;
-                        case 6: 
-                            p7b.setDisable(false);
-                            break;
-                        case 5:
-                            p6b.setDisable(false);
-                            break;
-                        case 4:
-                            p5b.setDisable(false);
-                            break;
-                        case 3:
-                            p4b.setDisable(false);
-                            break;
-                        case 2:
-                            p3b.setDisable(false);
-                            break;
-                        case 1:
-                            p2b.setDisable(false);
-                            break;
-                        case 0:
-                            p1b.setDisable(false);
-                            break;
-                        default:
-                            break;
-                    }
-                }
-                playerIndex++;
-    }
-//            if(returnArrowCount > 0){
-//                returnArrow.setDisable(false);
-//            }
-            
-            
-    }
-    
     //used for dropping an arrow (Pedro Ramirez's ability)
     public void dropArrow(MyPlayer currPlayer){
         currPlayer.setArrows((currPlayer.getArrows() - 1));
@@ -2151,28 +1861,7 @@ public class BangFXMain extends Application {
         }
         //if the next arrow drawn doesnt empty the pile (start an indian attack)
         else if(arrowPile != 1 && currPlayer.getHp() > 0){
-            if(checkExpansion() == "Old Saloon"){
-                
-            
-            if(indianChiefArrow == 1){
-                int dropResponse = JOptionPane.showConfirmDialog(null, "Draw the Indian Chief Arrow?", "Old Saloon Add-on", JOptionPane.YES_NO_OPTION);
-                if(dropResponse == JOptionPane.YES_OPTION){
-                    indianChiefArrow = 0;
-                    currPlayer.setArrows(currPlayer.getArrows() + 2);
-                    indianChiefArrowIndex = index;
-                    
-                }else{
-                    currPlayer.setArrows(currPlayer.getArrows() + 1);
-                }
-            }
-                ////// TODO implement the indian chief arrow when indian attack happens
-            
-            }else{
-                
-             
-            
             currPlayer.setArrows(currPlayer.getArrows() + 1);
-            }
             switch(index){
                 case 0:
                     p1arrow.setText("Arrows: " + currPlayer.getArrows());
@@ -2198,13 +1887,10 @@ public class BangFXMain extends Application {
                 case 7:
                     p8arrow.setText("Arrows: " + currPlayer.getArrows());
                     break;
-            
             }
             arrowPile--;
         }
         //indians attack because pile became empty
-        // if player has the indian chief arrow, AND the most arrows in the game, then they lose 0 life points from indian attack
-        // Otherwise indian chief arrow makes player lose 2 life points
         else{
             currPlayer.setArrows(currPlayer.getArrows() + 1);
             int playerIndex = 0;
@@ -2212,11 +1898,6 @@ public class BangFXMain extends Application {
                 if("Jourdonnais".equals(player.getCharacterName()) && player.getArrows() > 0){
                     player.loseHp(1);
                     updateHp(playerIndex);
-                }else if(playerIndex == indianChiefArrowIndex && playerIndex == getMaxArrowIndex()){
-                    continue;
-                }
-                else if(playerIndex == indianChiefArrowIndex){
-                    player.loseHp(2);
                 }
                 else if(player.getArrows() > 0){
                     player.loseHp(player.getArrows());
@@ -2258,29 +1939,6 @@ public class BangFXMain extends Application {
         }
     }
     
-    
-    public int getMaxArrowIndex(){
-        int max=0; 
-        int maxIndex=0;
-        int first = 1;
-        int index1 = 0;
-        for(MyPlayer player: players){
-            if(first == 1){
-                max = player.getArrows();
-                index1++;
-                first++;
-            }else{
-                if(player.getArrows() > max){
-                    max = player.getArrows();
-                    maxIndex = index1;
-                    index1++;
-                }
-            }
-            
-            
-        }
-        return maxIndex;
-    }
     //used for disbling dead players from getting beer and resolves gatling gun if ther was any
     public void beerAndGat(MyPlayer currPlayer){
         if(beerCount > 0){
@@ -2525,8 +2183,6 @@ public class BangFXMain extends Application {
         dice3.setDisable(true);
         dice4.setDisable(true);
         dice5.setDisable(true);
-        cowardDice.setDisable(true);
-        loudmouthDice.setDisable(true);
         nextPlayer.setDisable(true);
         giveBeer.setDisable(true);
         saveRolls.setDisable(true);
@@ -2632,6 +2288,12 @@ public class BangFXMain extends Application {
             default:
                 break;
         }
+    }
+    
+    public String checkExpansion(){
+        
+            return "Old Saloon";
+        
     }
 
     /**
