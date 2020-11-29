@@ -1,11 +1,12 @@
 /*
- * CS2365 FALL 2020 GRROUP PROJECT 3
+ * CS2365 FALL 2020 GROUP PROJECT 3
  * Members: Javier Vasquez, Blane Brown, David Hoefs, Cole, Zach Hunt 
  */
 package myproject3;
 
 /**
- *
+ * This class is the object blueprint of a Character. Stores the name of the character in a string 
+ * and the current health-points of the character as an integer.
  * @author David Hoefs
  */
 public class MyCharacter {
@@ -13,7 +14,10 @@ public class MyCharacter {
     String name;
     int hp;
     
-    //Constructor
+    /**
+     * Takes in a name for the character and sets the health based on which character was chosen.
+     * @param name A string that is used to set the name of the character.
+     */
     public MyCharacter(String name){
         this.name = name;
         switch(name){
