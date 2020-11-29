@@ -8,7 +8,7 @@ package myproject3;
 import java.util.Random;
 
 /**
- *
+ * Is the object blueprint of the OldSaloon Dice
  * @author hoefs
  */
 public class OldSaloonDice extends MyDice {
@@ -19,7 +19,11 @@ public class OldSaloonDice extends MyDice {
     // loudmouth or coward
     private String type;
     
-   public OldSaloonDice(String type){
+    /**
+     * Creates the Old Saloon version of the Dice
+     * @param type sets the type of the dice
+     */
+    public OldSaloonDice(String type){
         Random rnd = new Random();
         this.roll = rnd.nextInt(6);
         this.type = type;
