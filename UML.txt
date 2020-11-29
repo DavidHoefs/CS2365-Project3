@@ -1,43 +1,146 @@
 =========================
-       ClassName
+       BangFXMain
+=========================
+- players : ArrayList<MyPlayer>
+- index : int
+- gameOver : boolean
+- playerCount : int
+- dynamiteCount : int
+- arrowPile : int
+- beerCount : int
+- getCount : int
+- rolls : int[]
+- reRollCount : int
+- twoShot : int
+- oneShot : int
+- sheriffIndex : int
+=========================
++ start(primaryStage : Stage) : void
++ disable() : void
++ turn(currPlayer : MyPlayer) : void
++ AIroll(currPlayer : MyPlayer) : void
++ roll(currPlayer : MyPlayer) : void
++ checkTarget(checkDirectionLength : String, currPlayer : MyPlayer) : int
++ shoot(directionLength : String, currPlayer : MyPlayer) : void
++ dropArrow(currPlayer : MyPlayer) : void
++ arrow(currPlayer : MyPlayer) : void
++ beerAndGat(currPlayer : MyPlayer) : void
++ samAbility() : void
++ updateHp(i : int) : void
++ disableAll() : void
++ playerLabels() : void
++ checkExpansion() : String
++ main(args : String[]) : void
 =========================
 
-=========================
 
 =========================
-
-
+       OldSaloonFX
 =========================
-       ClassName
+~ players : ArrayList<MyPlayer>
+~ indianChiefArrow : int
+~ indianChiefArrowIndex : int
+~ returnArrowCount : int
 =========================
-
-=========================
-
-=========================
-
-
-=========================
-       ClassName
-=========================
-
-=========================
-
-=========================
-
-
-=========================
-       ClassName
-=========================
-
-=========================
-
+~ OldSaloonFx() : void
++ disable() : void
++ turn(currPlayer : MyPlayer) : void
++ AIroll(currPlayer : MyPlayer) : void
++ roll(currPlayer : MyPlayer) : void
++ checkTarget(checkDirectionLength : String, currPlayer : MyPlayer) : int
++ shoot(directionLength : String, currPlayer : MyPlayer) : void
++ dropArrowOldSaloon(currPlayer : MyPlayer) : void
++ arrow(currPlayer : MyPlayer) : void
++ beerAndGat(currPlayer : MyPlayer) : void
++ updateHp(i : int) : void
++ playerLabels() : void
++ checkExpansion() : String
++ main(args : String[]) : void
 =========================
 
 
 =========================
-       ClassName
+       MyDice
+=========================
+- roll : int
+- rolls : int[]
+=========================
++ MyDice() : void
++ MyDice(n : int) : void
++ getRolls() : int[]
++ getRoll() : int
++ getRollString() : String
++ getRollsString(n : int) : String
 =========================
 
+
+=========================
+       OldSaloonDice
+=========================
+- roll : int
+- type : String
+=========================
++ OldSaloonDice(type : String) : void
++ getRoll() : int
++ getRollString() : String
++ getRollsString(n : int) : String
 =========================
 
+
+=========================
+       MyCharacter
+=========================
+- name : String
+- hp : int
+=========================
++ MyCharacter(name : String) : void
+=========================
+
+
+=========================
+       MyPlayer
+=========================
+- name : String
+- role : String
+- hp : int
+- maxHp : int
+- healOther : int
+- arrows : int
+- character : MyCharacter
+- human : boolean
+=========================
++ MyPlayer(role : String, character : MyCharacter) : void
++ getName() : String
++ getRole() : String
++ getHp() : int
++ getMaxHp() : int
++ getCharacter() : MyCharacter
++ getCharacterName() : String
++ getArrows() : int
++ getHuman() : boolean
++ getHealOther() : int
++ setArrows(newArrows : int) : void
++ setHuman() : void
++ increaseHealOther() : void
++ decreaseHealOther() : void
++ setHp(newHp : int) : void
++ gainHp(n : int) : void
++ loseHp(n : int) : void
+=========================
+
+
+=========================
+       MyProject3
+=========================
+- players : ArrayList<MyPlayers>
+- playerCount : int
+=========================
++ MyProject3(n : int, expansion : String) : void
++ getPlayers() : ArrayList<MyPlayer>
++ getPlayerCount() : int
+- populateGame(n : int, expansion : String) : ArrayList<MyPlayer>
+- getChars(expansion : String) : String[]
+- shuffleString(string : String[]) : String[]
+- setRoles(players : int) : String[]
+- main(args : String[]) : void
 =========================
