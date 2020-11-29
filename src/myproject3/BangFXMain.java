@@ -154,6 +154,7 @@ public class BangFXMain extends Application {
         btn.setOnAction((e)->
     {
         new OldSaloonFX();
+        primaryStage.close();
     });
 
         //below is where the above labels and buttons are created
