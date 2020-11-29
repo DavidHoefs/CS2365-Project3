@@ -21,7 +21,7 @@ import javafx.stage.Stage;
 import javax.swing.JOptionPane;
 
 /**
- *
+ * Is the object blueprint of the OldSaloonFX expansion pack
  * @author hoefs
  */
 public class OldSaloonFX extends BangFXMain {
@@ -572,6 +572,11 @@ public class OldSaloonFX extends BangFXMain {
         }
         
     }
+
+    /**
+     * 
+     * @param currPlayer provides which players turn it is
+     */
     public void dropArrowOldSaloon(MyPlayer currPlayer){
         int playerIndex = 0;
             for(MyPlayer player : players){
@@ -1363,7 +1368,9 @@ public class OldSaloonFX extends BangFXMain {
         }
     }
     
-    
+    /**
+     * @return the index of the player that has the most arrows
+     */
     public int getMaxArrowIndex(){
         int max=0; 
         int maxIndex=0;
