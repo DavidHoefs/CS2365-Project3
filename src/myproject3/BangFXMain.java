@@ -71,8 +71,8 @@ public class BangFXMain extends Application {
     Label roll1;
     Label roll2;
     Label roll3;
-    Label roll4;
-    Label roll5;
+    Label duelRoll1;
+    Label duelRoll2;
     Label p1hp;
     Label p2hp;
     Label p3hp;
@@ -101,8 +101,8 @@ public class BangFXMain extends Application {
     CheckBox dice1;
     CheckBox dice2;
     CheckBox dice3;
-    CheckBox dice4;
-    CheckBox dice5;
+    CheckBox duelDice1;
+    CheckBox duelDice2;
     
     //used for re-rolling
     int[] rolls;
@@ -141,6 +141,8 @@ public class BangFXMain extends Application {
     //used for ai so they can keep track of the sheriff
     int sheriffIndex;
     
+    //String to determine exapnsion
+    
     @Override
     public void start(Stage primaryStage) {
         primaryStage.setTitle("Bang! The Dice Game");
@@ -149,14 +151,19 @@ public class BangFXMain extends Application {
     {
         new OldSaloonFX();
     });
+        Button btn1 = new Button("Undead Or Alive");
+         btn1.setOnAction((e)->
+         {
+             new UndeadAliveFX();
+         });
 
         //below is where the above labels and buttons are created
         //roll 1 - 5 is where a d
         roll1 = new Label();
         roll2 = new Label();
         roll3 = new Label();
-        roll4 = new Label();
-        roll5 = new Label();
+        duelRoll1 = new Label();
+        duelRoll2 = new Label();
         
         //these are the titles of each player
         p1t = new Label("");
@@ -202,15 +209,15 @@ public class BangFXMain extends Application {
         dice1 = new CheckBox("Dice 1");
         dice2 = new CheckBox("Dice 2");
         dice3 = new CheckBox("Dice 3");
-        dice4 = new CheckBox("Dice 4");
-        dice5 = new CheckBox("Dice 5");
+        duelDice1 = new CheckBox("Dice 4");
+        duelDice2 = new CheckBox("Dice 5");
         reRoll = new Button("Re-Roll");
         
         dice1.setDisable(true);
         dice2.setDisable(true);
         dice3.setDisable(true);
-        dice4.setDisable(true);
-        dice5.setDisable(true);
+        duelDice1.setDisable(true);
+        duelDice2.setDisable(true);
         reRoll.setDisable(true);
         
         //checkboxes so the user can chose who to give beer to
@@ -322,7 +329,7 @@ public class BangFXMain extends Application {
         
         //below the scene is set-up and all the boxes are put in one vertical box
         HBox hbox1 = new HBox(20);
-        hbox1.getChildren().addAll(p4, p5, p6, p7, p8,btn);
+        hbox1.getChildren().addAll(p4, p5, p6, p7, p8,btn,btn1);
         hbox1.setAlignment(Pos.CENTER);
         
         HBox hbox2 = new HBox(20);
@@ -330,11 +337,11 @@ public class BangFXMain extends Application {
         hbox2.setAlignment(Pos.CENTER);
         
         HBox hbox3 = new HBox(25);
-        hbox3.getChildren().addAll(roll1, roll2, roll3, roll4, roll5);
+        hbox3.getChildren().addAll(roll1, roll2, roll3, duelRoll1, duelRoll2);
         hbox3.setAlignment(Pos.CENTER);
         
         HBox hboxD = new HBox(20);
-        hboxD.getChildren().addAll(dice1, dice2, dice3, dice4, dice5);
+        hboxD.getChildren().addAll(dice1, dice2, dice3, duelDice1, duelDice2);
         hboxD.setAlignment(Pos.CENTER);
         
         HBox hbox4 = new HBox(20);
@@ -402,8 +409,8 @@ public class BangFXMain extends Application {
             roll1.setText("");
             roll2.setText("");
             roll3.setText("");
-            roll4.setText("");
-            roll5.setText("");
+            duelRoll1.setText("");
+            duelRoll2.setText("");
             rollDice.setDisable(true);
             saveRolls.setDisable(true);
             
@@ -516,8 +523,8 @@ public class BangFXMain extends Application {
             dice1.setDisable(false);
             dice2.setDisable(false);
             dice3.setDisable(false);
-            dice4.setDisable(false);
-            dice5.setDisable(false);
+            duelDice1.setDisable(false);
+            duelDice2.setDisable(false);
             nextPlayer.setDisable(true);
             
         }
@@ -536,8 +543,8 @@ public class BangFXMain extends Application {
         roll1.setText(aiRoll.getRollsString(rolls[0]));
         roll2.setText(aiRoll.getRollsString(rolls[1]));
         roll3.setText(aiRoll.getRollsString(rolls[2]));
-        roll4.setText(aiRoll.getRollsString(rolls[3]));
-        roll5.setText(aiRoll.getRollsString(rolls[4]));
+        duelRoll1.setText(aiRoll.getRollsString(rolls[3]));
+        duelRoll2.setText(aiRoll.getRollsString(rolls[4]));
         for(int i = 0; i < this.rolls.length; i++){
             if(rolls[i] == 0){
                 arrow(currPlayer);
@@ -994,8 +1001,8 @@ public class BangFXMain extends Application {
             roll1.setText(firstRoll.getRollsString(rolls[0]));
             roll2.setText(firstRoll.getRollsString(rolls[1]));
             roll3.setText(firstRoll.getRollsString(rolls[2]));
-            roll4.setText(firstRoll.getRollsString(rolls[3]));
-            roll5.setText(firstRoll.getRollsString(rolls[4]));
+            duelRoll1.setText(firstRoll.getRollsString(rolls[3]));
+            duelRoll2.setText(firstRoll.getRollsString(rolls[4]));
             rollDice.setDisable(true);
             reRoll.setDisable(false);
             
@@ -1016,8 +1023,8 @@ public class BangFXMain extends Application {
                         dice1.setDisable(true);
                         dice2.setDisable(true);
                         dice3.setDisable(true);
-                        dice4.setDisable(true);
-                        dice5.setDisable(true);
+                        duelDice1.setDisable(true);
+                        duelDice2.setDisable(true);
                         currPlayer.loseHp(1);
                         updateHp(0);
                         if("Pedro Ramirez".equals(currPlayer.getCharacterName()) && currPlayer.getArrows() > 0)
@@ -1040,12 +1047,12 @@ public class BangFXMain extends Application {
                             dice3.setSelected(false);
                             break;
                         case 3:
-                            dice4.setDisable(true);
-                            dice4.setSelected(false);
+                            duelDice1.setDisable(true);
+                            duelDice1.setSelected(false);
                             break;
                         case 4:
-                            dice5.setDisable(true);
-                            dice5.setSelected(false);
+                            duelDice2.setDisable(true);
+                            duelDice2.setSelected(false);
                             break;
                     }
                 }
@@ -1061,8 +1068,8 @@ public class BangFXMain extends Application {
             dice1.setDisable(true);
             dice2.setDisable(true);
             dice3.setDisable(true);
-            dice4.setDisable(true);
-            dice5.setDisable(true);
+            duelDice1.setDisable(true);
+            duelDice2.setDisable(true);
             reRollCount = 0;
             }
                 
@@ -1080,8 +1087,8 @@ public class BangFXMain extends Application {
                         dice1.setDisable(true);
                         dice2.setDisable(true);
                         dice3.setDisable(true);
-                        dice4.setDisable(true);
-                        dice5.setDisable(true);
+                        duelDice1.setDisable(true);
+                        duelDice2.setDisable(true);
                         currPlayer.loseHp(1);
                         updateHp(0);
                         if("Pedro Ramirez".equals(currPlayer.getCharacterName()) && currPlayer.getArrows() > 0){
@@ -1111,8 +1118,8 @@ public class BangFXMain extends Application {
                         dice1.setDisable(true);
                         dice2.setDisable(true);
                         dice3.setDisable(true);
-                        dice4.setDisable(true);
-                        dice5.setDisable(true);
+                        duelDice1.setDisable(true);
+                        duelDice2.setDisable(true);
                         currPlayer.loseHp(1);
                         updateHp(0);
                         if("Pedro Ramirez".equals(currPlayer.getCharacterName()) && currPlayer.getArrows() > 0){
@@ -1142,8 +1149,8 @@ public class BangFXMain extends Application {
                         dice1.setDisable(true);
                         dice2.setDisable(true);
                         dice3.setDisable(true);
-                        dice4.setDisable(true);
-                        dice5.setDisable(true);
+                        duelDice1.setDisable(true);
+                        duelDice2.setDisable(true);
                         currPlayer.loseHp(1);
                         updateHp(0);
                         if("Pedro Ramirez".equals(currPlayer.getCharacterName()) && currPlayer.getArrows() > 0){
@@ -1158,10 +1165,10 @@ public class BangFXMain extends Application {
             }else{
                 dice3.setDisable(true);
             }
-            if(dice4.isSelected()){
+            if(duelDice1.isSelected()){
                 MyDice reRoll4 = new MyDice();
                 this.rolls[3] = reRoll4.getRoll();
-                roll4.setText(reRoll4.getRollString());
+                duelRoll1.setText(reRoll4.getRollString());
                 if(this.rolls[3] == 0){
                     arrow(currPlayer);
                 }
@@ -1172,8 +1179,8 @@ public class BangFXMain extends Application {
                         dice1.setDisable(true);
                         dice2.setDisable(true);
                         dice3.setDisable(true);
-                        dice4.setDisable(true);
-                        dice5.setDisable(true);
+                        duelDice1.setDisable(true);
+                        duelDice2.setDisable(true);
                         currPlayer.loseHp(1);
                         updateHp(0);
                         if("Pedro Ramirez".equals(currPlayer.getCharacterName()) && currPlayer.getArrows() > 0){
@@ -1182,16 +1189,16 @@ public class BangFXMain extends Application {
                                 dropArrow(currPlayer);
                         }
                     }
-                    dice4.setDisable(true);
-                    dice4.setSelected(false);
+                    duelDice1.setDisable(true);
+                    duelDice1.setSelected(false);
                 }
             }else{
-                dice4.setDisable(true);
+                duelDice1.setDisable(true);
             }
-            if(dice5.isSelected()){
+            if(duelDice2.isSelected()){
                 MyDice reRoll5 = new MyDice();
                 this.rolls[4] = reRoll5.getRoll();
-                roll5.setText(reRoll5.getRollString());
+                duelRoll2.setText(reRoll5.getRollString());
                 if(this.rolls[4] == 0){
                     arrow(currPlayer);
                 }
@@ -1202,8 +1209,8 @@ public class BangFXMain extends Application {
                         dice1.setDisable(true);
                         dice2.setDisable(true);
                         dice3.setDisable(true);
-                        dice4.setDisable(true);
-                        dice5.setDisable(true);
+                        duelDice1.setDisable(true);
+                        duelDice2.setDisable(true);
                         currPlayer.loseHp(1);
                         updateHp(0);
                         if("Pedro Ramirez".equals(currPlayer.getCharacterName()) && currPlayer.getArrows() > 0){
@@ -1212,11 +1219,11 @@ public class BangFXMain extends Application {
                                 dropArrow(currPlayer);
                         }
                     }
-                    dice5.setDisable(true);
-                    dice5.setSelected(false);
+                    duelDice2.setDisable(true);
+                    duelDice2.setSelected(false);
                 }
             }else{
-                dice5.setDisable(true);
+                duelDice2.setDisable(true);
             }           
         }));
         
@@ -1225,14 +1232,14 @@ public class BangFXMain extends Application {
             dice1.setDisable(true);
             dice2.setDisable(true);
             dice3.setDisable(true);
-            dice4.setDisable(true);
-            dice5.setDisable(true);
+            duelDice1.setDisable(true);
+            duelDice2.setDisable(true);
             saveRolls.setDisable(true);
             dice1.setSelected(false);
             dice2.setSelected(false);
             dice3.setSelected(false);
-            dice4.setSelected(false);
-            dice5.setSelected(false);
+            duelDice1.setSelected(false);
+            duelDice2.setSelected(false);
             dynamiteCount = 0;
             reRollCount = 0;
             for(int i = 0; i < this.rolls.length; i++){
@@ -2181,8 +2188,8 @@ public class BangFXMain extends Application {
         dice1.setDisable(true);
         dice2.setDisable(true);
         dice3.setDisable(true);
-        dice4.setDisable(true);
-        dice5.setDisable(true);
+        duelDice1.setDisable(true);
+        duelDice2.setDisable(true);
         nextPlayer.setDisable(true);
         giveBeer.setDisable(true);
         saveRolls.setDisable(true);
@@ -2289,6 +2296,7 @@ public class BangFXMain extends Application {
                 break;
         }
     }
+    
     
     public String checkExpansion(){
         
