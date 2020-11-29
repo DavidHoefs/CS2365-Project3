@@ -47,6 +47,12 @@ public class MyCharacter {
             case "Tequila Joe":
                 this.hp = 7;
                 break;
+            case "Belle Star" :
+                this.hp = 8;
+                break;
+            case "Greg Digger" :
+                this.hp = 7;
+                break;
         }
     }
 }

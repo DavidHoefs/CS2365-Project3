@@ -10,7 +10,7 @@ import java.util.Random;
 
 /**
  *
- * @author Javier Vasquez, Blane Brown
+ * @author Javier Vasquez, Blane Brown, Zac Hunt
  */
 public class MyProject3 {
     //Data members
@@ -77,7 +77,14 @@ public class MyProject3 {
                 "Paul Regret", "Pedro Ramirez", "Suzy Lafayette", "Vulture Sam", 
                 "Willy The Kid","Jose Delgado","Tequila Joe"};
             return Chars;
-        }else{
+        }
+        else if(expansion == "Undead Or Alive"){
+            String [] Chars = {"El Gringo", "Jesse Jones", "Jourdonnais",
+                "Paul Regret", "Pedro Ramirez", "Suzy Lafayette", "Vulture Sam", 
+                "Willy The Kid","Belle Star","Greg Digger"};
+            return Chars;
+        }
+        else{
             String [] Chars = {"El Gringo", "Jesse Jones", "Jourdonnais",
                 "Paul Regret", "Pedro Ramirez", "Suzy Lafayette", "Vulture Sam", 
                 "Willy The Kid"};
