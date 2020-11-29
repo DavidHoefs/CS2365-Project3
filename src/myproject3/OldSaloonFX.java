@@ -36,155 +36,15 @@ public class OldSaloonFX extends BangFXMain {
     CheckBox cowardDice = new CheckBox("Coward");
     OldSaloonFX(){
         super();
-        //Stage s = new Stage();
-        //s.setTitle("Old Saloon Expansion");
-        //s.show();
-    
-    //index is a players poition in the array of player objects
-    //playerCount is the number of chosen players for the game
-    //the rest of the counters keep track of how many of each a player has rolled
-    //and they reset back to 0 after their turn
-    //arrowPile starts at 9 and is put back to 9 once all arrows are taken
-//    final int index = 0;
-//    boolean gameOver = false;
-//    int playerCount = 0;
-//    int dynamiteCount = 0;
-//    int arrowPile = 9;
-   
-//    int beerCount = 0;
-//    int gatCount = 0;
-//    
-//    int returnArrowCount = 0;
-//    
-//    //used to determine if a player just died of if they've been dead
-//    boolean p1dead = false;
-//    boolean p2dead = false;
-//    boolean p3dead = false;
-//    boolean p4dead = false;
-//    boolean p5dead = false;
-//    boolean p6dead = false;
-//    boolean p7dead = false;
-//    boolean p8dead = false;
-//    
-//    // used to determine if a player wants to include Expansions
-//    boolean useOldSaloon = false;
-//    
-//    
-//    
-//    //everything below is all FX related and used to change labels and disable
-//    //certain buttons
-//    Button saveRolls;
-//    Button p4;
-//    Button p5;
-//    Button p6;
-//    Button p7;
-//    Button p8;
-//    Button rollDice;
-//    Button nextPlayer;
-//    Button returnArrow;
-//    
-//    Label p1t;
-//    Label p2t;
-//    Label p3t;
-//    Label p4t;
-//    Label p5t;
-//    Label p6t;
-//    Label p7t;
-//    Label p8t;
-//    Label roll1;
-//    Label roll2;
-//    Label roll3;
-//    Label roll4;
-//    Label roll5;
-//    Label loudmouthRoll;
-//    Label cowardRoll;
-//    Label p1hp;
-//    Label p2hp;
-//    Label p3hp;
-//    Label p4hp;
-//    Label p5hp;
-//    Label p6hp;
-//    Label p7hp;
-//    Label p8hp;
-//    Label p1c;
-//    Label p2c;
-//    Label p3c;
-//    Label p4c;
-//    Label p5c;
-//    Label p6c;
-//    Label p7c;
-//    Label p8c;
-//    Label p1arrow;
-//    Label p2arrow;
-//    Label p3arrow;
-//    Label p4arrow;
-//    Label p5arrow;
-//    Label p6arrow;
-//    Label p7arrow;
-//    Label p8arrow;
-//    Label winner;
-//    CheckBox dice1;
-//    CheckBox dice2;
-//    CheckBox dice3;
-//    CheckBox dice4;
-//    CheckBox dice5;
-//    
-//    // loudmouth and coward dice for Old Saloon
-//    CheckBox loudmouthDice;
-//    CheckBox cowardDice;
-//    Button chooseDice;
-//    
-//    CheckBox oldSaloon;
-//    
-//    //used for re-rolling
-//    int[] rolls;
-//    int cowardsRolls;
-//    int loudmouthRolls;
-//    Button reRoll;
-//    int reRollCount = 0;
-//    
-//    //used for giving beer to other players or yourself
-//    Button giveBeer;
-//    CheckBox p1b;
-//    CheckBox p2b;
-//    CheckBox p3b;
-//    CheckBox p4b;
-//    CheckBox p5b;
-//    CheckBox p6b;
-//    CheckBox p7b;
-//    CheckBox p8b;
-//    
-//    //used for shooting logic
-//    Button oneShotLeft;
-//    Button oneShotRight;
-//    Button twoShotLeft;
-//    Button twoShotRight;
-//    int twoShot = 0;
-//    int oneShot = 0;
-//    
-//    //used to organize all the labels for each player
-//    VBox player1 = new VBox(2);
-//    VBox player2 = new VBox(2);
-//    VBox player3 = new VBox(2);
-//    VBox player4 = new VBox(2);
-//    VBox player5 = new VBox(2);
-//    VBox player6 = new VBox(2);
-//    VBox player7 = new VBox(2);
-//    VBox player8 = new VBox(2);
-//    
-//    //used for ai so they can keep track of the sheriff
-//    final int sheriffIndex;
-//    @Override
-//    public void start(Stage primaryStage) {
-//    primaryStage.setTitle("Bang! The Dice Game Old Saloon");
+        
         
         //below is where the above labels and buttons are created
         //roll 1 - 5 is where a dice roll is displayed
         roll1 = new Label();
         roll2 = new Label();
         roll3 = new Label();
-        roll4 = new Label();
-        roll5 = new Label();
+        duelRoll1 = new Label();
+        duelRoll2 = new Label();
         // labels for Old Saloon dice
         loudmouthRoll = new Label();
         cowardRoll = new Label();
@@ -238,8 +98,8 @@ public class OldSaloonFX extends BangFXMain {
         dice1 = new CheckBox("Dice 1");
         dice2 = new CheckBox("Dice 2");
         dice3 = new CheckBox("Dice 3");
-        dice4 = new CheckBox("Dice 4");
-        dice5 = new CheckBox("Dice 5");
+        duelDice1 = new CheckBox("Dice 4");
+        duelDice2 = new CheckBox("Dice 5");
         
         loudmouthDice = new CheckBox("Loudmouth");
         cowardDice = new CheckBox("Coward");
@@ -249,8 +109,8 @@ public class OldSaloonFX extends BangFXMain {
         dice1.setDisable(true);
         dice2.setDisable(true);
         dice3.setDisable(true);
-        dice4.setDisable(true);
-        dice5.setDisable(true);
+        duelDice1.setDisable(true);
+        duelDice2.setDisable(true);
         
         loudmouthDice.setDisable(true);
         cowardDice.setDisable(true);
@@ -382,11 +242,11 @@ public class OldSaloonFX extends BangFXMain {
         hbox2.setAlignment(Pos.CENTER);
         
         HBox hbox3 = new HBox(25);
-        hbox3.getChildren().addAll(roll1, roll2, roll3, roll4, roll5,loudmouthRoll,cowardRoll);
+        hbox3.getChildren().addAll(roll1, roll2, roll3, duelRoll1, duelRoll2,loudmouthRoll,cowardRoll);
         hbox3.setAlignment(Pos.CENTER);
         
         HBox hboxD = new HBox(20);
-        hboxD.getChildren().addAll(dice1, dice2, dice3, dice4, dice5,loudmouthDice,cowardDice);
+        hboxD.getChildren().addAll(dice1, dice2, dice3, duelDice1, duelDice2,loudmouthDice,cowardDice);
         hboxD.setAlignment(Pos.CENTER);
         
         HBox hbox4 = new HBox(20);
@@ -454,8 +314,8 @@ public class OldSaloonFX extends BangFXMain {
             roll1.setText("");
             roll2.setText("");
             roll3.setText("");
-            roll4.setText("");
-            roll5.setText("");
+            duelRoll1.setText("");
+            duelRoll2.setText("");
             rollDice.setDisable(true);
             saveRolls.setDisable(true);
             
@@ -558,8 +418,8 @@ public class OldSaloonFX extends BangFXMain {
             dice1.setDisable(false);
             dice2.setDisable(false);
             dice3.setDisable(false);
-            dice4.setDisable(false);
-            dice5.setDisable(false);
+            duelDice1.setDisable(false);
+            duelDice2.setDisable(false);
             
             loudmouthDice.setDisable(false);
             cowardDice.setDisable(false);
@@ -640,7 +500,7 @@ public class OldSaloonFX extends BangFXMain {
             
             if(loudmouthDice.isSelected() || cowardDice.isSelected()){
                 
-                dice5.setDisable(true);
+                duelDice2.setDisable(true);
             }
                 
             
@@ -658,12 +518,12 @@ public class OldSaloonFX extends BangFXMain {
             roll1.setText(firstRoll.getRollsString(rolls[0]));
             roll2.setText(firstRoll.getRollsString(rolls[1]));
             roll3.setText(firstRoll.getRollsString(rolls[2]));
-            roll4.setText(firstRoll.getRollsString(rolls[3]));
+            duelRoll1.setText(firstRoll.getRollsString(rolls[3]));
             if((!loudmouthDice.isSelected() && !cowardDice.isSelected()) && (currPlayer.getName() != "Jose Delgado" || currPlayer.getName() != "Tequila Joe")){
-              roll5.setText(firstRoll.getRollsString(rolls[4]));  
+              duelRoll2.setText(firstRoll.getRollsString(rolls[4]));  
               
             }else{
-                roll5.setDisable(true);
+                duelRoll2.setDisable(true);
             }
             
             if(loudmouthDice.isSelected()){
@@ -699,8 +559,8 @@ public class OldSaloonFX extends BangFXMain {
                         dice1.setDisable(true);
                         dice2.setDisable(true);
                         dice3.setDisable(true);
-                        dice4.setDisable(true);
-                        dice5.setDisable(true);
+                        duelDice1.setDisable(true);
+                        duelDice2.setDisable(true);
                         currPlayer.loseHp(1);
                         updateHp(0);
                         if("Pedro Ramirez".equals(currPlayer.getCharacterName()) && currPlayer.getArrows() > 0)
@@ -723,12 +583,12 @@ public class OldSaloonFX extends BangFXMain {
                             dice3.setSelected(false);
                             break;
                         case 3:
-                            dice4.setDisable(true);
-                            dice4.setSelected(false);
+                            duelDice1.setDisable(true);
+                            duelDice1.setSelected(false);
                             break;
                         case 4:
-                            dice5.setDisable(true);
-                            dice5.setSelected(false);
+                            duelDice2.setDisable(true);
+                            duelDice2.setSelected(false);
                             break;
                     }
                 }
@@ -745,8 +605,8 @@ public class OldSaloonFX extends BangFXMain {
             dice1.setDisable(true);
             dice2.setDisable(true);
             dice3.setDisable(true);
-            dice4.setDisable(true);
-            dice5.setDisable(true);
+            duelDice1.setDisable(true);
+            duelDice2.setDisable(true);
             loudmouthDice.setDisable(true);
             cowardDice.setDisable(true);
             reRollCount = 0;
@@ -766,8 +626,8 @@ public class OldSaloonFX extends BangFXMain {
                         dice1.setDisable(true);
                         dice2.setDisable(true);
                         dice3.setDisable(true);
-                        dice4.setDisable(true);
-                        dice5.setDisable(true);
+                        duelDice1.setDisable(true);
+                        duelDice2.setDisable(true);
                         currPlayer.loseHp(1);
                         updateHp(0);
                         if("Pedro Ramirez".equals(currPlayer.getCharacterName()) && currPlayer.getArrows() > 0){
@@ -797,8 +657,8 @@ public class OldSaloonFX extends BangFXMain {
                         dice1.setDisable(true);
                         dice2.setDisable(true);
                         dice3.setDisable(true);
-                        dice4.setDisable(true);
-                        dice5.setDisable(true);
+                        duelDice1.setDisable(true);
+                        duelDice2.setDisable(true);
                         currPlayer.loseHp(1);
                         updateHp(0);
                         if("Pedro Ramirez".equals(currPlayer.getCharacterName()) && currPlayer.getArrows() > 0){
@@ -828,8 +688,8 @@ public class OldSaloonFX extends BangFXMain {
                         dice1.setDisable(true);
                         dice2.setDisable(true);
                         dice3.setDisable(true);
-                        dice4.setDisable(true);
-                        dice5.setDisable(true);
+                        duelDice1.setDisable(true);
+                        duelDice2.setDisable(true);
                         currPlayer.loseHp(1);
                         updateHp(0);
                         if("Pedro Ramirez".equals(currPlayer.getCharacterName()) && currPlayer.getArrows() > 0){
@@ -844,10 +704,10 @@ public class OldSaloonFX extends BangFXMain {
             }else{
                 dice3.setDisable(true);
             }
-            if(dice4.isSelected()){
+            if(duelDice1.isSelected()){
                 MyDice reRoll4 = new MyDice();
                 this.rolls[3] = reRoll4.getRoll();
-                roll4.setText(reRoll4.getRollString());
+                duelRoll1.setText(reRoll4.getRollString());
                 if(this.rolls[3] == 0){
                     arrow(currPlayer);
                 }
@@ -858,8 +718,8 @@ public class OldSaloonFX extends BangFXMain {
                         dice1.setDisable(true);
                         dice2.setDisable(true);
                         dice3.setDisable(true);
-                        dice4.setDisable(true);
-                        dice5.setDisable(true);
+                        duelDice1.setDisable(true);
+                        duelDice2.setDisable(true);
                         currPlayer.loseHp(1);
                         updateHp(0);
                         if("Pedro Ramirez".equals(currPlayer.getCharacterName()) && currPlayer.getArrows() > 0){
@@ -868,16 +728,16 @@ public class OldSaloonFX extends BangFXMain {
                                 dropArrow(currPlayer);
                         }
                     }
-                    dice4.setDisable(true);
-                    dice4.setSelected(false);
+                    duelDice1.setDisable(true);
+                    duelDice1.setSelected(false);
                 }
             }else{
-                dice4.setDisable(true);
+                duelDice1.setDisable(true);
             }
-            if(dice5.isSelected()){
+            if(duelDice2.isSelected()){
                 MyDice reRoll5 = new MyDice();
                 this.rolls[4] = reRoll5.getRoll();
-                roll5.setText(reRoll5.getRollString());
+                duelRoll2.setText(reRoll5.getRollString());
                 if(this.rolls[4] == 0){
                     arrow(currPlayer);
                 }
@@ -888,8 +748,8 @@ public class OldSaloonFX extends BangFXMain {
                         dice1.setDisable(true);
                         dice2.setDisable(true);
                         dice3.setDisable(true);
-                        dice4.setDisable(true);
-                        dice5.setDisable(true);
+                        duelDice1.setDisable(true);
+                        duelDice2.setDisable(true);
                         currPlayer.loseHp(1);
                         updateHp(0);
                         if("Pedro Ramirez".equals(currPlayer.getCharacterName()) && currPlayer.getArrows() > 0){
@@ -898,11 +758,11 @@ public class OldSaloonFX extends BangFXMain {
                                 dropArrow(currPlayer);
                         }
                     }
-                    dice5.setDisable(true);
-                    dice5.setSelected(false);
+                    duelDice2.setDisable(true);
+                    duelDice2.setSelected(false);
                 }
             }else{
-                dice5.setDisable(true);
+                duelDice2.setDisable(true);
             } 
             if(loudmouthDice.isSelected()){
                 OldSaloonDice dice = new OldSaloonDice("loudmouth");
@@ -930,16 +790,16 @@ public class OldSaloonFX extends BangFXMain {
             dice1.setDisable(true);
             dice2.setDisable(true);
             dice3.setDisable(true);
-            dice4.setDisable(true);
-            dice5.setDisable(true);
+            duelDice1.setDisable(true);
+            duelDice2.setDisable(true);
             loudmouthDice.setDisable(true);
             cowardDice.setDisable(true);
             saveRolls.setDisable(true);
             dice1.setSelected(false);
             dice2.setSelected(false);
             dice3.setSelected(false);
-            dice4.setSelected(false);
-            dice5.setSelected(false);
+            duelDice1.setSelected(false);
+            duelDice2.setSelected(false);
             
             dynamiteCount = 0;
             reRollCount = 0;
@@ -2107,8 +1967,8 @@ public class OldSaloonFX extends BangFXMain {
         roll1.setText(aiRoll.getRollsString(rolls[0]));
         roll2.setText(aiRoll.getRollsString(rolls[1]));
         roll3.setText(aiRoll.getRollsString(rolls[2]));
-        roll4.setText(aiRoll.getRollsString(rolls[3]));
-        roll5.setText(aiRoll.getRollsString(rolls[4]));
+        duelRoll1.setText(aiRoll.getRollsString(rolls[3]));
+        duelRoll2.setText(aiRoll.getRollsString(rolls[4]));
         for(int i = 0; i < this.rolls.length; i++){
             if(rolls[i] == 0){
                 arrow(currPlayer);
