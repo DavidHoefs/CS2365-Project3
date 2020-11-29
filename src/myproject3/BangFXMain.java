@@ -1,6 +1,6 @@
 /*
  * CS2365 FALL 2020 GRROUP PROJECT 3
- * Members: Javier Vasquez, Blane Brown, David Hoefs, Cole, Zach Hunt 
+ * Members: Javier Vasquez, Blane Brown, David Hoefs, Cole Townsend, Zach Hunt 
  */
 package myproject3;
 
@@ -17,7 +17,7 @@ import javafx.stage.Stage;
 import javax.swing.JOptionPane;
 
 /**
- *
+ * Is the class for the base game JavaFX 
  * @author Blane Brown
  */
 public class BangFXMain extends Application {
@@ -142,6 +142,9 @@ public class BangFXMain extends Application {
     int sheriffIndex;
     
     @Override
+    /**
+     * Is the method that controls the primary window of the game
+     */
     public void start(Stage primaryStage) {
         primaryStage.setTitle("Bang! The Dice Game");
         Button btn = new Button("Old Saloon");
@@ -498,8 +501,9 @@ public class BangFXMain extends Application {
         }));
     }
     
-    //disables the player count buttons so that player count can only be
-    //selected once
+    /**
+     * Disables the player count buttons so that player count can only be seleected once
+     */
     public void disable(){
         p4.setDisable(true);
         p5.setDisable(true);
@@ -508,8 +512,10 @@ public class BangFXMain extends Application {
         p8.setDisable(true);
     }
     
-    //every player gets a turn, if the one getting a turn is a human, the dice
-    //buttons become avaliable to them
+    /**
+     * Every player gets a turn, if the one getting a turn is a human, the dice buttons become available to them
+     * @param currPlayer provides which players turn it is
+     */
     public void turn(MyPlayer currPlayer){
         if(currPlayer.getHuman() == true){
             rollDice.setDisable(false);
@@ -527,8 +533,10 @@ public class BangFXMain extends Application {
         
     }
     
-    //logic for the AI, they roll their dice and then perform the actions as if
-    //they were a human
+    /**
+     * Logic for the AI, they roll their dice and then perform the actions as if they were a human
+     * @param currPlayer provides which players turn it is
+     */
     public void AIroll(MyPlayer currPlayer){
         //start with the AI rolling their dice
         MyDice aiRoll = new MyDice(5);
@@ -981,7 +989,10 @@ public class BangFXMain extends Application {
         
     }
     
-    //where the majority of the game logic for a HUMAN rolling the dice lies
+    /**
+     * Where the majority of the game logic for a HUMAN rolling the dice lives
+     * @param currPlayer provides which players turn it is
+     */
     public void roll(MyPlayer currPlayer){
         //if the player clicks roll dice, 5 dice are rolled for them and the 
         //values are displayed. If any of the first 5 dice rolled are arrows the
@@ -1430,7 +1441,12 @@ public class BangFXMain extends Application {
         
     }
     
-    //used by the AI to check their two options when shooting, much like how a human would
+    /**
+     * Used by the AI to check their two options when shooting, much like how a human would
+     * @param checkDirectionLength
+     * @param currPlayer provides which players turn it is
+     * @return returns an integer of which target to shoot
+     */
     public int checkTarget(String checkDirectionLength, MyPlayer currPlayer){
         int alive = 0;
         for(MyPlayer player : players){
@@ -1590,7 +1606,11 @@ public class BangFXMain extends Application {
         return 0;
     }
     
-    //used for shooting, directionLength is the direction and length u want to shoot, currplayer is the player shooting
+    /**
+     * Used for shooting.
+     * @param directionLength is the direction and length that you want to shoot
+     * @param currPlayer provides which players turn it is
+     */
     public void shoot(String directionLength, MyPlayer currPlayer){
         int alive = 0;
         for(MyPlayer player : players){
@@ -1816,7 +1836,10 @@ public class BangFXMain extends Application {
         
     }
     
-    //used for dropping an arrow (Pedro Ramirez's ability)
+    /**
+     * Used for dropping an arrow (Pedro Ramirez's ability)
+     * @param currPlayer provides which players turn it is
+     */
     public void dropArrow(MyPlayer currPlayer){
         currPlayer.setArrows((currPlayer.getArrows() - 1));
         switch(index){
@@ -1848,7 +1871,10 @@ public class BangFXMain extends Application {
         arrowPile++;
     }
     
-    //used for rolling arrow and indian attacks, currPlayer is the player rolling the dice
+    /**
+     * Used for rolling arrow and indian attacks
+     * @param currPlayer provides which players turn it is
+     */
     public void arrow(MyPlayer currPlayer){
         int alive = 0;
         for(MyPlayer player : players){
@@ -1939,7 +1965,10 @@ public class BangFXMain extends Application {
         }
     }
     
-    //used for disbling dead players from getting beer and resolves gatling gun if ther was any
+    /**
+     * Used for disabling dead players from getting beer and resolves gatling gun if there was any
+     * @param currPlayer provides which players turn it is
+     */
     public void beerAndGat(MyPlayer currPlayer){
         if(beerCount > 0){
             int playerIndex = 0;
@@ -2013,7 +2042,9 @@ public class BangFXMain extends Application {
         }
     }
     
-    //Vulture Sam's ability that lets him heal if another player dies.
+    /**
+     * Vulture Sam's ability that lets him heal if another player dies.
+     */
     public void samAbility(){
         for(int i = 0; i < playerCount; i++){
             if("Vulture Sam".equals(players.get(i).getCharacterName()) && players.get(i).getHp() > 0){
@@ -2023,9 +2054,12 @@ public class BangFXMain extends Application {
         }
     }
     
-    //updates a players hp to the GUI after something happens to them, int i is the player whos hp you want to update.
-    //if you want to update multiple peopls hp use a for loop.
-    //also checks if the game has been won every time a player dies
+    /**
+     * Updates a players hp to the GUI after something happens to them.
+     * If you want to update multiple peoples hp use a loop
+     * Will also check if the game has been won every time a player dies
+     * @param i is the index of the player whos hp you want to update
+     */
     public void updateHp(int i){
         //dont lower health if already dead
         if(players.get(i).getHp() < 0){
@@ -2175,7 +2209,9 @@ public class BangFXMain extends Application {
                 
     }
     
-    //disables all buttons after someone has won
+    /**
+     * Disables all buttons after someone has won
+     */
     public void disableAll(){
         reRoll.setDisable(true);
         dice1.setDisable(true);
@@ -2202,7 +2238,10 @@ public class BangFXMain extends Application {
         this.gameOver = true;
     }
     
-    //creates the players labels and sets the values, only does it depending on player count
+    /**
+     * Creates the players labels and sets the values
+     * Only does it depending on player count
+     */
     public void playerLabels(){
         switch(playerCount){
             case 8:
@@ -2290,6 +2329,10 @@ public class BangFXMain extends Application {
         }
     }
     
+    /**
+     * 
+     * @return 
+     */
     public String checkExpansion(){
         
             return "Old Saloon";
