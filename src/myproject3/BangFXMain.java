@@ -141,14 +141,17 @@ public class BangFXMain extends Application {
     //used for ai so they can keep track of the sheriff
     int sheriffIndex;
     
+    //used for chosing old saloon
+    Button btn;
+    
     @Override
     /**
      * Is the method that controls the primary window of the game
      */
     public void start(Stage primaryStage) {
         primaryStage.setTitle("Bang! The Dice Game");
-        Button btn = new Button("Old Saloon");
-         btn.setOnAction((e)->
+        btn = new Button("Old Saloon");
+        btn.setOnAction((e)->
     {
         new OldSaloonFX();
     });
@@ -272,6 +275,7 @@ public class BangFXMain extends Application {
             this.playerCount = 4;
             playerLabels();
             sheriffIndex = index + 1;
+            btn.setDisable(true);
                 
         }));
         
@@ -284,6 +288,7 @@ public class BangFXMain extends Application {
             this.playerCount = 5;
             playerLabels();
             sheriffIndex = index + 1;
+            btn.setDisable(true);
           
         }));
         
@@ -296,6 +301,7 @@ public class BangFXMain extends Application {
             this.playerCount = 6;
             playerLabels();
             sheriffIndex = index + 1;
+            btn.setDisable(true);
            
         }));
         
@@ -308,6 +314,7 @@ public class BangFXMain extends Application {
             this.playerCount = 7;
             playerLabels();
             sheriffIndex = index + 1;
+            btn.setDisable(true);
          
         }));
         
@@ -320,6 +327,7 @@ public class BangFXMain extends Application {
             this.playerCount = 8;
             playerLabels();
             sheriffIndex = index + 1;
+            btn.setDisable(true);
            
         }));
         
