@@ -37,6 +37,7 @@ public class BangFXMain extends Application {
     int dynamiteCount = 0;
     int arrowPile = 9;
     int beerCount = 0;
+    int whiskeyCount = 0;
     int gatCount = 0;
     
     //used to determine if a player just died of if they've been dead
@@ -106,6 +107,7 @@ public class BangFXMain extends Application {
     
     //used for re-rolling
     int[] rolls;
+    int[] duelRolls;
     Button reRoll;
     int reRollCount = 0;
     
@@ -119,6 +121,17 @@ public class BangFXMain extends Application {
     CheckBox p6b;
     CheckBox p7b;
     CheckBox p8b;
+    
+    //used for dueling
+    Button duel;
+    CheckBox p1d;
+    CheckBox p2d;
+    CheckBox p3d;
+    CheckBox p4d;
+    CheckBox p5d;
+    CheckBox p6d;
+    CheckBox p7d;
+    CheckBox p8d;
     
     //used for shooting logic
     Button oneShotLeft;
