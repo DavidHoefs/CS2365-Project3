@@ -143,6 +143,7 @@ public class BangFXMain extends Application {
     
     //used for chosing old saloon
     Button btn;
+    Button btn1;
     
     @Override
     /**
@@ -151,11 +152,18 @@ public class BangFXMain extends Application {
     public void start(Stage primaryStage) {
         primaryStage.setTitle("Bang! The Dice Game");
         btn = new Button("Old Saloon");
+        btn1 = new Button ("Undead or Alive");
         btn.setOnAction((e)->
     {
         new OldSaloonFX();
         primaryStage.close();
     });
+        
+         btn1.setOnAction((e)->
+         {
+             new UndeadAliveFX();
+         });
+
 
         //below is where the above labels and buttons are created
         //roll 1 - 5 is where a d
@@ -334,7 +342,7 @@ public class BangFXMain extends Application {
         
         //below the scene is set-up and all the boxes are put in one vertical box
         HBox hbox1 = new HBox(20);
-        hbox1.getChildren().addAll(p4, p5, p6, p7, p8,btn);
+        hbox1.getChildren().addAll(p4, p5, p6, p7, p8,btn,btn1);
         hbox1.setAlignment(Pos.CENTER);
         
         HBox hbox2 = new HBox(20);
