@@ -162,6 +162,7 @@ public class BangFXMain extends Application {
          btn1.setOnAction((e)->
          {
              new UndeadAliveFX();
+             primaryStage.close();
          });
 
 
@@ -285,6 +286,8 @@ public class BangFXMain extends Application {
             playerLabels();
             sheriffIndex = index + 1;
             btn.setDisable(true);
+            btn1.setDisable(true);
+
                 
         }));
         
@@ -298,7 +301,7 @@ public class BangFXMain extends Application {
             playerLabels();
             sheriffIndex = index + 1;
             btn.setDisable(true);
-          
+            btn1.setDisable(true);
         }));
         
         p6 = new Button(" 6 ");
@@ -311,7 +314,7 @@ public class BangFXMain extends Application {
             playerLabels();
             sheriffIndex = index + 1;
             btn.setDisable(true);
-           
+            btn1.setDisable(true);
         }));
         
         p7 = new Button(" 7 ");
@@ -324,7 +327,7 @@ public class BangFXMain extends Application {
             playerLabels();
             sheriffIndex = index + 1;
             btn.setDisable(true);
-         
+            btn1.setDisable(true);
         }));
         
         p8 = new Button(" 8 ");
@@ -337,7 +340,7 @@ public class BangFXMain extends Application {
             playerLabels();
             sheriffIndex = index + 1;
             btn.setDisable(true);
-           
+            btn1.setDisable(true);
         }));
         
         //below the scene is set-up and all the boxes are put in one vertical box
