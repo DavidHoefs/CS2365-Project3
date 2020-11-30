@@ -120,6 +120,27 @@ public class UndeadAliveFX extends BangFXMain {
         p8b.setDisable(true);
         giveBeer.setDisable(true);
         
+        //Checkboxes for dueling
+       p1d = new CheckBox("P1");
+       p2d = new CheckBox("P2");
+       p3d = new CheckBox("P3");
+       p4d = new CheckBox("P4");
+       p5d = new CheckBox("P5");
+       p6d = new CheckBox("P6");
+       p7d = new CheckBox("P7");
+       p8d = new CheckBox("P8");
+       duel = new Button("Duel");
+       
+        p1d.setDisable(true);
+        p2d.setDisable(true);
+        p3d.setDisable(true);
+        p4d.setDisable(true);
+        p5d.setDisable(true);
+        p6d.setDisable(true);
+        p7d.setDisable(true);
+        p8d.setDisable(true);
+        duel.setDisable(true);
+        
         //used for shooting
         oneShotLeft = new Button("1 Left");
         twoShotLeft = new Button("2 Left");
@@ -242,6 +263,10 @@ public class UndeadAliveFX extends BangFXMain {
         hboxB.getChildren().addAll(p1b, p2b, p3b, p4b, p5b, p6b, p7b, p8b, giveBeer);
         hboxB.setAlignment(Pos.CENTER);
         
+        HBox hboxDuel = new HBox(20);
+        hboxDuel.getChildren().addAll(p1d, p2d, p3d, p4d, p5d, p6d, p8d, duel);
+        hboxDuel.setAlignment(Pos.CENTER);
+        
         HBox hboxS = new HBox(20);
         hboxS.getChildren().addAll(twoShotLeft, oneShotLeft, oneShotRight, twoShotRight);
         hboxS.setAlignment(Pos.CENTER);
@@ -263,6 +288,10 @@ public class UndeadAliveFX extends BangFXMain {
         space4.getChildren().add(new Label(""));
         space4.setAlignment(Pos.CENTER);
         
+        HBox space5 = new HBox(0);
+        space5.getChildren().add(new Label(""));
+        space5.setAlignment(Pos.CENTER);
+        
         //final vertical box that holds every other box
         VBox layout = new VBox(5);
         layout.getChildren().add(new Label("Player Count"));
@@ -279,6 +308,9 @@ public class UndeadAliveFX extends BangFXMain {
         layout.getChildren().add(new Label("Give Beer (select one at a time"));
         layout.getChildren().add(hboxB);
         layout.getChildren().add(space3);
+        layout.getChildren().add(new Label("Duel (select one at a time)"));
+        layout.getChildren().add(hboxDuel);
+        layout.getChildren().add(space5);
         layout.getChildren().add(hbox4);
         layout.getChildren().add(hbox5);
         layout.getChildren().add(winner);
@@ -451,12 +483,12 @@ public class UndeadAliveFX extends BangFXMain {
         //player immediatly gets an arrow, if any of the first 3 dice are 
         //dynamite then their turn ends immediatly
         
-        UndeadAliveDice duelDie = new UndeadAliveDice("duel");
+        UndeadAliveDice duelDie = new UndeadAliveDice(2);
 
         
         rollDice.setOnAction((e -> {
             saveRolls.setDisable(false);
-            MyDice firstRoll = new MyDice(5);
+            MyDice firstRoll = new MyDice(3);
             this.rolls = firstRoll.getRolls();
             roll1.setText(firstRoll.getRollsString(rolls[0]));
             roll2.setText(firstRoll.getRollsString(rolls[1]));
@@ -626,13 +658,13 @@ public class UndeadAliveFX extends BangFXMain {
                 dice3.setDisable(true);
             }
             if(duelDice1.isSelected()){
-                MyDice reRollDuel1 = new MyDice();
-                this.rolls[3] = reRollDuel1.getRoll();
+                MyDice reRollDuel1 = new UndeadAliveDice(1);
+                this.duelRolls[3] = reRollDuel1.getRoll();
                 duelRoll1.setText(reRollDuel1.getRollString());
-                if(this.rolls[3] == 0){
+                if(this.duelRolls[3] == 0){
                     arrow(currPlayer);
                 }
-                if(this.rolls[3] == 1){
+                if(this.duelRolls[3] == 1){
                     dynamiteCount = dynamiteCount + 1;
                     if(dynamiteCount == 3){
                         reRoll.setDisable(true);
@@ -657,12 +689,12 @@ public class UndeadAliveFX extends BangFXMain {
             }
             if(duelDice2.isSelected()){
                 MyDice reRollDuel2 = new MyDice();
-                this.rolls[4] = reRollDuel2.getRoll();
+                this.duelRolls[4] = reRollDuel2.getRoll();
                 duelRoll2.setText(reRollDuel2.getRollString());
-                if(this.rolls[4] == 0){
+                if(this.duelRolls[4] == 0){
                     arrow(currPlayer);
                 }
-                if(this.rolls[4] == 1){
+                if(this.duelRolls[4] == 1){
                     dynamiteCount = dynamiteCount + 1;
                     if(dynamiteCount == 3){
                         reRoll.setDisable(true);
@@ -792,6 +824,123 @@ public class UndeadAliveFX extends BangFXMain {
                 }
             }
         }));
+        
+        //duel logic
+        boolean dueling = true;
+        duel.setOnAction((e-> {
+            if(p1d.isSelected()) {
+                while(dueling) {
+                  int rand = 1 + (int)(Math.random() * ((6-1)+1));
+                  if(rand != 5 || rand != 6) {
+                     players.get(0).loseHp(1);
+                      p1hp.setText("Health: " + players.get(0).getHp());
+                      break;
+                  }
+                  else if(rand == 5 || rand == 6) {
+                      currPlayer.loseHp(1);
+                      break;
+                  }
+               }
+            }
+            if(p2d.isSelected()) {
+                while(dueling) {
+                  int rand = 1 + (int)(Math.random() * ((6-1)+1));
+                  if(rand != 5 || rand != 6) {
+                     players.get(1).loseHp(1);
+                      p2hp.setText("Health: " + players.get(1).getHp());
+                      break;
+                  }
+                  else if(rand == 5 || rand == 6) {
+                      currPlayer.loseHp(1);
+                      break;
+                  }
+               }
+            }
+            if(p3d.isSelected()) {
+                while(dueling) {
+                  int rand = 1 + (int)(Math.random() * ((6-1)+1));
+                  if(rand != 5 || rand != 6) {
+                     players.get(2).loseHp(1);
+                      p3hp.setText("Health: " + players.get(2).getHp());
+                      break;
+                  }
+                  else if(rand == 5 || rand == 6) {
+                      currPlayer.loseHp(1);
+                      break;
+                  }
+               }
+            }
+            if(p4d.isSelected()) {
+                while(dueling) {
+                  int rand = 1 + (int)(Math.random() * ((6-1)+1));
+                  if(rand != 5 || rand != 6) {
+                     players.get(3).loseHp(1);
+                      p4hp.setText("Health: " + players.get(3).getHp());
+                      break;
+                  }
+                  else if(rand == 5 || rand == 6) {
+                      currPlayer.loseHp(1);
+                      break;
+                  }
+               }
+            }
+            if(p5d.isSelected()) {
+                while(dueling) {
+                  int rand = 1 + (int)(Math.random() * ((6-1)+1));
+                  if(rand != 5 || rand != 6) {
+                     players.get(4).loseHp(1);
+                      p5hp.setText("Health: " + players.get(4).getHp());
+                      break;
+                  }
+                  else if(rand == 5 || rand == 6) {
+                      currPlayer.loseHp(1);
+                      break;
+                  }
+               }
+            }
+            if(p6d.isSelected()) {
+                while(dueling) {
+                  int rand = 1 + (int)(Math.random() * ((6-1)+1));
+                  if(rand != 5 || rand != 6) {
+                     players.get(5).loseHp(1);
+                      p6hp.setText("Health: " + players.get(5).getHp());
+                      break;
+                  }
+                  else if(rand == 5 || rand == 6) {
+                      currPlayer.loseHp(1);
+                      break;
+                  }
+               }
+            }
+            if(p7d.isSelected()) {
+                while(dueling) {
+                  int rand = 1 + (int)(Math.random() * ((6-1)+1));
+                  if(rand != 5 || rand != 6) {
+                     players.get(6).loseHp(1);
+                      p7hp.setText("Health: " + players.get(6).getHp());
+                      break;
+                  }
+                  else if(rand == 5 || rand == 6) {
+                      currPlayer.loseHp(1);
+                      break;
+                  }
+               }
+            }
+            if(p8d.isSelected()) {
+                while(dueling) {
+                  int rand = 1 + (int)(Math.random() * ((6-1)+1));
+                  if(rand != 5 || rand != 6) {
+                     players.get(7).loseHp(1);
+                      p8hp.setText("Health: " + players.get(7).getHp());
+                      break;
+                  }
+                  else if(rand == 5 || rand == 6) {
+                      currPlayer.loseHp(1);
+                      break;
+                  }
+               }
+            }
+            }));
         
         giveBeer.setOnAction((e -> {
                 if(p1b.isSelected()){
@@ -1655,7 +1804,7 @@ public class UndeadAliveFX extends BangFXMain {
                 
     }
     
-    //used for disbling dead players from getting beer and resolves gatling gun if ther was any
+    //used for disabling dead players from getting beer and resolves gatling gun if there was any
     @Override
     public void beerAndGat(MyPlayer currPlayer){
         if(beerCount > 0){
@@ -1733,13 +1882,11 @@ public class UndeadAliveFX extends BangFXMain {
     @Override
      public void AIroll(MyPlayer currPlayer){
         //start with the AI rolling their dice
-        MyDice aiRoll = new MyDice(5);
+        MyDice aiRoll = new MyDice(3);
         this.rolls = aiRoll.getRolls();
         roll1.setText(aiRoll.getRollsString(rolls[0]));
         roll2.setText(aiRoll.getRollsString(rolls[1]));
         roll3.setText(aiRoll.getRollsString(rolls[2]));
-        duelRoll1.setText(aiRoll.getRollsString(rolls[3]));
-        duelRoll2.setText(aiRoll.getRollsString(rolls[4]));
         for(int i = 0; i < this.rolls.length; i++){
             if(rolls[i] == 0){
                 arrow(currPlayer);
@@ -1758,6 +1905,42 @@ public class UndeadAliveFX extends BangFXMain {
             }
             if(rolls[i] == 5){
                 beerCount++;
+            }
+        }
+        
+        UndeadAliveDice aiRollDuel = new UndeadAliveDice(2);
+        this.duelRolls = aiRollDuel.getRolls();
+        duelRoll1.setText(aiRollDuel.getRollsString(duelRolls[0]));
+        duelRoll2.setText(aiRollDuel.getRollsString(duelRolls[1]));
+        for(int i = 0; i < this.duelRolls.length; i++) {
+            if(duelRolls[i] == 0) {
+                arrow(currPlayer);
+            }
+            if(duelRolls[i] == 1) {
+                dynamiteCount++;
+            }
+            if(duelRolls[i] == 2) {
+                whiskeyCount++;
+            }
+            if(duelRolls[i] == 3) {
+                gatCount++;
+            }
+            if(duelRolls[i] == 4) {
+                int cont = 0;
+                while(cont == 0) {
+                    int randPlayer = 1 + (int)(Math.random() * ((8-1)+1));
+                    int randFace = 1 + (int)(Math.random() * ((6-1)+1));
+                    if(randFace == 4 || randFace == 5) {
+                        currPlayer.loseHp(1);
+                        updateHp(index);
+                        cont = 1;
+                    }
+                    if(randFace != 4 || randFace != 5) {
+                        players.get(randPlayer).loseHp(1);
+                        updateHp(index);
+                        cont = 1;
+                    }
+                }
             }
         }
         
@@ -2126,6 +2309,12 @@ public class UndeadAliveFX extends BangFXMain {
             beerCount--;
         }
         
+        //Adds hp to player that rolled a whiskey since you have to use the whiskey on yourself
+        while(whiskeyCount > 0 && currPlayer.getHp() > 0) {
+            currPlayer.gainHp(1);
+            updateHp(index);
+        }
+        
         //if 3 gatling guns were rolled make everyone lose 1hp and lose arrows
         if(gatCount >= 3 || (gatCount > 1 && "Willy The Kid".equals(currPlayer.getCharacterName()))){
             for(int i = 0; i < playerCount; i++){
@@ -2178,6 +2367,7 @@ public class UndeadAliveFX extends BangFXMain {
         gatCount = 0;
         dynamiteCount = 0;
         beerCount = 0;
+        whiskeyCount = 0;
         twoShot = 0;
         oneShot = 0;
         
