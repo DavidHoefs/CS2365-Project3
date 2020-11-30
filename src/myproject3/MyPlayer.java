@@ -6,7 +6,7 @@ package myproject3;
 
 /**
  *
- * @author Blane Brown, Javier Vasquez
+ * @author Blane Brown, Javier Vasquez, Zac Hunt
  */
 public class MyPlayer {
     //Private data memebers
