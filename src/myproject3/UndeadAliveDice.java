@@ -12,16 +12,21 @@ import java.util.Random;
  */
 public class UndeadAliveDice extends MyDice {
     
-    private int roll;
+    private int duelRoll;
+    private int[] duelRolls;
     
-    public UndeadAliveDice(String type){
+    public UndeadAliveDice(int n){
         Random rnd = new Random();
-        this.roll = rnd.nextInt(6);
+        this.duelRolls = new int[n];
+        for(int i = 0; i < n; i++){
+            this.duelRolls[i] = rnd.nextInt(6);
+        }
+        
     }
     
     @Override
     public int getRoll(){
-        return this.roll;
+        return this.duelRoll;
     }
     
      //returns the value of a dice roll as a string,
@@ -29,7 +34,7 @@ public class UndeadAliveDice extends MyDice {
     public String getRollString(){
         
         String[] rollTypes = {"Arrow","Dynamite","Whiskey","Gatling Gun","Duel","Duel" };
-        return rollTypes[roll];
+        return rollTypes[duelRoll];
     }
     
     
