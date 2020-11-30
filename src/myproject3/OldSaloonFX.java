@@ -507,6 +507,11 @@ public class OldSaloonFX extends BangFXMain {
                 
                 dice5.setDisable(true);
             }
+            if(loudmouthDice.isSelected()){
+                cowardDice.setDisable(true);
+            }else if(cowardDice.isSelected()){
+                loudmouthDice.setDisable(true);
+            }
                 
             
            // MyDice firstRoll = new MyDice(5);
