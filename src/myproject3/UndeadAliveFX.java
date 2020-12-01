@@ -1717,7 +1717,6 @@ public class UndeadAliveFX extends BangFXMain {
         p6b.setDisable(true);
         p7b.setDisable(true);
         p8b.setDisable(true);      
-        this.gameOver = true;
     }
     
     @Override
@@ -2095,17 +2094,21 @@ public class UndeadAliveFX extends BangFXMain {
         if(sheriffAlive == 0 && outlawAlive > 0){
             winner.setText("THE WINNER IS THE OUTLAWS");
             disableAll();
+            this.gameOver = true;
         }
         if(outlawAlive == 0 && renegadeAlive == 0){
             winner.setText("THE WINNER IS THE SHERIFF");
             disableAll();
+            this.gameOver = true;
         }
         if(outlawAlive == 0 && sheriffAlive == 0 && deputyAlive == 0 && renegadeAlive == 1){
             winner.setText("THE WINNER IS THE RENEGADE");
             disableAll();
+            this.gameOver = true;
         }
         if(zombieAlive > (outlawAlive + sheriffAlive+ renegadeAlive+deputyAlive))
             winner.setText("THE WINNER IS THE ZOMBIES!");
+            this.gameOver = true;
         }
      else if(outbreak && outbreakCount == 0){
          players.get(i).zombie = true;
@@ -2271,7 +2274,7 @@ public class UndeadAliveFX extends BangFXMain {
         }
         
         //if they rolled a shoot 1 dice
-        while(oneShot > 0){
+        while(oneShot > 0 && gameOver == false){
             int leftTarget = checkTarget("checkOneLeft", currPlayer);
             int rightTarget = checkTarget("checkOneRight", currPlayer);
             
@@ -2409,7 +2412,7 @@ public class UndeadAliveFX extends BangFXMain {
         }
         
         //exact same logic as shoot 1 except now its for 2
-        while(twoShot > 0){
+        while(twoShot > 0 && gameOver == false){
             int aliveCount = 0;
             for(MyPlayer player : players){
                 if(player.getHp() > 0){
@@ -2547,7 +2550,7 @@ public class UndeadAliveFX extends BangFXMain {
         }
         
         //if they rolled any beer it is solved here
-        while(beerCount > 0 && currPlayer.getHp() > 0){ 
+        while(beerCount > 0 && currPlayer.getHp() > 0 && gameOver == false){ 
             int aliveCount = 0;
             for(MyPlayer player : players){
                 if(player.getHp() > 0){
@@ -2626,7 +2629,7 @@ public class UndeadAliveFX extends BangFXMain {
         }
         
         //Adds hp to player that rolled a whiskey since you have to use the whiskey on yourself
-        while(whiskeyCount > 0 && currPlayer.getHp() > 0) {
+        while(whiskeyCount > 0 && currPlayer.getHp() > 0 && gameOver == false) {
             if(currPlayer.zombie == false){
                 if("Greg Digger".equals(currPlayer.getCharacterName()))
                 currPlayer.gainHp(2);
