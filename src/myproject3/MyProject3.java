@@ -49,7 +49,7 @@ public class MyProject3 {
         ArrayList<MyPlayer> players = new ArrayList<>();
         
         String[] Chars = getChars(expansion);
-         String[] Roles = setRoles(n);
+        String[] Roles = setRoles(n);
         
        
         
@@ -77,12 +77,15 @@ public class MyProject3 {
     }
     
     private String[] getChars(String expansion){
-        
-       
-        if(expansion == "Old Saloon"){
+        if("Old Saloon".equals(expansion)){
             String [] Chars = {"El Gringo", "Jesse Jones", "Jourdonnais",
                 "Paul Regret", "Pedro Ramirez", "Suzy Lafayette", "Vulture Sam", 
                 "Willy The Kid","Jose Delgado","Tequila Joe"};
+            return Chars;
+        }else if("Undead Or Alive".equals(expansion)){
+            String [] Chars = {"El Gringo", "Jesse Jones", "Jourdonnais",
+                "Paul Regret", "Pedro Ramirez", "Suzy Lafayette", "Vulture Sam", 
+                "Willy The Kid","Belle Star","Greg Digger"};
             return Chars;
         }else{
             String [] Chars = {"El Gringo", "Jesse Jones", "Jourdonnais",

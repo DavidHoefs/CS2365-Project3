@@ -29,6 +29,10 @@ public class UndeadAliveDice extends MyDice {
         return this.duelRoll;
     }
     
+    public int[] getRolls(){
+        return this.duelRolls;
+    }
+    
      //returns the value of a dice roll as a string,
     @Override
     public String getRollString(){
