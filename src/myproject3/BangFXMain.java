@@ -278,7 +278,7 @@ public class BangFXMain extends Application {
         //selection of how many players the user wants including themselves takes place below 
         p4 = new Button(" 4 ");
         p4.setOnAction((e -> {
-            MyProject3 game = new MyProject3(4,expansion);
+            MyProject3 game = new MyProject3(4,"none");
             this.players = game.getPlayers();
             disable();
             nextPlayer.setDisable(false);
@@ -291,7 +291,7 @@ public class BangFXMain extends Application {
         
         p5 = new Button(" 5 ");
         p5.setOnAction((e -> {
-            MyProject3 game = new MyProject3(5,expansion);
+            MyProject3 game = new MyProject3(5,"none");
             this.players = game.getPlayers();
             disable();
             nextPlayer.setDisable(false);
@@ -305,7 +305,7 @@ public class BangFXMain extends Application {
         
         p6 = new Button(" 6 ");
         p6.setOnAction((e -> {
-            MyProject3 game = new MyProject3(6,expansion);
+            MyProject3 game = new MyProject3(6,"none");
             this.players = game.getPlayers();
             disable();
             nextPlayer.setDisable(false);
@@ -319,7 +319,7 @@ public class BangFXMain extends Application {
         
         p7 = new Button(" 7 ");
         p7.setOnAction((e -> {
-            MyProject3 game = new MyProject3(7,expansion);
+            MyProject3 game = new MyProject3(7,"none");
             this.players = game.getPlayers();
             disable();
             nextPlayer.setDisable(false);
@@ -333,7 +333,7 @@ public class BangFXMain extends Application {
         
         p8 = new Button(" 8 ");
         p8.setOnAction((e -> {
-            MyProject3 game = new MyProject3(8,expansion);
+            MyProject3 game = new MyProject3(8,"none");
             this.players = game.getPlayers();
             disable();
             nextPlayer.setDisable(false);
