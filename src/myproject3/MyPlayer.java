@@ -24,6 +24,7 @@ public class MyPlayer {
     private int arrows;
     private final MyCharacter character;
     private boolean human = false;
+    public boolean zombie = false;
     
     //Constructor
     //creates a player object, each player will have one of these

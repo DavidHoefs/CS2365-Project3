@@ -38,6 +38,7 @@ public class BangFXMain extends Application {
     int arrowPile = 9;
     int beerCount = 0;
     int gatCount = 0;
+    int outbreakCount = 0;
     
     //used to determine if a player just died of if they've been dead
     boolean p1dead = false;

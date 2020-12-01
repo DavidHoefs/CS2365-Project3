@@ -1270,7 +1270,8 @@ public class OldSaloonFX extends BangFXMain {
                     player.loseHp(1);
                     updateHp(playerIndex);
                 }else if(playerIndex == indianChiefArrowIndex && playerIndex == getMaxArrowIndex()){
-                    continue;
+                    player.setArrows(0);
+                    
                 }
                 else if(playerIndex == indianChiefArrowIndex){
                     player.loseHp(2);
