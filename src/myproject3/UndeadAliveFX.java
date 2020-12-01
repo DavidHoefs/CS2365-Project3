@@ -21,7 +21,7 @@ import javax.swing.JOptionPane;
 import java.util.Random;
 
 /**
- *
+ * Is the object blueprint of the UndeadAlive FX
  * @author Javier Vasquez, hoefs, zhunt
  */
 public class UndeadAliveFX extends BangFXMain {
@@ -2697,6 +2697,11 @@ public class UndeadAliveFX extends BangFXMain {
         
     }
      
+    /**
+    * Method that takes care of the logic for the duels
+    *@param i 
+    *@param j 
+    */
     public void duelLogic(int i, int j){
         Random rand = new Random();
         int roll = rand.nextInt(6);
