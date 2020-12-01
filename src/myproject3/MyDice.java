@@ -7,7 +7,7 @@ package myproject3;
 import java.util.Random;
 
 /**
- *
+ * Is the object blueprint of the set of dice. On creation the dice are rolled and the values of the rolls are stored in an array. 
  * @author Blane Brown
  */
 public class MyDice {
@@ -17,15 +17,21 @@ public class MyDice {
     private int roll;
     private int[] rolls;
 
-    //Constructor
-    //Dice value will be a number 0 - 5, where 0 = arrow, 1 = dynamite, 
-    //2 = one shot, 3 = two shot, 4 = gatling gun, 5 = beer, this can be seen 
-    //in toString, n is the number of dice to be rolled 
+    /**
+     * Constructor for single dice roll. The single role object is used for re-roll purposes. 
+     * Dice value will be a number 0 - 5, where 0 = arrow, 1 = dynamite, 2 = one shot,
+     * 3 = two shot, 4 = gatling gun, 5 = beer, this can be seen in toString,
+     * n is the number of dice to be rolled 
+     */
     public MyDice(){
         Random rnd = new Random();
         this.roll = rnd.nextInt(6);
     } 
     
+    /**
+     * Constructor for multiple dice roll. All 'n' rolls will be stored in an array. 
+     * @param n 'n' is the number of dice that will be rolled and stored in an array
+     */
     public MyDice(int n){
         Random rnd = new Random();
         this.rolls = new int[n];
@@ -35,22 +41,35 @@ public class MyDice {
         
     }
     
-    //Accessors
+    /**
+     * Accessor to the array of roll values
+     * @return the current array that is storing the rolls
+     */
     public int[] getRolls(){
         return this.rolls;
     }
     
+    /**
+     * Accessor to the integer that is storing the single roll value. 
+     * @return the current value of the variable that is storing the roll
+     */
     public int getRoll(){
         return this.roll;
     }
     
     //returns the value of a dice roll as a string
+    /**
+     * @return the value of a dice roll as a string
+     */
     public String getRollString(){
         String[] rollTypes = {"Arrow", "Dynamite", "Shoot 1 Space", "Shoot 2 Spaces", "Gatling Gun", "Beer"};
         return rollTypes[roll];      
     }
     
-    //returns the value of a 5 dice roll as a string
+    /**
+     * @param n the index of the array that is holding the roll values
+     * @return the value of a dice roll as a string at index 'n' in the array of rolls
+     */
     public String getRollsString(int n){
         String[] rollTypes = {"Arrow", "Dynamite", "Shoot 1 Space", "Shoot 2 Spaces", "Gatling Gun", "Beer"};
         return rollTypes[n];

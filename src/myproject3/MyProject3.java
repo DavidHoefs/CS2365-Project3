@@ -1,6 +1,6 @@
 /*
  * CS2365 FALL 2020 GRROUP PROJECT 3
- * Members: Javier Vasquez, Blane Brown, David Hoefs, Cole, Zach Hunt 
+ * Members: Javier Vasquez, Blane Brown, David Hoefs, Cole Townsend, Zach Hunt 
  */
 package myproject3;
 
@@ -9,7 +9,7 @@ import java.util.Arrays;
 import java.util.Random;
 
 /**
- *
+ * Is the object blueprint for the base game.
  * @author Javier Vasquez, Blane Brown
  */
 public class MyProject3 {
@@ -17,22 +17,29 @@ public class MyProject3 {
     private ArrayList<MyPlayer> players;
     private int playerCount = 0;
     
-    //Constructor 
+    /**
+     * Creates a game of Bang
+     * @param n 'n' is the player count
+     * @param expansion 'expansion' is used to choose which expansion of the game you want to play
+     */
     public MyProject3(int n,String expansion){
         this.playerCount = n;
         this.players = populateGame(playerCount, expansion);
     }
     
     
-    
-    //Accessor
-    //gets the array of players
+    /**
+     * Accessor for the arraylist of players
+     * @return an arraylist of 'MyPlayer' objects
+     */
     public ArrayList<MyPlayer> getPlayers(){
         return this.players;
     }
     
-    //Accessor
-    //gets the number of players
+     /**
+     * Accessor for the number of players
+     * @return an integer of how many players there are
+     */
     public int getPlayerCount(){
         return this.playerCount;
     }
