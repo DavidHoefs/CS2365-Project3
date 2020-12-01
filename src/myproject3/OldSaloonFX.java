@@ -1981,14 +1981,17 @@ public class OldSaloonFX extends BangFXMain {
         if(sheriffAlive == 0 && outlawAlive > 0){
             winner.setText("THE WINNER IS THE OUTLAWS");
             disableAll();
+            this.gameOver = true;
         }
         if(outlawAlive == 0 && renegadeAlive == 0){
             winner.setText("THE WINNER IS THE SHERIFF");
             disableAll();
+            this.gameOver = true;
         }
         if(outlawAlive == 0 && sheriffAlive == 0 && deputyAlive == 0 && renegadeAlive == 1){
             winner.setText("THE WINNER IS THE RENEGADE");
             disableAll();
+            this.gameOver = true;
         }
         
                 
@@ -2119,7 +2122,7 @@ public class OldSaloonFX extends BangFXMain {
         }
         
         //if they rolled a shoot 1 dice
-        while(oneShot > 0){
+        while(oneShot > 0 && gameOver == false){
             int leftTarget = checkTarget("checkOneLeft", currPlayer);
             int rightTarget = checkTarget("checkOneRight", currPlayer);
             
@@ -2257,7 +2260,7 @@ public class OldSaloonFX extends BangFXMain {
         }
         
         //exact same logic as shoot 1 except now its for 2
-        while(twoShot > 0){
+        while(twoShot > 0 && gameOver == false){
             int aliveCount = 0;
             for(MyPlayer player : players){
                 if(player.getHp() > 0){
@@ -2395,7 +2398,7 @@ public class OldSaloonFX extends BangFXMain {
         }
         
         //if they rolled any beer it is solved here
-        while(beerCount > 0 && currPlayer.getHp() > 0){ 
+        while(beerCount > 0 && currPlayer.getHp() > 0 && gameOver == false){ 
             int aliveCount = 0;
             for(MyPlayer player : players){
                 if(player.getHp() > 0){
