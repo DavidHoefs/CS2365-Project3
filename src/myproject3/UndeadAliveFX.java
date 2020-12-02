@@ -46,16 +46,6 @@ public class UndeadAliveFX extends BangFXMain {
     String cardsDrawn = "Undead Cards\n";
     CheckBox duelDice1;
     CheckBox duelDice2;
-     //used for dueling
-    Button duel;
-    CheckBox p1d;
-    CheckBox p2d;
-    CheckBox p3d;
-    CheckBox p4d;
-    CheckBox p5d;
-    CheckBox p6d;
-    CheckBox p7d;
-    CheckBox p8d;
     Label p1card;
     Label p2card;
     Label p3card;
@@ -352,7 +342,7 @@ public class UndeadAliveFX extends BangFXMain {
         layout.getChildren().add(cardsDrawnLabel);
         layout.setAlignment(Pos.TOP_CENTER);
         Stage s = new Stage();
-        Scene scene = new Scene(layout, 950, 850);
+        Scene scene = new Scene(layout, 1200, 1000);
         scene.getStylesheets().add(getClass().getResource("StyleGUI.css").toString());
         s.setScene(scene);
         s.show();
