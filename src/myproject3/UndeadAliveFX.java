@@ -17,6 +17,8 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javax.swing.JOptionPane;
 import java.util.Random;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
 /**
  * Is the object blueprint of the UndeadAlive FX
@@ -174,26 +176,6 @@ public class UndeadAliveFX extends BangFXMain {
         p8b.setDisable(true);
         giveBeer.setDisable(true);
         
-        //Checkboxes for dueling
-       p1d = new CheckBox("P1");
-       p2d = new CheckBox("P2");
-       p3d = new CheckBox("P3");
-       p4d = new CheckBox("P4");
-       p5d = new CheckBox("P5");
-       p6d = new CheckBox("P6");
-       p7d = new CheckBox("P7");
-       p8d = new CheckBox("P8");
-       duel = new Button("Duel");
-       
-        p1d.setDisable(true);
-        p2d.setDisable(true);
-        p3d.setDisable(true);
-        p4d.setDisable(true);
-        p5d.setDisable(true);
-        p6d.setDisable(true);
-        p7d.setDisable(true);
-        p8d.setDisable(true);
-        duel.setDisable(true);
         cardsDrawnLabel.setDisable(true);
         
         //used for shooting
@@ -288,12 +270,14 @@ public class UndeadAliveFX extends BangFXMain {
            
         }));
         
+        ImageView undeadLogo = new ImageView(new Image(getClass().getResourceAsStream("undeadAliveLogo.png")));
+        undeadLogo.setFitWidth(600);
+        undeadLogo.setFitHeight(150);
+        
         //below the scene is set-up and all the boxes are put in one vertical box
         HBox hbox1 = new HBox(20);
         hbox1.getChildren().addAll(p4, p5, p6, p7, p8);
         hbox1.setAlignment(Pos.CENTER);
-        
-       
         
         HBox hbox2 = new HBox(20);
         hbox2.getChildren().addAll(rollDice, reRoll, saveRolls);
@@ -319,9 +303,6 @@ public class UndeadAliveFX extends BangFXMain {
         hboxB.getChildren().addAll(p1b, p2b, p3b, p4b, p5b, p6b, p7b, p8b, giveBeer);
         hboxB.setAlignment(Pos.CENTER);
         
-        HBox hboxDuel = new HBox(20);
-        hboxDuel.getChildren().addAll(p1d, p2d, p3d, p4d, p5d, p6d, p8d, duel);
-        hboxDuel.setAlignment(Pos.CENTER);
         
         HBox hboxS = new HBox(20);
         hboxS.getChildren().addAll(twoShotLeft, oneShotLeft, oneShotRight, twoShotRight);
@@ -350,6 +331,7 @@ public class UndeadAliveFX extends BangFXMain {
         
         //final vertical box that holds every other box
         VBox layout = new VBox(5);
+        layout.getChildren().add(undeadLogo);
         layout.getChildren().add(new Label("Player Count"));
         layout.getChildren().add(hbox1);
         layout.getChildren().add(space);
@@ -361,12 +343,9 @@ public class UndeadAliveFX extends BangFXMain {
         layout.getChildren().add(new Label("Shooting"));
         layout.getChildren().add(hboxS);
         layout.getChildren().add(space4);
-        layout.getChildren().add(new Label("Give Beer (select one at a time"));
+        layout.getChildren().add(new Label("Give Beer (select one at a time)"));
         layout.getChildren().add(hboxB);
         layout.getChildren().add(space3);
-        layout.getChildren().add(new Label("Duel (select one at a time)"));
-        layout.getChildren().add(hboxDuel);
-        layout.getChildren().add(space5);
         layout.getChildren().add(hbox4);
         layout.getChildren().add(hbox5);
         layout.getChildren().add(winner);
