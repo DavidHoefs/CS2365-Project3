@@ -7,7 +7,7 @@ package myproject3;
 import java.util.Random;
 
 /**
- *
+ * Is the object blueprint of the UndeadAlive Dice
  * @author zhunt, hoeffs
  */
 public class UndeadAliveDice extends MyDice {
@@ -15,6 +15,10 @@ public class UndeadAliveDice extends MyDice {
     private int duelRoll;
     private int[] duelRolls;
     
+    /**
+     * Creates the UndeadAlive version of the Dice
+     * @param n is the number of dice
+     */
     public UndeadAliveDice(int n){
         Random rnd = new Random();
         this.duelRolls = new int[n];
@@ -25,10 +29,16 @@ public class UndeadAliveDice extends MyDice {
     }
     
     @Override
+    /**
+     * Returns the single Roll
+     */
     public int getRoll(){
         return this.duelRoll;
     }
     
+     /**
+     * Returns the array of Rolls
+     */
     public int[] getRolls(){
         return this.duelRolls;
     }
