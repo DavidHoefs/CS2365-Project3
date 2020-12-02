@@ -1060,6 +1060,7 @@ public class UndeadAliveFX extends BangFXMain {
             duelDice2.setDisable(true);
             saveRolls.setDisable(true);
             dice1.setSelected(false);
+            nextPlayer.setDisable(false);
             dice2.setSelected(false);
             dice3.setSelected(false);
             duelDice1.setSelected(false);
