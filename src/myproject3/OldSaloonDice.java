@@ -1,7 +1,8 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * CS2365 FALL 2020 GRROUP PROJECT 3
+ * Members: Javier Vasquez, Blane Brown, David Hoefs, Cole Townsend, Zach Hunt 
+ *
+ * This class was created by: David Hoefs
  */
 package myproject3;
 
@@ -9,7 +10,7 @@ import java.util.Random;
 
 /**
  * Is the object blueprint of the OldSaloon Dice
- * @author hoefs
+ * @author David Hoefs
  */
 public class OldSaloonDice extends MyDice {
     

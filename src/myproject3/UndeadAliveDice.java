@@ -1,6 +1,8 @@
 /*
  * CS2365 FALL 2020 GRROUP PROJECT 3
- * Members: Javier Vasquez, Blane Brown, David Hoefs, Cole, Zach Hunt 
+ * Members: Javier Vasquez, Blane Brown, David Hoefs, Cole Townsend, Zach Hunt 
+ *
+ * This class was created by: David Hoefs and Zach Hunt
  */
 package myproject3;
 
@@ -8,7 +10,7 @@ import java.util.Random;
 
 /**
  * Is the object blueprint of the UndeadAlive Dice
- * @author zhunt, hoeffs
+ * @author Zach Hunt, David Hoefs
  */
 public class UndeadAliveDice extends MyDice {
     

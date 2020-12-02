@@ -1,6 +1,8 @@
 /*
  * CS2365 FALL 2020 GRROUP PROJECT 3
  * Members: Javier Vasquez, Blane Brown, David Hoefs, Cole Townsend, Zach Hunt 
+ *
+ * This class was created by: Blane Brown and Javier Vasquez
  */
 package myproject3;
 
@@ -10,7 +12,7 @@ import java.util.Random;
 
 /**
  * Is the object blueprint for the base game.
- * @author Javier Vasquez, Blane Brown
+ * @author Blane Brown
  */
 public class MyProject3 {
     //Data members
@@ -79,17 +81,17 @@ public class MyProject3 {
     private String[] getChars(String expansion){
         if("Old Saloon".equals(expansion)){
             String [] Chars = {"El Gringo", "Jesse Jones", "Jourdonnais",
-                "Paul Regret", "Pedro Ramirez", "Suzy Lafayette", "Vulture Sam", 
+                "Paul Regret", "Vulture Sam", "Suzy Lafayette", "Vulture Sam", 
                 "Willy The Kid","Jose Delgado","Tequila Joe"};
             return Chars;
         }else if("Undead Or Alive".equals(expansion)){
             String [] Chars = {"El Gringo", "Jesse Jones", "Jourdonnais",
-                "Paul Regret", "Pedro Ramirez", "Suzy Lafayette", "Vulture Sam", 
+                "Paul Regret", "Vulture Sam", "Suzy Lafayette", "Vulture Sam", 
                 "Willy The Kid","Belle Star","Greg Digger"};
             return Chars;
         }else{
             String [] Chars = {"El Gringo", "Jesse Jones", "Jourdonnais",
-                "Paul Regret", "Pedro Ramirez", "Suzy Lafayette", "Vulture Sam", 
+                "Paul Regret", "Vulture Sam", "Suzy Lafayette", "Vulture Sam", 
                 "Willy The Kid"};
             return Chars;
         }

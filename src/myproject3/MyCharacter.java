@@ -1,6 +1,8 @@
 /*
  * CS2365 FALL 2020 GROUP PROJECT 3
  * Members: Javier Vasquez, Blane Brown, David Hoefs, Cole, Zach Hunt 
+ *
+ * This class was created by: David Hoefs
  */
 package myproject3;
 
@@ -40,9 +42,6 @@ public class MyCharacter {
                 this.hp = 8;
                 break;
             case "Suzy Lafayette":
-                this.hp = 8;
-                break;
-            case "Pedro Ramirez":
                 this.hp = 8;
                 break;
             case "Jose Delgado":
