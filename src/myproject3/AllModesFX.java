@@ -397,11 +397,31 @@ public class AllModesFX extends BangFXMain {
             rollDice.setDisable(true);
             saveRolls.setDisable(true);
             
-            //resets the index back at 0 if it hits the playerCount - 1
-            if(this.index + 1 == playerCount)
-                this.index = 0;
-            else
-                index++;
+           //resets the index back at 0 if it hits the playerCount - 1
+            if(outbreak){
+                if(this.index + 1 == playerCount){
+                    this.index = 0;
+                    while(players.get(this.index).getHp() <= 0){
+                        index++;
+                    }
+                }
+                else{
+                    index = index + 1;
+                    while(players.get(this.index).getHp() <= 0){
+                        if(this.index + 1 == playerCount){
+                            this.index = 0;
+                        }
+                        else{
+                            index++;
+                        }
+                    }
+                }
+            }else{
+                if(this.index + 1 == playerCount)
+                    this.index = 0;
+                else
+                    index++;
+            }
             
             //used for checking whos alive and if anyone has won
             int alive = 0;
@@ -560,170 +580,6 @@ public class AllModesFX extends BangFXMain {
         }
         cardsDrawn += "\n" + temp;
         cardsDrawnLabel.setText(cardsDrawn);
-        /*
-                switch(i){
-                    case 0:
-                        String temp = cards.getCardsString(cards.drawCard(this.index));
-                        switch(temp){
-                            case "One":
-                                zombieHandCount++;
-                                break;
-                            case "Two":
-                                zombieHandCount+=2;
-                                break;
-                        }
-                        if(zombieHandCount > aliveInGame && aliveInGame != 0 ){
-                            outbreak = true;
-                            outbreakCount++;
-                            p1t.setText("ZOMBIE - " + players.get(index).getRole() );
-                            players.get(index).zombie = true;
-                        }
-                        //p1card.setText( "\nUndead Card "+ temp);
-                        
-                        cardsDrawn += "\n" + temp;
-                        cardsDrawnLabel.setText(cardsDrawn);
-                        break;
-                    case 1:
-                        temp = cards.getCardsString(cards.drawCard(this.index));
-                        switch(temp){
-                            case "One":
-                                zombieHandCount++;
-                                break;
-                            case "Two":
-                                zombieHandCount+=2;
-                                break;
-                        }
-                         if(zombieHandCount > aliveInGame && aliveInGame != 0 ){
-                            outbreak = true;
-                            outbreakCount++;
-                            p2t.setText("ZOMBIE - " + players.get(index).getRole() );
-                            players.get(index).zombie = true;
-                        }
-                        //p2t.setText(players.get(index).getRole());
-                        cardsDrawn += "\n" + temp;
-                        cardsDrawnLabel.setText(cardsDrawn);
-                        break;
-                    case 2:
-                        temp = cards.getCardsString(cards.drawCard(this.index));
-                        switch(temp){
-                            case "One":
-                                zombieHandCount++;
-                                break;
-                            case "Two":
-                                zombieHandCount+=2;
-                                break;
-                        }
-                         if(zombieHandCount > aliveInGame && aliveInGame != 0 ){
-                            outbreak = true;
-                            outbreakCount++;
-                            p3t.setText("ZOMBIE - " + players.get(index).getRole() );
-                            players.get(index).zombie = true;
-                            
-                        }
-                        //p3t.setText(players.get(index).getRole());
-                       cardsDrawn += "\n" + temp;
-                        cardsDrawnLabel.setText(cardsDrawn);
-                        break;
-                    case 3:
-                       temp = cards.getCardsString(cards.drawCard(this.index));
-                        switch(temp){
-                            case "One":
-                                zombieHandCount++;
-                                break;
-                            case "Two":
-                                zombieHandCount+=2;
-                                break;
-                        }
-                         if(zombieHandCount > aliveInGame && aliveInGame != 0 ){
-                            outbreak = true;
-                            outbreakCount++;
-                            p4t.setText("ZOMBIE - " + players.get(index).getRole() );
-                            players.get(index).zombie = true;
-                        }
-                        //p4t.setText(players.get(index).getRole());
-                     cardsDrawn += "\n" + temp;
-                      cardsDrawnLabel.setText(cardsDrawn);
-                        break;
-                    case 4:
-                       temp = cards.getCardsString(cards.drawCard(this.index));
-                        switch(temp){
-                            case "One":
-                                zombieHandCount++;
-                                break;
-                            case "Two":
-                                zombieHandCount+=2;
-                                break;
-                        }
-                        if(zombieHandCount > aliveInGame && aliveInGame != 0 && outbreakCount == 0){
-                            outbreak = true;
-                            outbreakCount++;
-                            p5t.setText("ZOMBIE - " + players.get(index).getRole() );
-                            players.get(index).zombie = true;
-                        }
-                        //p5t.setText(players.get(index).getRole());
-                       cardsDrawn += "\n" + temp;
-                       cardsDrawnLabel.setText(cardsDrawn);
-                        break;
-                    case 5:
-                      temp = cards.getCardsString(cards.drawCard(this.index));
-                        switch(temp){
-                            case "One":
-                                zombieHandCount++;
-                                break;
-                            case "Two":
-                                zombieHandCount+=2;
-                                break;
-                        }
-                         if(zombieHandCount > aliveInGame && aliveInGame != 0 && outbreakCount == 0){
-                            outbreak = true;
-                            outbreakCount++;
-                            p6t.setText("ZOMBIE - " + players.get(index).getRole() );
-                            players.get(index).zombie = true;
-                        }
-                      cardsDrawn += "\n" + temp;
-                       cardsDrawnLabel.setText(cardsDrawn);
-                        break;
-                    case 6:
-                        temp = cards.getCardsString(cards.drawCard(this.index));
-                        switch(temp){
-                            case "One":
-                                zombieHandCount++;
-                                break;
-                            case "Two":
-                                zombieHandCount+=2;
-                                break;
-                        }
-                         if(zombieHandCount > aliveInGame && aliveInGame != 0 && outbreakCount == 0){
-                            outbreak = true;
-                            outbreakCount++;
-                            p7t.setText("ZOMBIE - " + players.get(index).getRole() );
-                            players.get(index).zombie = true;
-                        }
-                        cardsDrawn += "\n" + temp;
-                        cardsDrawnLabel.setText(cardsDrawn);
-                        //p7t.setText(players.get(index).getRole());
-                        break;
-                    case 7:
-                        temp = cards.getCardsString(cards.drawCard(this.index));
-                        switch(temp){
-                            case "One":
-                                zombieHandCount++;
-                                break;
-                            case "Two":
-                                zombieHandCount+=2;
-                                break;
-                        }
-                         if(zombieHandCount > aliveInGame && aliveInGame != 0 && outbreakCount == 0){
-                            outbreak = true;
-                            outbreakCount++;
-                            p8t.setText("ZOMBIE - " + players.get(index).getRole() );
-                            players.get(index).zombie = true;
-                        }
-                       cardsDrawn += "\n" + temp;
-                        cardsDrawnLabel.setText(cardsDrawn);
-                        //p8t.setText(players.get(index).getRole());
-                        break;
-                }*/
     }
     
     @Override
