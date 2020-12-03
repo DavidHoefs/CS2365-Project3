@@ -437,7 +437,7 @@ public class BangFXMain extends Application {
         layout.getChildren().add(winner);
         layout.setAlignment(Pos.TOP_CENTER);
         
-        Scene scene = new Scene(layout, 950, 650);
+        Scene scene = new Scene(layout, 1200, 850);
         scene.getStylesheets().add(getClass().getResource("StyleGUI.css").toString());
         primaryStage.setScene(scene);
         primaryStage.show();
