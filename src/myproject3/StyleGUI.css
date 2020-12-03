@@ -1,0 +1,24 @@
+/*
+ * CS2365 FALL 2020 GRROUP PROJECT 3
+ * Members: Javier Vasquez, Blane Brown, David Hoefs, Cole Townsend, Zach Hunt 
+ *
+ * This class was created by: Blane Brown, adds style to the GUIs
+ */
+
+/* 
+    Created on : Dec 2, 2020, 12:13:09 AM
+    Author     : Blane Brown
+*/
+
+
+.root{
+    -fx-background-color: #a9a9a9;
+    -fx-text-fill: #525252;
+    -fx-font-weight: bold;
+}
+
+.button{
+    -fx-text-fill: #d92121;
+    -fx-background-radius: 5;
+    -fx-font-weight: bold;
+}

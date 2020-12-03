@@ -1,6 +1,8 @@
 /*
  * CS2365 FALL 2020 GRROUP PROJECT 3
  * Members: Javier Vasquez, Blane Brown, David Hoefs, Cole Townsend, Zach Hunt 
+ *
+ * This class was created by: Blane Brown
  */
 package myproject3;
 
@@ -8,7 +10,7 @@ package myproject3;
  * Is the object blueprint for a player.
  * Stores things such as name, role, health-points, maximum health-points,
  * arrows, what character they are, and if they are a human player or not
- * @author Blane Brown, Javier Vasquez
+ * @author Blane Brown
  */
 public class MyPlayer {
     //Private data memebers
@@ -24,6 +26,7 @@ public class MyPlayer {
     private int arrows;
     private final MyCharacter character;
     private boolean human = false;
+    public boolean zombie = false;
     
     //Constructor
     //creates a player object, each player will have one of these

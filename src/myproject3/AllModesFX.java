@@ -24,8 +24,20 @@ import javafx.scene.image.ImageView;
  * Is the object blueprint of the UndeadAlive FX
  * @author Javier Vasquez, David Hoefs, Zach Hunt
  */
-public class UndeadAliveFX extends BangFXMain {
+public class AllModesFX extends BangFXMain {
     ArrayList<MyPlayer> players;
+    
+    //OLD SALOON
+    int indianChiefArrow = 1;
+    int indianChiefArrowIndex;
+    Label loudmouthRoll;
+    Button returnArrow;
+    Label cowardRoll;
+    int returnArrowCount = 0;
+    CheckBox loudmouthDice = new CheckBox("Loudmouth");
+    CheckBox cowardDice = new CheckBox("Coward");
+    
+    //UNDEAD ALIVE
     int x = 0;
     Label duelRoll1;
     Label duelRoll2;
@@ -39,7 +51,7 @@ public class UndeadAliveFX extends BangFXMain {
     int gatCount = 0;
     int duelCount = 0;
     int zombieHandCount=0;
-    int rolls[] = {0,0,0,0,0,0};
+    int rolls[] = {-1, -1, -1, -1, -1, -1};
     int zombieCount=0;
     boolean zombieHpSet = false;
     boolean outbreak = false;
@@ -73,7 +85,7 @@ public class UndeadAliveFX extends BangFXMain {
     int[] duelRolls;
     UndeadAliveCards cards = new UndeadAliveCards(11);
  
-    UndeadAliveFX(){
+    AllModesFX(){
         super();
         
         //below is where the above labels and buttons are created
@@ -83,6 +95,9 @@ public class UndeadAliveFX extends BangFXMain {
         roll3 = new Label();
         duelRoll1 = new Label();
         duelRoll2 = new Label();
+        // labels for Old Saloon dice
+        loudmouthRoll = new Label();
+        cowardRoll = new Label();
          
         
         //these are the titles of each player
@@ -143,6 +158,8 @@ public class UndeadAliveFX extends BangFXMain {
         dice3 = new CheckBox("Dice 3");
         duelDice1 = new CheckBox("Duel Dice 1");
         duelDice2 = new CheckBox("Duel Dice 2");
+        loudmouthDice = new CheckBox("Loudmouth");
+        cowardDice = new CheckBox("Coward");
         
                 
         reRoll = new Button("Re-Roll");
@@ -153,6 +170,8 @@ public class UndeadAliveFX extends BangFXMain {
         duelDice1.setDisable(true);
         duelDice2.setDisable(true);
         
+        loudmouthDice.setDisable(true);
+        cowardDice.setDisable(true);
         reRoll.setDisable(true);
         
         //checkboxes so the user can chose who to give beer to
@@ -175,6 +194,8 @@ public class UndeadAliveFX extends BangFXMain {
         p7b.setDisable(true);
         p8b.setDisable(true);
         giveBeer.setDisable(true);
+        returnArrow = new Button("Return Arrow");
+        returnArrow.setDisable(true);
         
         cardsDrawnLabel.setDisable(true);
         
@@ -303,7 +324,6 @@ public class UndeadAliveFX extends BangFXMain {
         hboxB.getChildren().addAll(p1b, p2b, p3b, p4b, p5b, p6b, p7b, p8b, giveBeer);
         hboxB.setAlignment(Pos.CENTER);
         
-        
         HBox hboxS = new HBox(20);
         hboxS.getChildren().addAll(twoShotLeft, oneShotLeft, oneShotRight, twoShotRight);
         hboxS.setAlignment(Pos.CENTER);
@@ -369,27 +389,11 @@ public class UndeadAliveFX extends BangFXMain {
             rollDice.setDisable(true);
             saveRolls.setDisable(true);
             
-            
-            
             //used for checking whos alive and if anyone has won
             int alive = 0;
             for(MyPlayer player : players){
                 if(player.getHp() > 0){
                     alive = alive + 1;
-                }
-            }
-            
-            aliveInGame = alive;
-            // check for zombie outbreak
-            if(zombieHandCount > aliveInGame && aliveInGame > 1 && zombieHpSet == false){
-                outbreak = true;
-                
-                outbreakCount++;
-                cardsDrawnLabel.setText("ZOMBIE OUTBREAK!");
-                for(MyPlayer player: players){
-                    if(player.getHp() <= 0){
-                        player.zombie = true;
-                    }
                 }
             }
             if(alive > 1){
@@ -399,53 +403,81 @@ public class UndeadAliveFX extends BangFXMain {
                     deathIndex++;
                 }
             }
+            
+            aliveInGame = alive;
+            // check for zombie outbreak
+            if(zombieHandCount > aliveInGame && aliveInGame != 0 && zombieHpSet == false){
+                outbreak = true;
+                
+                outbreakCount++;
+                cardsDrawnLabel.setText("ZOMBIE OUTBREAK!");
+                for(MyPlayer player: players){
+                    if(player.getHp() <= 0){
+                        player.zombie = true;
+                        
+                    }
+                }
+               
+
+            }
             // if player dies, dont give them turn after outbreak starts
             if(outbreak){
                 cardsDrawnLabel.setText("ZOMBIE OUTBREAK!");
                 if(this.index + 1 == playerCount){
-                    this.index = 0;
-                    while(players.get(this.index).getHp() <= 0){
-                        index++;
-                    }
-                    if(players.get(index).zombie){
-                        duelDice1.setDisable(true);
-                        duelDice2.setDisable(true);
-                    }
+                this.index = 0;
+                while(players.get(this.index).getHp() <= 0){
+                    index++;
+                }
+                if(players.get(index).zombie){
+                    duelDice1.setDisable(true);
+                    duelDice2.setDisable(true);
+                }
                 }
                 else{
-                    this.index = index + 1;
-                    while(players.get(this.index).getHp() <= 0){
-                        if(this.index + 1 == playerCount){
-                            this.index = 0;
-                        }
-                        else{
-                            index++;
-                        }
+                this.index = index + 1;
+                while(players.get(this.index).getHp() <= 0){
+                    if(this.index + 1 == playerCount){
+                        this.index = 0;
+                    }
+                    else{
+                        index++;
+                    }
 
-                    }
-                    if(players.get(index).zombie){
-                        duelDice1.setDisable(true);
-                        duelDice2.setDisable(true);
-                    }
                 }
+                if(players.get(index).zombie){
+                    duelDice1.setDisable(true);
+                    duelDice2.setDisable(true);
+                }
+            }
                 // even if player is dead they will draw a card
             }else{
                  //resets the index back at 0 if it hits the playerCount - 1
-                if(this.index + 1 == playerCount){
-                    this.index = 0;
-                }
-                else{
-                    this.index = index + 1;
+            if(this.index + 1 == playerCount){
+                this.index = 0;
+//                while(players.get(this.index).getHp() <= 0){
+//                    index++;
+//                }
+            }
+            else{
+                this.index = index + 1;
+//                while(players.get(this.index).getHp() <= 0){
+//                    if(this.index + 1 == playerCount){
+//                        this.index = 0;
+//                    }
+//                    else{
+//                        index++;
+//                    }
+
                 }
             }
            
-            if(players.get(index).zombie){
-                duelDice1.setDisable(true);
-                duelDice2.setDisable(true);
-            }
+                if(players.get(index).zombie==true){
+                    duelDice1.setDisable(true);
+                    duelDice2.setDisable(true);
+                }
             
             //if a player is alive, it will become their turn once it hits their index
-            if(players.get(this.index).getHp() > 0){
+            if(players.get(this.index).getHp() != 0){
                 p1c.setText("");
                 p2c.setText("");
                 p3c.setText("");
@@ -549,14 +581,8 @@ public class UndeadAliveFX extends BangFXMain {
                         //p8t.setText(players.get(index).getRole());
                         break;
                 }
-                drawZombCard(index);
-            }
-        }));
-    }
-    
-    public void drawZombCard(int i){
-        cardsDrawnLabel.setDisable(false);
-                switch(i){
+                cardsDrawnLabel.setDisable(false);
+                switch(this.index){
                     case 0:
                         String temp = cards.getCardsString(cards.drawCard(this.index));
                         switch(temp){
@@ -719,8 +745,10 @@ public class UndeadAliveFX extends BangFXMain {
                         //p8t.setText(players.get(index).getRole());
                         break;
                 }
-    }
+            }
+        }));
     
+    }
     @Override
     public void turn(MyPlayer currPlayer){
         if(currPlayer.getHuman() == true){
@@ -737,10 +765,14 @@ public class UndeadAliveFX extends BangFXMain {
                 rollDice.setDisable(false);
                 duelDice1.setDisable(false);
                 duelDice2.setDisable(false);
+
                 nextPlayer.setDisable(true);
                 dice1.setDisable(false);
                 dice2.setDisable(false);
                 dice3.setDisable(false);
+
+                loudmouthDice.setDisable(false);
+                cowardDice.setDisable(false);
             }
             
         }
@@ -751,7 +783,7 @@ public class UndeadAliveFX extends BangFXMain {
     }
     
     //used for dropping an arrow (Pedro Ramirez's ability)
-    /*
+    /**
     @Override
     public void dropArrow(MyPlayer currPlayer){
         currPlayer.setArrows((currPlayer.getArrows() - 1));
@@ -800,17 +832,23 @@ public class UndeadAliveFX extends BangFXMain {
         rollDice.setOnAction((e -> {
             duelCount = 0;
             saveRolls.setDisable(false);
-            MyDice firstRoll = new MyDice(3);
+            MyDice firstRoll; 
+            if("Jose Delgado".equals(currPlayer.getName()) && loudmouthDice.isSelected()){
+                firstRoll = new MyDice(6);
+            }else if("Tequila Joe".equals(currPlayer.getName()) && cowardDice.isSelected()){
+                firstRoll = new MyDice(6);
+            }else{
+                firstRoll = new MyDice(5);
+            }
             //this.rolls = firstRoll.getRolls();
             System.arraycopy(firstRoll.getRolls(), 0, this.rolls, 0, 3);
-            if(!currPlayer.zombie)
-                System.arraycopy(duelDie.getRolls(), 0, this.rolls, 3, 2);
+            System.arraycopy(duelDie.getRolls(), 0, this.rolls, 3, 2);
             roll1.setText(firstRoll.getRollsString(rolls[0]));
             roll2.setText(firstRoll.getRollsString(rolls[1]));
             roll3.setText(firstRoll.getRollsString(rolls[2]));
             
-            int rollCount;
-            if(!currPlayer.zombie){
+            int rollCount = 0;
+            if(currPlayer.zombie == false){
                 duelRoll1.setText(duelDie.getRollsString(rolls[3]));
                 duelRoll2.setText(duelDie.getRollsString(rolls[4]));
                 rollCount = this.rolls.length;
@@ -980,7 +1018,7 @@ public class UndeadAliveFX extends BangFXMain {
             }else{
                 dice3.setDisable(true);
             }
-            if(duelDice1.isSelected() && !currPlayer.zombie){
+            if(duelDice1.isSelected()){
                 MyDice reRollDuel1 = new UndeadAliveDice(1);
                 this.rolls[3] = reRollDuel1.getRoll();
                 duelRoll1.setText(reRollDuel1.getRollString());
@@ -1010,7 +1048,7 @@ public class UndeadAliveFX extends BangFXMain {
             }else{
                 duelDice1.setDisable(true);
             }
-            if(duelDice2.isSelected() && !currPlayer.zombie){
+            if(duelDice2.isSelected()){
                 MyDice reRollDuel2 = new MyDice();
                 this.rolls[4] = reRollDuel2.getRoll();
                 duelRoll2.setText(reRollDuel2.getRollString());
@@ -1058,12 +1096,7 @@ public class UndeadAliveFX extends BangFXMain {
             duelDice2.setSelected(false);
             dynamiteCount = 0;
             reRollCount = 0;
-            int rollCount;
-            if(currPlayer.zombie)
-                rollCount = 3;
-            else
-                rollCount = 5;
-            for(int i = 0; i < rollCount; i++){
+            for(int i = 0; i < 3; i++){
                 if(this.rolls[i] == 5){
                     beerCount = beerCount + 1;
                 }
@@ -1077,39 +1110,39 @@ public class UndeadAliveFX extends BangFXMain {
                     oneShot++;
                 }
             }
-            if(!currPlayer.zombie){
+            if(currPlayer.zombie == false){
                 
             
-                for(int i = 3; i < 5; i++){
-                    if(this.rolls[i] == 2){
-                        whiskeyCount++;
-                    }
-                    if(this.rolls[i] == 3){
-                        gatCount++;
-                    }
-                    if(this.rolls[i] == 4 || this.rolls[i] == 5){
-                        duelCount++;
-                    }
+            for(int i = 3; i < 5; i++){
+                if(this.rolls[i] == 2){
+                    whiskeyCount++;
                 }
-
-                //handle duel logic
-                while(duelCount > 0){
-                    int n = 0;
-                    while(n < 1 || n > 7){
-                        String input = JOptionPane.showInputDialog(null, "Duel!\nEnter the number of the player you want to duel with [2 - 8]");
-                        n = Integer.parseInt(input) - 1;
-                    }
-                    duelLogic(index, n);
-                    duelCount--;
+                if(this.rolls[i] == 3){
+                    gatCount++;
                 }
-
-                //handle whiskey logic
-                for(int i = 3; i < 5; i++){
-                    if(this.rolls[i] == 2)
-                        whiskeyCount++;
-                    else if(this.rolls[i] == 4 || this.rolls[i] == 5)
-                        duelCount++;     
+                if(this.rolls[i] == 4 || this.rolls[i] == 5){
+                    duelCount++;
                 }
+            }
+            
+            //handle duel logic
+            while(duelCount > 0){
+                int n = 0;
+                while(n < 1 || n > 7){
+                    String input = JOptionPane.showInputDialog(null, "Duel!\nEnter the number of the player you want to duel with [2 - 8]");
+                    n = Integer.parseInt(input) - 1;
+                }
+                duelLogic(index, n);
+                duelCount--;
+            }
+            
+            //handle whiskey logic
+            for(int i = 3; i < 5; i++){
+                if(this.rolls[i] == 2)
+                    whiskeyCount++;
+                else if(this.rolls[i] == 4 || this.rolls[i] == 5)
+                    duelCount++;     
+            }
             }
             if(twoShot > 0 || oneShot > 0){
                 if(twoShot > 0){
@@ -1121,7 +1154,7 @@ public class UndeadAliveFX extends BangFXMain {
                     oneShotRight.setDisable(false);
                 }
             }
-            if(beerCount>0 && !currPlayer.zombie){
+            if(beerCount>0){
                 if(gameOver == false){
                     if("Suzy Lafayette".equals(currPlayer.getCharacterName())){
                         currPlayer.gainHp(2);
@@ -1282,20 +1315,23 @@ public class UndeadAliveFX extends BangFXMain {
                     p6b.setSelected(false);
                     p7b.setSelected(false);
                     p8b.setSelected(false);
-                    
                     if(currPlayer.zombie == false){
-                        while(whiskeyCount > 0 && currPlayer.getHp() > 0){
-                            if("Greg Digger".equals(currPlayer.getCharacterName())){
-                                if(currPlayer.zombie == false)
-                                    currPlayer.gainHp(2);
-                            }
-                            else{
-                                    if(currPlayer.zombie == false)
-                                        currPlayer.gainHp(1);
-                            }
-                            updateHp(index);
-                            whiskeyCount--;
+                        
+                    
+                    while(whiskeyCount > 0 && currPlayer.getHp() > 0){
+                        if("Greg Digger".equals(currPlayer.getCharacterName())){
+                            if(currPlayer.zombie == false)
+                                currPlayer.gainHp(2);
                         }
+                            
+                    else{
+                            if(currPlayer.zombie == false)
+                                currPlayer.gainHp(1);
+                       }
+                            
+                        updateHp(index);
+                        whiskeyCount--;
+                    }
                     }
                     if(this.gatCount >= 3 || (this.gatCount > 1 && "Willy The Kid".equals(currPlayer.getCharacterName()))){
                         for(int i = 0; i < playerCount; i++){
@@ -1944,9 +1980,13 @@ public class UndeadAliveFX extends BangFXMain {
             if(outbreak && outbreakCount >=0 && zombieHpSet == false){
                 players.get(i).setHp(aliveInGame);
                 zombieHpSet = true;
+                
+                
             }else{
                 players.get(i).setHp(0);
             }
+            
+            
         }
  
             //sets new hp for the player shot
@@ -1957,22 +1997,25 @@ public class UndeadAliveFX extends BangFXMain {
                         if(!p1dead){
                             p1dead = true;
                             String temp = cards.getCardsString(cards.drawCard(this.index));
-                            switch(temp){
-                                case "One":
-                                    zombieHandCount++;
-                                    break;
-                                case "Two":
-                                    zombieHandCount+=2;
-                                    break;
-                            }
+                        switch(temp){
+                            case "One":
+                                zombieHandCount++;
+                                break;
+                            case "Two":
+                                zombieHandCount+=2;
+                                break;
+                                    
+                        
+                            
+                        }
                         cardsDrawn += "\n" + temp;
-                        cardsDrawnLabel.setText(cardsDrawn);
+                       cardsDrawnLabel.setText(cardsDrawn);
                         samAbility();
                         }
                        
                         //p4t.setText(players.get(index).getRole());
                       
-                        if(zombieHandCount > aliveInGame && aliveInGame != 0 && outbreakCount == 0){
+                         if(zombieHandCount > aliveInGame && aliveInGame != 0 && outbreakCount == 0){
                             outbreak = true;
                             outbreakCount++;
                             p1dead = false;
@@ -2002,20 +2045,20 @@ public class UndeadAliveFX extends BangFXMain {
                             
                             samAbility();
                             String temp = cards.getCardsString(cards.drawCard(this.index));
-                            switch(temp){
-                                case "One":
-                                    zombieHandCount++;
-                                    break;
-                                case "Two":
-                                    zombieHandCount+=2;
-                                    break;
-                            }
-                        
-                            //p4t.setText(players.get(index).getRole());
-                           cardsDrawn += "\n" + temp;
-                           cardsDrawnLabel.setText(cardsDrawn);
+                        switch(temp){
+                            case "One":
+                                zombieHandCount++;
+                                break;
+                            case "Two":
+                                zombieHandCount+=2;
+                                break;
                         }
-                        if(zombieHandCount > aliveInGame && aliveInGame != 0 && outbreakCount == 0){
+                        
+                        //p4t.setText(players.get(index).getRole());
+                       cardsDrawn += "\n" + temp;
+                       cardsDrawnLabel.setText(cardsDrawn);
+                        }
+                         if(zombieHandCount > aliveInGame && aliveInGame != 0 && outbreakCount == 0){
                             outbreak = true;
                             outbreakCount++;
                             p2dead = false;
@@ -2030,8 +2073,8 @@ public class UndeadAliveFX extends BangFXMain {
                         }
                         
                         arrowPile = arrowPile + players.get(i).getArrows();
-                        players.get(i).setArrows(0);
-                        p2arrow.setText("Arrows: 0");
+                            players.get(i).setArrows(0);
+                            p2arrow.setText("Arrows: 0");
                     }
                     break;
                 case 2:
@@ -2295,22 +2338,11 @@ public class UndeadAliveFX extends BangFXMain {
                 zombieAlive++;
             }
         }
-        
-        if(aliveInGame == 0 && zombieAlive >=1 && outlawAlive == 0 && sheriffAlive == 0 && deputyAlive == 0 && outbreak){
-            winner.setText("THE WINNER IS THE ZOMBIES!");
-            winner.setStyle("-fx-text-fill: #00ffff");
-            this.gameOver = true;
+        if(zombieHandCount <= aliveInGame && aliveInGame >= 0){
+            
         }
-        else if(aliveInGame >= 1 && zombieAlive == 0 && outbreak){
-            winner.setText("THE WINNERS ARE THE SURVIVORS");
-            winner.setStyle("-fx-text-fill: #00fff");
-            this.gameOver = true;
-        }
-        else if(outbreak == true && outbreakCount == 0){
-         players.get(i).zombie = true;
-         zombieCount++;
-        }
-        else if(sheriffAlive == 0 && outlawAlive > 0){
+     
+        if(sheriffAlive == 0 && outlawAlive > 0){
             winner.setText("THE WINNER IS THE OUTLAWS");
             winner.setStyle("-fx-text-fill: #00ffff");
             disableAll();
@@ -2327,6 +2359,17 @@ public class UndeadAliveFX extends BangFXMain {
             winner.setStyle("-fx-text-fill: #00ffff");
             disableAll();
             this.gameOver = true;
+        }
+        else if(aliveInGame == 0 && zombieAlive >=1 && outlawAlive == 0 && sheriffAlive == 0 && deputyAlive == 0){
+            winner.setText("THE WINNER IS THE ZOMBIES!");
+            winner.setStyle("-fx-text-fill: #00ffff");
+            this.gameOver = true;
+        }
+        else if(outbreak == true && outbreakCount == 0){
+         players.get(i).zombie = true;
+         zombieCount++;
+        }else{
+            
         }
         
         
