@@ -66,6 +66,14 @@ public class AllModesFX extends BangFXMain {
     Label cardsDrawnLabel;
     Label zombie;
     int aliveInGame = 0;
+    int indianChiefArrow = 1;
+    int indianChiefArrowIndex;
+    Label loudmouthRoll;
+    Button returnArrow;
+    Label cowardRoll;
+    int returnArrowCount = 0;
+    CheckBox loudmouthDice = new CheckBox("Loudmouth");
+    CheckBox cowardDice = new CheckBox("Coward");
     
  
     Label undeadCard;
@@ -82,8 +90,15 @@ public class AllModesFX extends BangFXMain {
         roll3 = new Label();
         duelRoll1 = new Label();
         duelRoll2 = new Label();
-         
+        loudmouthRoll = new Label();
+        cowardRoll = new Label();
+        loudmouthDice = new CheckBox("Loudmouth");
+        cowardDice = new CheckBox("Coward");
         
+
+        //reRoll.setDisable(true);
+        returnArrow = new Button("Return Arrow");
+        returnArrow.setDisable(true);
         //these are the titles of each player
         p1t = new Label("");
         p2t = new Label("");
@@ -151,6 +166,8 @@ public class AllModesFX extends BangFXMain {
         dice3.setDisable(true);
         duelDice1.setDisable(true);
         duelDice2.setDisable(true);
+        loudmouthDice.setDisable(true);
+        cowardDice.setDisable(true);
         
         reRoll.setDisable(true);
         
@@ -283,11 +300,11 @@ public class AllModesFX extends BangFXMain {
         hbox2.setAlignment(Pos.CENTER);
         
         HBox hbox3 = new HBox(25);
-        hbox3.getChildren().addAll(roll1, roll2, roll3, duelRoll1, duelRoll2);
+        hbox3.getChildren().addAll(roll1, roll2, roll3, duelRoll1, duelRoll2,loudmouthRoll,cowardRoll);
         hbox3.setAlignment(Pos.CENTER);
         
         HBox hboxD = new HBox(20);
-        hboxD.getChildren().addAll(dice1, dice2, dice3, duelDice1, duelDice2);
+        hboxD.getChildren().addAll(dice1, dice2, dice3, duelDice1, duelDice2,loudmouthDice,cowardDice);
         hboxD.setAlignment(Pos.CENTER);
         
         HBox hbox4 = new HBox(20);
@@ -299,7 +316,7 @@ public class AllModesFX extends BangFXMain {
         hbox5.setAlignment(Pos.CENTER);
         
         HBox hboxB = new HBox(20);
-        hboxB.getChildren().addAll(p1b, p2b, p3b, p4b, p5b, p6b, p7b, p8b, giveBeer);
+        hboxB.getChildren().addAll(p1b, p2b, p3b, p4b, p5b, p6b, p7b, p8b, giveBeer,returnArrow);
         hboxB.setAlignment(Pos.CENTER);
         
         
@@ -365,6 +382,8 @@ public class AllModesFX extends BangFXMain {
             roll3.setText("");
             duelRoll1.setText("");
             duelRoll2.setText("");
+            cowardRoll.setText("");
+            loudmouthRoll.setText("");
             rollDice.setDisable(true);
             saveRolls.setDisable(true);
             
@@ -411,6 +430,8 @@ public class AllModesFX extends BangFXMain {
             if(players.get(index).zombie){
                 duelDice1.setDisable(true);
                 duelDice2.setDisable(true);
+                loudmouthDice.setDisable(true);
+                cowardDice.setDisable(true);
             }
             
             //if a player is alive, it will become their turn once it hits their index
@@ -707,6 +728,8 @@ public class AllModesFX extends BangFXMain {
                 duelDice1.setDisable(true);
                 duelDice2.setDisable(true); 
                 nextPlayer.setDisable(true);
+                loudmouthDice.setDisable(true);
+                cowardDice.setDisable(true);
             }else{
                 rollDice.setDisable(false);
                 duelDice1.setDisable(false);
@@ -715,6 +738,9 @@ public class AllModesFX extends BangFXMain {
                 dice1.setDisable(false);
                 dice2.setDisable(false);
                 dice3.setDisable(false);
+                loudmouthDice.setDisable(false);
+                cowardDice.setDisable(false);
+                
             }
             
         }
@@ -767,15 +793,28 @@ public class AllModesFX extends BangFXMain {
         int tempRolls[] = {-1,-1,-1,-1,-1,-1};
         this.rolls = tempRolls;
         UndeadAliveDice duelDie = new UndeadAliveDice(2);
-        
+        OldSaloonDice cowardsDie = new OldSaloonDice("coward");
+        OldSaloonDice loudmouthDie = new OldSaloonDice("loudmouth");
         if(currPlayer.zombie == true){
             duelDice1.setDisable(true);
             duelDice2.setDisable(true);
+            cowardDice.setDisable(true);
+            loudmouthDice.setDisable(true);
         }
         rollDice.setOnAction((e -> {
             duelCount = 0;
             saveRolls.setDisable(false);
             MyDice firstRoll = new MyDice(3);
+            if(loudmouthDice.isSelected() || cowardDice.isSelected()){
+                
+                duelDice1.setDisable(true);
+            }
+            if(loudmouthDice.isSelected()){
+                cowardDice.setDisable(true);
+            }else if(cowardDice.isSelected()){
+                loudmouthDice.setDisable(true);
+            }
+            
             //this.rolls = firstRoll.getRolls();
             System.arraycopy(firstRoll.getRolls(), 0, this.rolls, 0, 3);
             if(!currPlayer.zombie)
@@ -783,7 +822,13 @@ public class AllModesFX extends BangFXMain {
             roll1.setText(firstRoll.getRollsString(rolls[0]));
             roll2.setText(firstRoll.getRollsString(rolls[1]));
             roll3.setText(firstRoll.getRollsString(rolls[2]));
-            
+            if(loudmouthDice.isSelected()){
+                loudmouthRoll.setText(loudmouthDie.getRollsString(rolls[4]));
+            }
+            if(cowardDice.isSelected()){
+                cowardRoll.setText(cowardsDie.getRollsString(rolls[4]));
+
+            }
             int rollCount;
             if(!currPlayer.zombie){
                 duelRoll1.setText(duelDie.getRollsString(rolls[3]));
@@ -792,6 +837,14 @@ public class AllModesFX extends BangFXMain {
             }else
                 rollCount = 3;
             
+            if(loudmouthDice.isSelected()){
+                loudmouthRoll.setText(loudmouthDie.getRollsString(rolls[4]));
+                duelRoll2.setText("");
+            }
+            if(cowardDice.isSelected()){
+                cowardRoll.setText(cowardsDie.getRollsString(rolls[4]));
+                duelRoll2.setText("");
+            }
             rollDice.setDisable(true);
             reRoll.setDisable(false);
             
@@ -800,6 +853,14 @@ public class AllModesFX extends BangFXMain {
                 //if a roll is a 0 a arrow is added to the player and drawn from
                 //the pile, however if the last arrow is drawn from the pile
                 //then the players get attacked by indians and the arrow pile resets
+                if((loudmouthDice.isSelected() && rolls[i] == 2 && i == 4)){
+                    currPlayer.loseHp(1);
+                    updateHp(0);
+                }
+                if((cowardDice.isSelected() && rolls[i] == 3 && i == 4)){
+                    arrow(currPlayer);
+                    continue;
+                }
                 if(rolls[i] == 0){
                     arrow(currPlayer);
                 }
@@ -1013,7 +1074,72 @@ public class AllModesFX extends BangFXMain {
                 }
             }else{
                 duelDice2.setDisable(true);
-            }           
+            }
+            if(loudmouthDice.isSelected()){
+                OldSaloonDice dice = new OldSaloonDice("loudmouth");
+                this.rolls[4] = dice.getRoll();
+                loudmouthRoll.setText(dice.getRollsString(rolls[4]));
+                if(this.rolls[4] == 0){
+                    arrow(currPlayer);        
+                }
+                if(this.rolls[4] == 2){
+                    currPlayer.loseHp(1);
+                    updateHp(0);
+                }
+                if(this.rolls[4] == 1){
+                    dynamiteCount = dynamiteCount + 1;
+                    if(dynamiteCount == 3){
+                        reRoll.setDisable(true);
+                        dice1.setDisable(true);
+                        dice2.setDisable(true);
+                        dice3.setDisable(true);
+                        dice4.setDisable(true);
+                        dice5.setDisable(true);
+                        loudmouthDice.setDisable(true);
+                        currPlayer.loseHp(1);
+                        updateHp(0);
+                        //if("Pedro Ramirez".equals(currPlayer.getCharacterName()) && currPlayer.getArrows() > 0){
+                        //    int dropResponse = JOptionPane.showConfirmDialog(null, "You took damage!\nDrop an arrow?", "Pedro Ability", JOptionPane.YES_NO_OPTION);
+                        //    if(dropResponse == JOptionPane.YES_OPTION)
+                        //        dropArrow(currPlayer);
+                        //}
+                    }
+                }   
+            }else{
+                loudmouthDice.setDisable(true);
+            }
+            if(cowardDice.isSelected()){
+                OldSaloonDice dice = new OldSaloonDice("coward");
+                this.rolls[4] = dice.getRoll(); 
+                cowardRoll.setText(dice.getRollsString(rolls[4]));
+                if(this.rolls[4] == 3){
+                    arrow(currPlayer);        
+                }
+                if(this.rolls[4] == 1){
+                    dynamiteCount = dynamiteCount + 1;
+                    if(dynamiteCount == 3){
+                        reRoll.setDisable(true);
+                        dice1.setDisable(true);
+                        dice2.setDisable(true);
+                        dice3.setDisable(true);
+                        dice4.setDisable(true);
+                        dice5.setDisable(true);
+                        loudmouthDice.setDisable(true);
+                        currPlayer.loseHp(1);
+                        updateHp(0);
+                        //if("Pedro Ramirez".equals(currPlayer.getCharacterName()) && currPlayer.getArrows() > 0){
+                        //    int dropResponse = JOptionPane.showConfirmDialog(null, "You took damage!\nDrop an arrow?", "Pedro Ability", JOptionPane.YES_NO_OPTION);
+                        //    if(dropResponse == JOptionPane.YES_OPTION)
+                        //       dropArrow(currPlayer);
+                        //}
+                    }
+                }
+                
+            
+                   
+            }else{
+                cowardDice.setDisable(true);
+            }
         }));
         
         saveRolls.setOnAction((e -> {
@@ -1033,11 +1159,14 @@ public class AllModesFX extends BangFXMain {
             dynamiteCount = 0;
             reRollCount = 0;
             int rollCount;
-            if(currPlayer.zombie)
+            if(currPlayer.zombie || (loudmouthDice.isSelected() || cowardDice.isSelected()))
                 rollCount = 3;
             else
                 rollCount = 5;
             for(int i = 0; i < rollCount; i++){
+
+                    
+                
                 if(this.rolls[i] == 5){
                     beerCount = beerCount + 1;
                 }
@@ -1051,19 +1180,88 @@ public class AllModesFX extends BangFXMain {
                     oneShot++;
                 }
             }
-            if(!currPlayer.zombie){
+            if(!currPlayer.zombie ){
                 
+                if(loudmouthDice.isSelected() || cowardDice.isSelected()){
+                 for(int i = 4; i<5;i++){
+                    if( cowardDice.isSelected()){
+                        
+                    if(this.rolls[i] == 0){
+                        // drop arrow from yourself or another player
+                        dropArrowOldSaloon(currPlayer);
+                        returnArrowCount++;
+                        returnArrow.setDisable(false);
+                        
+                        
+                    }
+                    if(this.rolls[i] == 2){ // was commented
+                        // lose a life point
+                        currPlayer.loseHp(1);
+                    }
+//                    if(this.rolls[i] == 2){
+//                        oneShot++;
+//                     
+//                    }
+                    if(this.rolls[i] == 3){ // was commented
+                        oneShot+=2;
+                    }
+                    if(this.rolls[i] == 4){
+                        beerCount = beerCount + 2;
+                    }
+                    if(this.rolls[i] == 5){
+                        beerCount++;
+                    }
+                    
             
-                for(int i = 3; i < 5; i++){
+                    }else{
+                        if(this.rolls[i] == 2){
+//                        // lose a life point
+                        currPlayer.loseHp(1);
+                    }
+                    if(this.rolls[i] == 3){
+                        oneShot+=2;
+                     
+                    }
+//                    if(this.rolls[i] == 3){// was 
+//                        oneShot+=2;
+//                    }
+                    if(this.rolls[i] == 4){
+                        twoShot+=2;
+                    }
+                    if(this.rolls[i] == 5){
+                        gatCount++;
+                    }
+                    }
+                    
+                    for(  i = 3; i < 4; i++){
+                    if(this.rolls[i] == 2)
+                        whiskeyCount++;
+                    else if(this.rolls[i] == 4 || this.rolls[i] == 5)
+                        duelCount++;     
+                }
+                        
+                    }
+                }else{
+                    
+                
+                for( int i = 3; i < 5; i++){
                     if(this.rolls[i] == 2){
                         whiskeyCount++;
                     }
                     if(this.rolls[i] == 3){
                         gatCount++;
                     }
-                    if(this.rolls[i] == 4 || this.rolls[i] == 5){
+                    if(this.rolls[i] == 4 || this.rolls[i] == 5 ){
                         duelCount++;
                     }
+                }
+                //handle whiskey logic
+                for( int i = 3; i < 5; i++){
+                    if(this.rolls[i] == 2)
+                        whiskeyCount++;
+                    else if(this.rolls[i] == 4 || this.rolls[i] == 5)
+                        duelCount++;     
+                }
                 }
 
                 //handle duel logic
@@ -1076,15 +1274,10 @@ public class AllModesFX extends BangFXMain {
                     duelLogic(index, n);
                     duelCount--;
                 }
-
-                //handle whiskey logic
-                for(int i = 3; i < 5; i++){
-                    if(this.rolls[i] == 2)
-                        whiskeyCount++;
-                    else if(this.rolls[i] == 4 || this.rolls[i] == 5)
-                        duelCount++;     
-                }
+                
+                
             }
+                
             if(twoShot > 0 || oneShot > 0){
                 if(twoShot > 0){
                     twoShotLeft.setDisable(false);
@@ -1104,6 +1297,8 @@ public class AllModesFX extends BangFXMain {
                     beerAndGat(currPlayer);
                 }
             }
+            
+            
         }));
         
         oneShotLeft.setOnAction((e -> {
@@ -1293,7 +1488,73 @@ public class AllModesFX extends BangFXMain {
                         nextPlayer.setDisable(false);
                     }
                 }
-            }));     
+            }));  
+        
+        returnArrow.setOnAction((e -> {
+                if(p1b.isSelected()){
+                    
+                    players.get(0).setArrows((players.get(0).getArrows() - 1));
+                    p1arrow.setText("Arrows: "+ players.get(0).getArrows());
+                    this.arrowPile += 1;
+                }
+                if(p2b.isSelected()){
+                    players.get(1).setArrows((players.get(1).getArrows() - 1));
+                    p2arrow.setText("Arrows: "+ players.get(1).getArrows());
+                    this.arrowPile += 1;
+                }
+                if(p3b.isSelected()){
+                   players.get(2).setArrows((players.get(2).getArrows() - 1));
+                    p2arrow.setText("Arrows: "+ players.get(2).getArrows());
+                    this.arrowPile += 1;
+                }
+                if(p4b.isSelected()){
+                    players.get(3).setArrows((players.get(3).getArrows() - 1));
+                    p3arrow.setText("Arrows: "+ players.get(3).getArrows());
+                    this.arrowPile += 1;
+                }
+                if(p5b.isSelected()){
+                    players.get(4).setArrows((players.get(4).getArrows() - 1));
+                    p4arrow.setText("Arrows: "+ players.get(4).getArrows());
+                    this.arrowPile += 1;
+                }
+                if(p6b.isSelected()){
+                    players.get(5).setArrows((players.get(5).getArrows() - 1));
+                    p5arrow.setText("Arrows: "+ players.get(5).getArrows());
+                    this.arrowPile += 1;
+                }
+                if(p7b.isSelected()){
+                    players.get(6).setArrows((players.get(6).getArrows() - 1));
+                    p6arrow.setText("Arrows: "+ players.get(6).getArrows());
+                    this.arrowPile += 1;
+                }
+                if(p8b.isSelected()){
+                    players.get(7).setArrows((players.get(7).getArrows() - 1));
+                    p7arrow.setText("Arrows: "+ players.get(7).getArrows());
+                    this.arrowPile += 1;
+                }
+                returnArrowCount = 0;
+                if(returnArrowCount == 0 && beerCount == 0){
+                    returnArrow.setDisable(true);
+                    p1b.setDisable(true);
+                    p2b.setDisable(true);
+                    p3b.setDisable(true);
+                    p4b.setDisable(true);
+                    p5b.setDisable(true);
+                    p6b.setDisable(true);
+                    p7b.setDisable(true);
+                    p8b.setDisable(true);
+                    p1b.setSelected(false);
+                    p2b.setSelected(false);
+                    p3b.setSelected(false);
+                    p4b.setSelected(false);
+                    p5b.setSelected(false);
+                    p6b.setSelected(false);
+                    p7b.setSelected(false);
+                    p8b.setSelected(false);
+                }
+                
+                
+            })); 
         
     }
     
@@ -1310,6 +1571,17 @@ public class AllModesFX extends BangFXMain {
         }
         //if the next arrow drawn doesnt empty the pile (start an indian attack)
         else if(arrowPile != 1 && currPlayer.getHp() > 0){
+            if(indianChiefArrow == 1 && currPlayer.getHuman()){
+                int dropResponse = JOptionPane.showConfirmDialog(null, "Draw the Indian Chief Arrow?", "Old Saloon Add-on", JOptionPane.YES_NO_OPTION);
+                if(dropResponse == JOptionPane.YES_OPTION){
+                    indianChiefArrow = 0;
+                    currPlayer.setArrows(currPlayer.getArrows() + 2);
+                    indianChiefArrowIndex = index;
+                    
+                }else{
+                    currPlayer.setArrows(currPlayer.getArrows() + 1);
+                }
+            }
             currPlayer.setArrows(currPlayer.getArrows() + 1);
             switch(index){
                 case 0:
@@ -1800,6 +2072,8 @@ public class AllModesFX extends BangFXMain {
         dice3.setDisable(true);
         duelDice1.setDisable(true);
         duelDice2.setDisable(true);
+        loudmouthDice.setDisable(true);
+        cowardDice.setDisable(true);
         nextPlayer.setDisable(true);
         giveBeer.setDisable(true);
         saveRolls.setDisable(true);
@@ -2848,7 +3122,75 @@ public class AllModesFX extends BangFXMain {
                 arrow(players.get(i));
         }
     }
-     
+    /**
+     * 
+     * @param currPlayer provides which players turn it is
+     */
+    public void dropArrowOldSaloon(MyPlayer currPlayer){
+        int playerIndex = 0;
+            for(MyPlayer player : players){
+                if(player.getArrows() == 0){   
+                }
+                else{
+                    switch(playerIndex){
+                        case 7:
+                            p8b.setDisable(false);
+                            break;
+                        case 6: 
+                            p7b.setDisable(false);
+                            break;
+                        case 5:
+                            p6b.setDisable(false);
+                            break;
+                        case 4:
+                            p5b.setDisable(false);
+                            break;
+                        case 3:
+                            p4b.setDisable(false);
+                            break;
+                        case 2:
+                            p3b.setDisable(false);
+                            break;
+                        case 1:
+                            p2b.setDisable(false);
+                            break;
+                        case 0:
+                            p1b.setDisable(false);
+                            break;
+                        default:
+                            break;
+                    }
+                }
+                playerIndex++;
+    }
+//            if(returnArrowCount > 0){
+//                returnArrow.setDisable(false);
+//            }
+            
+            
+    }  
+    public int getMaxArrowIndex(){
+        int max=0; 
+        int maxIndex=0;
+        int first = 1;
+        int index1 = 0;
+        for(MyPlayer player: players){
+            if(first == 1){
+                max = player.getArrows();
+                index1++;
+                first++;
+            }else{
+                if(player.getArrows() > max){
+                    max = player.getArrows();
+                    maxIndex = index1;
+                    index1++;
+                }
+            }
+            
+            
+        }
+        return maxIndex;
+    }
     /**
      * @param args the command line arguments
      */
