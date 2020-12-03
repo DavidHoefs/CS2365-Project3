@@ -58,8 +58,11 @@ public class UndeadAliveDice extends MyDice {
     //returns the value of a 5 dice roll as a string
     @Override
     public String getRollsString(int n){
-        String[] rollTypes = {"Arrow","Dynamite","Whiskey","Gatling Gun","Duel","Duel" };
-        return rollTypes[n];
+        if(n >= 0){
+            String[] rollTypes = {"Arrow","Dynamite","Whiskey","Gatling Gun","Duel","Duel" };
+            return rollTypes[n];
+        }else
+            return "";
     } 
     
 }

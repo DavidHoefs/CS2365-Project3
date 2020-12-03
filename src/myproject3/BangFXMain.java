@@ -150,6 +150,7 @@ public class BangFXMain extends Application {
     //used for chosing old saloon
     Button btn;
     Button btn1;
+    Button btn2;
     
     @Override
     /**
@@ -159,17 +160,23 @@ public class BangFXMain extends Application {
         primaryStage.setTitle("Bang! The Dice Game");
         btn = new Button("Old Saloon");
         btn1 = new Button ("Undead or Alive");
+        btn2 = new Button("Play All Game Modes");
         btn.setOnAction((e)->
-    {
-        new OldSaloonFX();
-        primaryStage.close();
-    });
+        {
+            new OldSaloonFX();
+            primaryStage.close();
+        });
         
-         btn1.setOnAction((e)->
-         {
-             new UndeadAliveFX();
-             primaryStage.close();
-         });
+        btn1.setOnAction((e)->
+        {
+            new UndeadAliveFX();
+            primaryStage.close();
+        });
+        btn2.setOnAction((e)->
+        {
+            new AllModesFX();
+            primaryStage.close();
+        });
 
 
         //below is where the above labels and buttons are created
@@ -293,6 +300,7 @@ public class BangFXMain extends Application {
             sheriffIndex = index + 1;
             btn.setDisable(true);
             btn1.setDisable(true);
+            btn2.setDisable(true);
 
                 
         }));
@@ -308,6 +316,7 @@ public class BangFXMain extends Application {
             sheriffIndex = index + 1;
             btn.setDisable(true);
             btn1.setDisable(true);
+            btn2.setDisable(true);
         }));
         
         p6 = new Button(" 6 ");
@@ -321,6 +330,7 @@ public class BangFXMain extends Application {
             sheriffIndex = index + 1;
             btn.setDisable(true);
             btn1.setDisable(true);
+            btn2.setDisable(true);
         }));
         
         p7 = new Button(" 7 ");
@@ -334,6 +344,7 @@ public class BangFXMain extends Application {
             sheriffIndex = index + 1;
             btn.setDisable(true);
             btn1.setDisable(true);
+            btn2.setDisable(true);
         }));
         
         p8 = new Button(" 8 ");
@@ -347,6 +358,7 @@ public class BangFXMain extends Application {
             sheriffIndex = index + 1;
             btn.setDisable(true);
             btn1.setDisable(true);
+            btn2.setDisable(true);
         }));
         
         ImageView logo = new ImageView(new Image(getClass().getResourceAsStream("logo.png")));
@@ -355,7 +367,7 @@ public class BangFXMain extends Application {
         
         //below the scene is set-up and all the boxes are put in one vertical box
         HBox hbox1 = new HBox(20);
-        hbox1.getChildren().addAll(p4, p5, p6, p7, p8,btn,btn1);
+        hbox1.getChildren().addAll(p4, p5, p6, p7, p8,btn,btn1, btn2);
         hbox1.setAlignment(Pos.CENTER);
         
         HBox hbox2 = new HBox(20);
@@ -425,7 +437,7 @@ public class BangFXMain extends Application {
         layout.getChildren().add(winner);
         layout.setAlignment(Pos.TOP_CENTER);
         
-        Scene scene = new Scene(layout, 1200, 850);
+        Scene scene = new Scene(layout, 950, 650);
         scene.getStylesheets().add(getClass().getResource("StyleGUI.css").toString());
         primaryStage.setScene(scene);
         primaryStage.show();
@@ -542,7 +554,7 @@ public class BangFXMain extends Application {
     }
     
     /**
-     * Disables the player count buttons so that player count can only be seleected once
+     * Disables the player count buttons so that player count can only be selected once
      */
     public void disable(){
         p4.setDisable(true);
@@ -1880,7 +1892,7 @@ public class BangFXMain extends Application {
      * Used for dropping an arrow (Pedro Ramirez's ability)
      * @param currPlayer provides which players turn it is
      */
-    /*
+    /**
     public void dropArrow(MyPlayer currPlayer){
         currPlayer.setArrows((currPlayer.getArrows() - 1));
         switch(index){
@@ -2107,125 +2119,125 @@ public class BangFXMain extends Application {
             players.get(i).setHp(0);
         }
  
-            //sets new hp for the player shot
-            switch(i){
-                case 0:
-                    p1hp.setText("Health: " + players.get(i).getHp() + "/" + players.get(i).getMaxHp());
-                    if(players.get(i).getHp() == 0){
-                        if(!p1dead){
-                            p1dead = true;
-                            samAbility();
-                        }
-                        p1t.setText("DEAD - " + players.get(i).getRole());
-                        p1t.setStyle("-fx-text-fill: #ff3333");
-                        disableAll();
-                        nextPlayer.setDisable(false);
-                        arrowPile = arrowPile + players.get(i).getArrows();
-                            players.get(i).setArrows(0);
-                            p1arrow.setText("Arrows: 0");
+        //sets new hp for the player shot
+        switch(i){
+            case 0:
+                p1hp.setText("Health: " + players.get(i).getHp() + "/" + players.get(i).getMaxHp());
+                if(players.get(i).getHp() == 0){
+                    if(!p1dead){
+                        p1dead = true;
+                        samAbility();
                     }
-                    break;
-                case 1:
-                    p2hp.setText("Health: " + players.get(i).getHp() + "/" + players.get(i).getMaxHp());
-                    if(players.get(i).getHp() == 0){
-                        if(!p2dead){
-                            p2dead = true;
-                            samAbility();
-                        }
-                        p2t.setText("DEAD - " + players.get(i).getRole());
-                        p2t.setStyle("-fx-text-fill: #ff3333");
-                        arrowPile = arrowPile + players.get(i).getArrows();
-                            players.get(i).setArrows(0);
-                            p2arrow.setText("Arrows: 0");
+                    p1t.setText("DEAD - " + players.get(i).getRole());
+                    p1t.setStyle("-fx-text-fill: #ff3333");
+                    disableAll();
+                    nextPlayer.setDisable(false);
+                    arrowPile = arrowPile + players.get(i).getArrows();
+                        players.get(i).setArrows(0);
+                        p1arrow.setText("Arrows: 0");
+                }
+                break;
+            case 1:
+                p2hp.setText("Health: " + players.get(i).getHp() + "/" + players.get(i).getMaxHp());
+                if(players.get(i).getHp() == 0){
+                    if(!p2dead){
+                        p2dead = true;
+                        samAbility();
                     }
-                    break;
-                case 2:
-                    p3hp.setText("Health: " + players.get(i).getHp() + "/" + players.get(i).getMaxHp());
-                    if(players.get(i).getHp() == 0){
-                        if(!p3dead){
-                            p3dead = true;
-                            samAbility();
-                        }
-                        p3t.setText("DEAD - " + players.get(i).getRole());
-                        p3t.setStyle("-fx-text-fill: #ff3333");
-                        arrowPile = arrowPile + players.get(i).getArrows();
-                            players.get(i).setArrows(0);
-                            p3arrow.setText("Arrows: 0");
+                    p2t.setText("DEAD - " + players.get(i).getRole());
+                    p2t.setStyle("-fx-text-fill: #ff3333");
+                    arrowPile = arrowPile + players.get(i).getArrows();
+                        players.get(i).setArrows(0);
+                        p2arrow.setText("Arrows: 0");
+                }
+                break;
+            case 2:
+                p3hp.setText("Health: " + players.get(i).getHp() + "/" + players.get(i).getMaxHp());
+                if(players.get(i).getHp() == 0){
+                    if(!p3dead){
+                        p3dead = true;
+                        samAbility();
                     }
-                    break;
-                case 3:
-                    p4hp.setText("Health: " + players.get(i).getHp() + "/" + players.get(i).getMaxHp());
-                    if(players.get(i).getHp() == 0){
-                        if(!p4dead){
-                            p4dead = true;
-                            samAbility();
-                        }
-                        p4t.setText("DEAD - " + players.get(i).getRole());
-                        p4t.setStyle("-fx-text-fill: #ff3333");
-                        arrowPile = arrowPile + players.get(i).getArrows();
-                            players.get(i).setArrows(0);
-                            p4arrow.setText("Arrows: 0");
+                    p3t.setText("DEAD - " + players.get(i).getRole());
+                    p3t.setStyle("-fx-text-fill: #ff3333");
+                    arrowPile = arrowPile + players.get(i).getArrows();
+                        players.get(i).setArrows(0);
+                        p3arrow.setText("Arrows: 0");
+                }
+                break;
+            case 3:
+                p4hp.setText("Health: " + players.get(i).getHp() + "/" + players.get(i).getMaxHp());
+                if(players.get(i).getHp() == 0){
+                    if(!p4dead){
+                        p4dead = true;
+                        samAbility();
                     }
-                    break;
-                case 4:
-                    p5hp.setText("Health: " + players.get(i).getHp() + "/" + players.get(i).getMaxHp());
-                    if(players.get(i).getHp() == 0){
-                        if(!p5dead){
-                            p5dead = true;
-                            samAbility();
-                        }
-                        p5t.setText("DEAD - " + players.get(i).getRole());
-                        p5t.setStyle("-fx-text-fill: #ff3333");
-                        arrowPile = arrowPile + players.get(i).getArrows();
-                            players.get(i).setArrows(0);
-                            p5arrow.setText("Arrows: 0");
+                    p4t.setText("DEAD - " + players.get(i).getRole());
+                    p4t.setStyle("-fx-text-fill: #ff3333");
+                    arrowPile = arrowPile + players.get(i).getArrows();
+                        players.get(i).setArrows(0);
+                        p4arrow.setText("Arrows: 0");
+                }
+                break;
+            case 4:
+                p5hp.setText("Health: " + players.get(i).getHp() + "/" + players.get(i).getMaxHp());
+                if(players.get(i).getHp() == 0){
+                    if(!p5dead){
+                        p5dead = true;
+                        samAbility();
                     }
-                    break;
-                case 5:
-                    p6hp.setText("Health: " + players.get(i).getHp() + "/" + players.get(i).getMaxHp());
-                    if(players.get(i).getHp() == 0){
-                        if(!p6dead){
-                            p6dead = true;
-                            samAbility();
-                        }
-                        p6t.setText("DEAD - " + players.get(i).getRole());
-                        p6t.setStyle("-fx-text-fill: #ff3333");
-                        arrowPile = arrowPile + players.get(i).getArrows();
-                            players.get(i).setArrows(0);
-                            p6arrow.setText("Arrows: 0");
+                    p5t.setText("DEAD - " + players.get(i).getRole());
+                    p5t.setStyle("-fx-text-fill: #ff3333");
+                    arrowPile = arrowPile + players.get(i).getArrows();
+                        players.get(i).setArrows(0);
+                        p5arrow.setText("Arrows: 0");
+                }
+                break;
+            case 5:
+                p6hp.setText("Health: " + players.get(i).getHp() + "/" + players.get(i).getMaxHp());
+                if(players.get(i).getHp() == 0){
+                    if(!p6dead){
+                        p6dead = true;
+                        samAbility();
                     }
-                    break;
-                case 6:
-                    p7hp.setText("Health: " + players.get(i).getHp() + "/" + players.get(i).getMaxHp());
-                    if(players.get(i).getHp() == 0){
-                        if(!p7dead){
-                            p7dead = true;
-                            samAbility();
-                        }
-                        p7t.setText("DEAD - " + players.get(i).getRole());
-                        p7t.setStyle("-fx-text-fill: #ff3333");
-                        arrowPile = arrowPile + players.get(i).getArrows();
-                            players.get(i).setArrows(0);
-                            p7arrow.setText("Arrows: 0");
+                    p6t.setText("DEAD - " + players.get(i).getRole());
+                    p6t.setStyle("-fx-text-fill: #ff3333");
+                    arrowPile = arrowPile + players.get(i).getArrows();
+                        players.get(i).setArrows(0);
+                        p6arrow.setText("Arrows: 0");
+                }
+                break;
+            case 6:
+                p7hp.setText("Health: " + players.get(i).getHp() + "/" + players.get(i).getMaxHp());
+                if(players.get(i).getHp() == 0){
+                    if(!p7dead){
+                        p7dead = true;
+                        samAbility();
                     }
-                    break;
-                case 7:
-                    p8hp.setText("Health: " + players.get(i).getHp() + "/" + players.get(i).getMaxHp());
-                    if(players.get(i).getHp() == 0){
-                        if(!p8dead){
-                            p8dead = true;
-                            samAbility();
-                        }
-                        p8t.setText("DEAD - " + players.get(i).getRole());
-                        p8t.setStyle("-fx-text-fill: #ff3333");
-                        arrowPile = arrowPile + players.get(i).getArrows();
-                            players.get(i).setArrows(0);
-                            p8arrow.setText("Arrows: 0");
+                    p7t.setText("DEAD - " + players.get(i).getRole());
+                    p7t.setStyle("-fx-text-fill: #ff3333");
+                    arrowPile = arrowPile + players.get(i).getArrows();
+                        players.get(i).setArrows(0);
+                        p7arrow.setText("Arrows: 0");
+                }
+                break;
+            case 7:
+                p8hp.setText("Health: " + players.get(i).getHp() + "/" + players.get(i).getMaxHp());
+                if(players.get(i).getHp() == 0){
+                    if(!p8dead){
+                        p8dead = true;
+                        samAbility();
                     }
-                    break;
-                default:
-                    break;                               
-            }
+                    p8t.setText("DEAD - " + players.get(i).getRole());
+                    p8t.setStyle("-fx-text-fill: #ff3333");
+                    arrowPile = arrowPile + players.get(i).getArrows();
+                        players.get(i).setArrows(0);
+                        p8arrow.setText("Arrows: 0");
+                }
+                break;
+            default:
+                break;                               
+        }
 
         int sheriffAlive = 0;
         int outlawAlive = 0;

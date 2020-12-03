@@ -16,8 +16,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javax.swing.JOptionPane;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 
 /**
  * Is the object blueprint of the OldSaloonFX expansion pack
@@ -229,15 +227,10 @@ public class OldSaloonFX extends BangFXMain {
            
         }));
         
-        ImageView oldSaloonLogo = new ImageView(new Image(getClass().getResourceAsStream("oldSaloonLogo.png")));
-        oldSaloonLogo.setFitWidth(550);
-        oldSaloonLogo.setFitHeight(200);
-        
         //below the scene is set-up and all the boxes are put in one vertical box
         HBox hbox1 = new HBox(20);
         hbox1.getChildren().addAll(p4, p5, p6, p7, p8);
         hbox1.setAlignment(Pos.CENTER);
-       
         
         HBox hbox2 = new HBox(20);
         hbox2.getChildren().addAll(rollDice, reRoll, saveRolls);
@@ -286,7 +279,6 @@ public class OldSaloonFX extends BangFXMain {
         
         //final vertical box that holds every other box
         VBox layout = new VBox(5);
-        layout.getChildren().add(oldSaloonLogo);
         layout.getChildren().add(new Label("Player Count"));
         layout.getChildren().add(hbox1);
         layout.getChildren().add(space);
@@ -306,7 +298,7 @@ public class OldSaloonFX extends BangFXMain {
         layout.getChildren().add(winner);
         layout.setAlignment(Pos.TOP_CENTER);
         Stage s = new Stage();
-        Scene scene = new Scene(layout, 1200, 850);
+        Scene scene = new Scene(layout, 950, 650);
         scene.getStylesheets().add(getClass().getResource("StyleGUI.css").toString());
         s.setScene(scene);
         s.show();
@@ -506,13 +498,13 @@ public class OldSaloonFX extends BangFXMain {
             // 7 because if player is jose delgado or tequila joe in old saloon they can roll 6 dice
             MyDice firstRoll; 
             
-                if(currPlayer.getName() == "Jose Delgado" && loudmouthDice.isSelected()){
-                    firstRoll = new MyDice(6);
-                }else if(currPlayer.getName() == "Tequila Joe" && cowardDice.isSelected()){
-                    firstRoll = new MyDice(6);
-                }else{
-                   firstRoll = new MyDice(5);
-                }
+            if(currPlayer.getName() == "Jose Delgado" && loudmouthDice.isSelected()){
+                firstRoll = new MyDice(6);
+            }else if(currPlayer.getName() == "Tequila Joe" && cowardDice.isSelected()){
+                firstRoll = new MyDice(6);
+            }else{
+               firstRoll = new MyDice(5);
+            }
                 
             
             if(loudmouthDice.isSelected() || cowardDice.isSelected()){

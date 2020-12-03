@@ -59,14 +59,16 @@ public class OldSaloonDice extends MyDice {
     //returns the value of a 5 dice roll as a string
     @Override
     public String getRollsString(int n){
-        if(this.type == "coward"){
-            String[] rollTypes = {"Return Arrow","Dynamite","Shoot 1 Space","Arrow","Double Beer","Beer"};
-            return rollTypes[n];
-        }else{
-             String[] rollTypes = {"Arrow","Dynamite","Lose Life Point","Double Shoot 1 Space","Double Shoot 2 Spaces","Gatling Gun"};
-            return rollTypes[n];
-
-        }
+        if(n >= 0){
+            if(this.type == "coward"){
+                String[] rollTypes = {"Return Arrow","Dynamite","Shoot 1 Space","Arrow","Double Beer","Beer"};
+                return rollTypes[n];
+            }else{
+                 String[] rollTypes = {"Arrow","Dynamite","Lose Life Point","Double Shoot 1 Space","Double Shoot 2 Spaces","Gatling Gun"};
+                return rollTypes[n];
+            }
+        }else
+            return "";
         
     } 
     

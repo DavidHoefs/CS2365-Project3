@@ -24,7 +24,7 @@ import javafx.scene.image.ImageView;
  * Is the object blueprint of the UndeadAlive FX
  * @author Javier Vasquez, David Hoefs, Zach Hunt
  */
-public class UndeadAliveFX extends BangFXMain {
+public class AllModesFX extends BangFXMain {
     ArrayList<MyPlayer> players;
     int x = 0;
     Label duelRoll1;
@@ -72,7 +72,7 @@ public class UndeadAliveFX extends BangFXMain {
     int[] duelRolls;
     UndeadAliveCards cards = new UndeadAliveCards(11);
  
-    UndeadAliveFX(){
+    AllModesFX(){
         super();
         
         //below is where the above labels and buttons are created
@@ -369,30 +369,10 @@ public class UndeadAliveFX extends BangFXMain {
             saveRolls.setDisable(true);
             
             //resets the index back at 0 if it hits the playerCount - 1
-            if(outbreak){
-                if(this.index + 1 == playerCount){
-                    this.index = 0;
-                    while(players.get(this.index).getHp() <= 0){
-                        index++;
-                    }
-                }
-                else{
-                    index = index + 1;
-                    while(players.get(this.index).getHp() <= 0){
-                        if(this.index + 1 == playerCount){
-                            this.index = 0;
-                        }
-                        else{
-                            index++;
-                        }
-                    }
-                }
-            }else{
-                if(this.index + 1 == playerCount)
-                    this.index = 0;
-                else
-                    index++;
-            }
+            if(this.index + 1 == playerCount)
+                this.index = 0;
+            else
+                index++;
             
             //used for checking whos alive and if anyone has won
             int alive = 0;
