@@ -351,7 +351,7 @@ public class UndeadAliveFX extends BangFXMain {
         layout.getChildren().add(cardsDrawnLabel);
         layout.setAlignment(Pos.TOP_CENTER);
         Stage s = new Stage();
-        Scene scene = new Scene(layout, 950, 850);
+        Scene scene = new Scene(layout, 1200, 950);
         scene.getStylesheets().add(getClass().getResource("StyleGUI.css").toString());
         s.setScene(scene);
         s.show();
