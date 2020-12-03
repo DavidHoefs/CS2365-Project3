@@ -290,6 +290,10 @@ public class AllModesFX extends BangFXMain {
         undeadLogo.setFitWidth(600);
         undeadLogo.setFitHeight(150);
         
+        ImageView oldSaloonLogo = new ImageView(new Image(getClass().getResourceAsStream("oldSaloonLogo.png")));	
+        oldSaloonLogo.setFitWidth(550);	
+        oldSaloonLogo.setFitHeight(200);
+        
         //below the scene is set-up and all the boxes are put in one vertical box
         HBox hbox1 = new HBox(20);
         hbox1.getChildren().addAll(p4, p5, p6, p7, p8);
@@ -325,6 +329,10 @@ public class AllModesFX extends BangFXMain {
         hboxS.setAlignment(Pos.CENTER);
         
         //space hboxs used for spacing out the GUI
+        HBox logoSpace = new HBox(0);
+        logoSpace.getChildren().add(new Label(""));
+        logoSpace.setAlignment(Pos.CENTER);
+        
         HBox space = new HBox(0);
         space.getChildren().add(new Label(""));
         space.setAlignment(Pos.CENTER);
@@ -348,6 +356,8 @@ public class AllModesFX extends BangFXMain {
         //final vertical box that holds every other box
         VBox layout = new VBox(5);
         layout.getChildren().add(undeadLogo);
+        layout.getChildren().add(logoSpace);
+        layout.getChildren().add(oldSaloonLogo);
         layout.getChildren().add(new Label("Player Count"));
         layout.getChildren().add(hbox1);
         layout.getChildren().add(space);
@@ -368,7 +378,7 @@ public class AllModesFX extends BangFXMain {
         layout.getChildren().add(cardsDrawnLabel);
         layout.setAlignment(Pos.TOP_CENTER);
         Stage s = new Stage();
-        Scene scene = new Scene(layout, 950, 850);
+        Scene scene = new Scene(layout, 1200, 1050);
         scene.getStylesheets().add(getClass().getResource("StyleGUI.css").toString());
         s.setScene(scene);
         s.show();
