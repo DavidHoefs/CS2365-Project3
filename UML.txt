@@ -1,4 +1,151 @@
 =========================
+      AllModesFX
+=========================
+~ players : ArrayList<MyPlayers>
+~ x : int
+~ index : int
+~ gameOver : boolean
+~ playerCount : int
+~ dynamiteCount : int
+~ arrowPile : int
+~ beerCount : int
+~ whiskeyCount : int
+~ gatCount : int
+~ zombieHandCount : int
+~ duelCount : int
+~ rolls : int
+~ zombieCount : int
+~ outbreak : boolean
+~ cardsDrawn : String
+=========================
++ drawZombCard(i : int) : void
++ disable() : void
++ turn(currPlayer : MyPlayer) : void
++ AIroll(currPlayer : MyPlayer) : void
++ roll(currPlayer : MyPlayer) : void
++ checkTarget(checkDirectionLength : String, currPlayer : MyPlayer) : int
++ shoot(directionLength : String, currPlayer : MyPlayer) : void
++ dropArrow(currPlayer : MyPlayer) : void
++ arrow(currPlayer : MyPlayer) : void
++ beerAndGat(currPlayer : MyPlayer) : void
++ samAbility() : void
++ updateHp(i : int) : void
++ disableAll() : void
++ playerLabels() : void
++ checkExpansion() : String
++ main(args : String[]) : void
+=========================
+
+
+=========================
+    UndeadAliveCards
+=========================
+- cards : int[]
+- card : int
+- cardsRemaining : int
+=========================
++ UndeadAliveCards(n : int) : void
++ getCard() : int
++ getCards() : int[]
++ getCardString() : String
++ getCardsString(n : int) : String
++ drawCard(i : int) : int
+=========================
+
+
+=========================
+    UndeadAliveDice
+=========================
+- duelRoll : int
+- duelRolls : int[]
+=========================
++ UndeadAliveDice(n : int): void
++ getRoll() : int
++ getRolls() : int[]
++ getRollString() : String
++ getRollsString(n : int) : String
+=========================
+
+=========================
+      OldSaloonDice
+=========================
+- roll : int
+- type : String
+=========================
++ OldSaloonDice(type : String): void
++ getRoll() : int
++ getRollString() : String
++ getRollsString(n : int) : String
+=========================
+
+
+=========================
+       UndeadAliveFX
+=========================
+~ players : ArrayList<MyPlayers>
+~ x : int
+~ index : int
+~ gameOver : boolean
+~ playerCount : int
+~ dynamiteCount : int
+~ arrowPile : int
+~ beerCount : int
+~ whiskeyCount : int
+~ gatCount : int
+~ zombieHandCount : int
+~ duelCount : int
+~ rolls : int
+~ zombieCount : int
+~ outbreak : boolean
+~ cardsDrawn : String
+=========================
+~ UndeadAliveFX() : void
++ drawZombCard(i : int) : void
++ turn(currPlayer : MyPlayer) : void
++ roll(currPlayer : MyPlayer) : void
++ arrow(currPlayer : MyPlayer) : void
++ shoot(directionLength : String, currPlayer : MyPlayer) : void
++ checkTarget(directionLength : String, currPlayer : MyPlayer) : void
++ checkExpansion() : String
++ disable() : void
++ disableAll() : void
++ playerLabels() : void
++ updateHp(i : int) : void
++ beerAndGat(currPlayer : MyPlayer) : void
++ AIRoll(currPlayer : MyPlayer) : void
++ duelLogic(i : int, j : int) : void
++ main(args : String[]) : void
+=========================
+
+
+=========================
+       OldSallonFX
+=========================
+~ players : ArrayList<MyPlayers>
+~ indianChiefArrow : int
+~ indianChiefArrowIndex : int
+~ returnArrowCount : int
+=========================
+~ OldSallonFX()
++ turn(currPlayer : MyPlayer) : void
++ dropArrowOldSallon(currPlayer : MyPlayer) : void
++ roll(currPlayer : MyPlayer) : void
++ arrow(currPlayer : MyPlayer) : void
++ getMaxArrowIndex() : void
++ shoot(directionLength : String, currPlayer : MyPlayer) : void
++ samAbility() : void
++ checkTarget(directionLength : String, currPlayer : MyPlayer) : void
++ checkExpansion() : String
++ disable() : void
++ playerLabels() : void
++ updateHp(i : int) : void
++ beerAndGat(currPlayer : MyPlayer) : void
++ AIRoll(currPlayer : MyPlayer) : void
++ main(args : String[]) : void
+=========================
+
+
+=========================
        BangFXMain
 =========================
 - players : ArrayList<MyPlayer>
